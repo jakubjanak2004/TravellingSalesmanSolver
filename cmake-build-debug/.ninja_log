@@ -1,3 +1,5 @@
 # ninja log v6
 0	340	1726161409406274432	CMakeFiles/TravellingSalesmanSolver.dir/main.cpp.o	a1f4b62424fd8947
 342	373	1726161409748169463	TravellingSalesmanSolver	eba70f23ef23967b
+2	307	1726161671093219021	CMakeFiles/TravellingSalesmanSolver.dir/main.cpp.o	a1f4b62424fd8947
+307	337	1726161671398322173	TravellingSalesmanSolver	eba70f23ef23967b
