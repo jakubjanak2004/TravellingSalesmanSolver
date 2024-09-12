@@ -1,0 +1,3 @@
+/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug/CMakeFiles/TravellingSalesmanSolver.dir
+/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug/CMakeFiles/rebuild_cache.dir
