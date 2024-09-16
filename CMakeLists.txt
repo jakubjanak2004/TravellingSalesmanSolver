@@ -14,4 +14,6 @@ add_executable(TravellingSalesmanSolver main.cpp
         graph/TSInstance.h
         files/FileManager.cpp
         files/FileManager.h
+        controller/Controller.cpp
+        controller/Controller.h
 )

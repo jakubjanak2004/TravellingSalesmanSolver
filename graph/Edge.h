@@ -5,29 +5,26 @@
 #ifndef EDGE_H
 #define EDGE_H
 
-#include "Node.h"
-
 #include <iostream>
 
-class Node;
+#include "Node.h"
 
 class Edge {
     Node* sourceNode;
     Node* targetNode;
-    double weight;
+    double weight{};
 
 public:
-    Edge(Node* sourceNode, Node* targetNode, double weight);
+    Edge(Node *sourceNode, Node *targetNode, double weight);
 
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 
     bool operator<(const Edge &e) const;
-
     bool operator>(const Edge &e) const;
 
-    Node getTargetNode() const;
+    [[nodiscard]] Node* getTargetNode() const;
 
-    double getWeight() const;
+    [[nodiscard]] double getWeight() const;
 };
 
 

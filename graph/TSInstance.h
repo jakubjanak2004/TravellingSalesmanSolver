@@ -8,20 +8,27 @@
 #include "Graph.h"
 
 
-class TSInstance : Graph {
+class TSInstance : public Graph {
     double minCost;
     Node startingNode;
     std::vector<Node> nodesExplored;
     std::vector<std::vector<Node> > bestHamiltonians;
+    std::chrono::duration<long long, std::ratio<1, 1000> > elapsed{};
 
 public:
-    TSInstance(std::vector<Node> nodes, std::vector<Edge> edges);
+    TSInstance(std::vector<std::unique_ptr<Node> > nodes, std::vector<std::unique_ptr<Edge> > edges);
 
     std::vector<std::vector<Node> > solve();
 
-    void branch(std::vector<Node> visitedNodes, double cost, Node currentNode);
+    void branch(std::vector<Node> visitedNodes, double cost, Node &currentNode);
 
-    double getMinCost();
+    double getLowerBound(std::vector<Node> subPath);
+
+    double getCostOfSubPath(std::vector<Node> subPath);
+
+    double getMinCost() const;
+
+    void printStatistics() const;
 };
 
 

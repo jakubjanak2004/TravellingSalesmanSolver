@@ -13,13 +13,16 @@
 
 class Graph {
 public:
-    Graph(std::vector<Node> nodes, std::vector<Edge> edges);
+    Graph(std::vector<std::unique_ptr<Node>> nodes, std::vector<std::unique_ptr<Edge>> edges);
 
     double getCostBetweenNodes(Node &node1, Node &node2);
 
+    [[nodiscard]] const std::vector<std::unique_ptr<Node>>& getNodes() const;
+    [[nodiscard]] const std::vector<std::unique_ptr<Edge>>& getEdges() const;
+
 protected:
-    std::vector<Node> nodes;
-    std::vector<Edge> edges;
+    std::vector<std::unique_ptr<Node> > nodes;
+    std::vector<std::unique_ptr<Edge> > edges;
 };
 
 

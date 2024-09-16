@@ -4,7 +4,7 @@
 
 #include "Edge.h"
 
-Edge::Edge(Node *sourceNode, Node *targetNode, double weight) {
+Edge::Edge(Node *sourceNode, Node *targetNode, double weight){
     this->sourceNode = sourceNode;
     this->targetNode = targetNode;
     this->weight = weight;
@@ -23,8 +23,8 @@ bool Edge::operator>(const Edge &e) const {
     return this->weight > e.weight;
 }
 
-Node Edge::getTargetNode() const {
-    return *this->targetNode;
+Node* Edge::getTargetNode() const {
+    return this->targetNode;
 }
 
 double Edge::getWeight() const {

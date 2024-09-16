@@ -85,6 +85,12 @@ build CMakeFiles/TravellingSalesmanSolver.dir/files/FileManager.cpp.o: CXX_COMPI
   OBJECT_DIR = CMakeFiles/TravellingSalesmanSolver.dir
   OBJECT_FILE_DIR = CMakeFiles/TravellingSalesmanSolver.dir/files
 
+build CMakeFiles/TravellingSalesmanSolver.dir/controller/Controller.cpp.o: CXX_COMPILER__TravellingSalesmanSolver_unscanned_Debug /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/controller/Controller.cpp || cmake_object_order_depends_target_TravellingSalesmanSolver
+  DEP_FILE = CMakeFiles/TravellingSalesmanSolver.dir/controller/Controller.cpp.o.d
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/TravellingSalesmanSolver.dir
+  OBJECT_FILE_DIR = CMakeFiles/TravellingSalesmanSolver.dir/controller
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target TravellingSalesmanSolver
@@ -93,7 +99,7 @@ build CMakeFiles/TravellingSalesmanSolver.dir/files/FileManager.cpp.o: CXX_COMPI
 #############################################
 # Link the executable TravellingSalesmanSolver
 
-build TravellingSalesmanSolver: CXX_EXECUTABLE_LINKER__TravellingSalesmanSolver_Debug CMakeFiles/TravellingSalesmanSolver.dir/main.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/Node.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/Edge.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/Graph.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/TSInstance.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/files/FileManager.cpp.o
+build TravellingSalesmanSolver: CXX_EXECUTABLE_LINKER__TravellingSalesmanSolver_Debug CMakeFiles/TravellingSalesmanSolver.dir/main.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/Node.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/Edge.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/Graph.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/TSInstance.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/files/FileManager.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/controller/Controller.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
   OBJECT_DIR = CMakeFiles/TravellingSalesmanSolver.dir
   POST_BUILD = :

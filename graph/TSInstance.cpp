@@ -5,31 +5,34 @@
 #include "TSInstance.h"
 #include "Node.h"
 
-TSInstance::TSInstance(std::vector<Node> nodes, std::vector<Edge> edges)
+TSInstance::TSInstance(std::vector<std::unique_ptr<Node>> nodes, std::vector<std::unique_ptr<Edge>> edges)
     : Graph(std::move(nodes), std::move(edges)),
-      minCost(std::numeric_limits<double>::max()),
-      startingNode(this->nodes[0]) {
+      minCost(std::numeric_limits<double>::infinity()),
+      startingNode(*this->nodes[0]) {
 }
 
 std::vector<std::vector<Node> > TSInstance::solve() {
+    auto start = std::chrono::high_resolution_clock::now();
     std::vector visitedNodes = {this->startingNode};
     branch(visitedNodes, 0, this->startingNode);
+    auto end = std::chrono::high_resolution_clock::now();
+    this->elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     return this->bestHamiltonians;
 }
 
-void TSInstance::branch(std::vector<Node> visitedNodes, double cost, Node currentNode) {
-    std::vector<Node> visitedNodesCopied = visitedNodes;
-
-    std::vector<Node> neighbours = currentNode.getNeighbourNodes();
-    for (Node &neighbour: neighbours) {
-        if (std::find(visitedNodes.begin(), visitedNodes.end(), neighbour) != visitedNodes.end()) {
+void TSInstance::branch(std::vector<Node> visitedNodes, double cost, Node &currentNode) {
+    std::vector<Node*> neighbours = currentNode.getNeighbourNodes();
+    for (Node* neighbour: neighbours) {
+        if (std::find(visitedNodes.begin(), visitedNodes.end(), *neighbour) != visitedNodes.end()) {
             continue;
         }
 
-        std::vector<Node> branchVisNodes = visitedNodesCopied;
-        branchVisNodes.push_back(neighbour);
+        std::vector<Node> branchVisNodes = visitedNodes;
+        branchVisNodes.push_back(*neighbour);
 
-        branch(branchVisNodes, cost + this->getCostBetweenNodes(currentNode, neighbour), neighbour);
+        if (this->getLowerBound(branchVisNodes) <= this->minCost) {
+            branch(branchVisNodes, cost + this->getCostBetweenNodes(currentNode, *neighbour), *neighbour);
+        }
     }
 
     if (visitedNodes.size() == this->nodes.size() - 1) {
@@ -44,6 +47,39 @@ void TSInstance::branch(std::vector<Node> visitedNodes, double cost, Node curren
     }
 }
 
-double TSInstance::getMinCost() {
+double TSInstance::getLowerBound(std::vector<Node> subPath) {
+    double cost = this->getCostOfSubPath(subPath);
+
+    for (auto& node: this->nodes) {
+        if (std::find(subPath.begin(), subPath.end() - 1, *node) != subPath.end() - 1) {
+            Edge* edge = *node->getEdges().begin();
+            cost += edge->getWeight();
+        }
+    }
+    return cost;
+}
+
+double TSInstance::getCostOfSubPath(std::vector<Node> subPath) {
+    double cost = 0;
+    for (int i = 0; i < subPath.size() - 1; i++) {
+        cost += this->getCostBetweenNodes(subPath[i], subPath[i + 1]);
+    }
+    return cost;
+}
+
+double TSInstance::getMinCost() const {
     return this->minCost;
+}
+
+void TSInstance::printStatistics() const {
+    std::cout << std::endl;
+    std::cout << "Travelling Salesman Instance with: " << this->nodes.size() << " nodes" << std::endl;
+    std::cout << "Solution set size: " << this->bestHamiltonians.size() << std::endl;
+    std::cout << "The optimal path length: " << this->minCost << std::endl;
+    std::cout << "Calculation took: " << elapsed.count() << " ms" << std::endl;
+
+    // std::cout << "First hamiltonian: ";
+    // for (const Node &node: this->bestHamiltonians.front()) {
+    //     std::cout << node.toString() << " ";
+    // }
 }
