@@ -22,6 +22,8 @@ public:
     bool operator<(const Edge &e) const;
     bool operator>(const Edge &e) const;
 
+    Node *getSourceNode() const;
+
     [[nodiscard]] Node* getTargetNode() const;
 
     [[nodiscard]] double getWeight() const;

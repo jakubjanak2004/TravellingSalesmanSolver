@@ -15,7 +15,7 @@ class Edge;
 
 class Node {
     std::string name;
-    std::multiset<Edge*> edges;
+    std::vector<Edge*> edges;
 
 public:
     Node(std::string name);
@@ -29,7 +29,7 @@ public:
     bool operator==(const Node &other) const;
 
     std::vector<Node*> getNeighbourNodes() const;
-    std::multiset<Edge*> getEdges();
+    std::vector<Edge*> getEdges();
 };
 
 

@@ -29,6 +29,8 @@ public:
     double getMinCost() const;
 
     void printStatistics() const;
+
+    void saveAs(const std::string &fileName) const;
 };
 
 

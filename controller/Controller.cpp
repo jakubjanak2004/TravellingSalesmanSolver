@@ -3,10 +3,13 @@
 //
 
 #include "Controller.h"
+#include "../files/FileManager.h"
 
 #include <iostream>
-#include <string>
 #include <random>
+#include <filesystem>
+#include <fstream>
+#include <string>
 
 int getRandomInteger(const int from, const int to) {
     std::random_device rd;
@@ -60,11 +63,18 @@ void Controller::loadInstance() {
 
     std::cout << "file path: ";
     std::getline(std::cin, filePath);
-    // get a file from the desired filepath
+
+    std::unique_ptr<TSInstance> tsInstance = FileManager::readDotFile(filePath);
+    this->unsolvedInstances.push(std::move(*tsInstance));
 }
 
 void Controller::autoLoadInstances() {
-    std::cout << "Loading Instances from files/instances automatically" << std::endl;
+    std::string directoryPath = "../files/instances";
+    std::cout << "Loading all instances from " << directoryPath << " automatically" << std::endl;
+    for (const auto &entry: FileManager::getDotInstances(directoryPath)) {
+        std::unique_ptr<TSInstance> tsInstance = FileManager::readDotFile(entry.path().string());
+        this->unsolvedInstances.push(std::move(*tsInstance));
+    }
 }
 
 void Controller::createSyntheticInstance() {
@@ -78,7 +88,7 @@ void Controller::createSyntheticInstance() {
     std::vector<std::unique_ptr<Edge> > edges;
     nodes.reserve(numOfNodes);
     for (int i = 0; i < numOfNodes; i++) {
-        nodes.emplace_back(std::make_unique<Node>("Node: " + std::to_string(i)));
+        nodes.emplace_back(std::make_unique<Node>(std::to_string(i)));
     }
 
     long counter = 0;
@@ -104,6 +114,14 @@ void Controller::solve() {
         TSInstance &instance = this->unsolvedInstances.front();
         instance.solve();
         instance.printStatistics();
+        std::string userInput;
+        std::cout << "Save the result graph[y for yes]: ";
+        std::getline(std::cin, userInput);
+        if (userInput == "y") {
+            std::cout << "Name of the file: ";
+            std::getline(std::cin, userInput);
+            instance.saveAs(userInput);
+        }
         this->unsolvedInstances.pop();
     }
 }

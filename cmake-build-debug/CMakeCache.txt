@@ -213,6 +213,12 @@ CMAKE_TAPI:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/tapi
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Arguments to supply to pkg-config
+PKG_CONFIG_ARGN:STRING=
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/opt/homebrew/bin/pkg-config
+
 //Value Computed by CMake
 TravellingSalesmanSolver_BINARY_DIR:STATIC=/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug
 
@@ -221,6 +227,15 @@ TravellingSalesmanSolver_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 TravellingSalesmanSolver_SOURCE_DIR:STATIC=/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver
+
+//Path to a library.
+pkgcfg_lib_GRAPHVIZ_cdt:FILEPATH=/opt/homebrew/Cellar/graphviz/12.1.1/lib/libcdt.dylib
+
+//Path to a library.
+pkgcfg_lib_GRAPHVIZ_cgraph:FILEPATH=/opt/homebrew/Cellar/graphviz/12.1.1/lib/libcgraph.dylib
+
+//Path to a library.
+pkgcfg_lib_GRAPHVIZ_gvc:FILEPATH=/opt/homebrew/Cellar/graphviz/12.1.1/lib/libgvc.dylib
 
 
 ########################
@@ -360,4 +375,65 @@ CMAKE_TAPI-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/opt/homebrew/bin/pkg-config][v0.29.2()]
+GRAPHVIZ_CFLAGS:INTERNAL=-I/opt/homebrew/Cellar/graphviz/12.1.1/include;-I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;-I/opt/homebrew/Cellar/graphviz/12.1.1/include;-I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;-I/opt/homebrew/Cellar/graphviz/12.1.1/include;-I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
+GRAPHVIZ_CFLAGS_I:INTERNAL=
+GRAPHVIZ_CFLAGS_OTHER:INTERNAL=
+GRAPHVIZ_FOUND:INTERNAL=1
+GRAPHVIZ_INCLUDEDIR:INTERNAL=
+GRAPHVIZ_INCLUDE_DIRS:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;/opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;/opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
+GRAPHVIZ_LDFLAGS:INTERNAL=-L/opt/homebrew/Cellar/graphviz/12.1.1/lib;-lgvc;-lcgraph;-lcdt;-lcgraph;-lcdt
+GRAPHVIZ_LDFLAGS_OTHER:INTERNAL=
+GRAPHVIZ_LIBDIR:INTERNAL=
+GRAPHVIZ_LIBRARIES:INTERNAL=gvc;cgraph;cdt;cgraph;cdt
+GRAPHVIZ_LIBRARY_DIRS:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1/lib
+GRAPHVIZ_LIBS:INTERNAL=
+GRAPHVIZ_LIBS_L:INTERNAL=
+GRAPHVIZ_LIBS_OTHER:INTERNAL=
+GRAPHVIZ_LIBS_PATHS:INTERNAL=
+GRAPHVIZ_MODULE_NAME:INTERNAL=
+GRAPHVIZ_PREFIX:INTERNAL=
+GRAPHVIZ_STATIC_CFLAGS:INTERNAL=-I/opt/homebrew/Cellar/graphviz/12.1.1/include;-I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;-I/opt/homebrew/Cellar/graphviz/12.1.1/include;-I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;-I/opt/homebrew/Cellar/graphviz/12.1.1/include;-I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
+GRAPHVIZ_STATIC_CFLAGS_I:INTERNAL=
+GRAPHVIZ_STATIC_CFLAGS_OTHER:INTERNAL=
+GRAPHVIZ_STATIC_INCLUDE_DIRS:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;/opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;/opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
+GRAPHVIZ_STATIC_LDFLAGS:INTERNAL=-L/opt/homebrew/Cellar/graphviz/12.1.1/lib;-lgvc;-lcgraph;-lcdt;-lcgraph;-lcdt
+GRAPHVIZ_STATIC_LDFLAGS_OTHER:INTERNAL=
+GRAPHVIZ_STATIC_LIBDIR:INTERNAL=
+GRAPHVIZ_STATIC_LIBRARIES:INTERNAL=gvc;cgraph;cdt;cgraph;cdt
+GRAPHVIZ_STATIC_LIBRARY_DIRS:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1/lib
+GRAPHVIZ_STATIC_LIBS:INTERNAL=
+GRAPHVIZ_STATIC_LIBS_L:INTERNAL=
+GRAPHVIZ_STATIC_LIBS_OTHER:INTERNAL=
+GRAPHVIZ_STATIC_LIBS_PATHS:INTERNAL=
+GRAPHVIZ_VERSION:INTERNAL=
+GRAPHVIZ_libcdt_INCLUDEDIR:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1/include
+GRAPHVIZ_libcdt_LIBDIR:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1/lib
+GRAPHVIZ_libcdt_MODULE_NAME:INTERNAL=libcdt
+GRAPHVIZ_libcdt_PREFIX:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1
+GRAPHVIZ_libcdt_VERSION:INTERNAL=12.1.1
+GRAPHVIZ_libcgraph_INCLUDEDIR:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1/include
+GRAPHVIZ_libcgraph_LIBDIR:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1/lib
+GRAPHVIZ_libcgraph_MODULE_NAME:INTERNAL=libcgraph
+GRAPHVIZ_libcgraph_PREFIX:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1
+GRAPHVIZ_libcgraph_VERSION:INTERNAL=12.1.1
+GRAPHVIZ_libgvc_INCLUDEDIR:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1/include
+GRAPHVIZ_libgvc_LIBDIR:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1/lib
+GRAPHVIZ_libgvc_MODULE_NAME:INTERNAL=libgvc
+GRAPHVIZ_libgvc_PREFIX:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1
+GRAPHVIZ_libgvc_VERSION:INTERNAL=12.1.1
+//ADVANCED property for variable: PKG_CONFIG_ARGN
+PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
+__pkg_config_arguments_GRAPHVIZ:INTERNAL=REQUIRED;libgvc;libcdt;libcgraph
+__pkg_config_checked_GRAPHVIZ:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_GRAPHVIZ_cdt
+pkgcfg_lib_GRAPHVIZ_cdt-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_GRAPHVIZ_cgraph
+pkgcfg_lib_GRAPHVIZ_cgraph-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_GRAPHVIZ_gvc
+pkgcfg_lib_GRAPHVIZ_gvc-ADVANCED:INTERNAL=1
+prefix_result:INTERNAL=/opt/homebrew/Cellar/graphviz/12.1.1/lib
 

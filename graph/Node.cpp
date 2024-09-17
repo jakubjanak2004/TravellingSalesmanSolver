@@ -10,7 +10,13 @@ Node::Node(std::string name) {
 }
 
 void Node::addEdge(Edge* edge) {
-    this->edges.insert(edge);
+    int addingIndex = 0;
+    for (auto &loopEdge : this->edges) {
+        if (loopEdge->getWeight() < edge->getWeight()) {
+            addingIndex++;
+        }
+    }
+    this->edges.insert(edges.begin() + addingIndex, edge);
 }
 
 std::string Node::toString() const {
@@ -37,7 +43,7 @@ std::vector<Node*> Node::getNeighbourNodes() const {
     return neighbours;
 }
 
-std::multiset<Edge*> Node::getEdges() {
+std::vector<Edge*> Node::getEdges() {
     return this->edges;
 }
 
