@@ -24,20 +24,17 @@ std::vector<std::vector<Node> > TSInstance::solve() {
 }
 
 void TSInstance::branch(std::vector<Node> visitedNodes, double cost, Node &currentNode) {
-    std::vector<Node *> neighbours = currentNode.getNeighbourNodes(); // causing segmentation from file manager
+    std::vector<Node *> neighbours = currentNode.getNeighbourNodes();
     for (Node *neighbour: neighbours) {
         if (std::find(visitedNodes.begin(), visitedNodes.end(), *neighbour) != visitedNodes.end()) {
             continue;
         }
-
         std::vector<Node> branchVisNodes = visitedNodes;
         branchVisNodes.push_back(*neighbour);
-
         if (this->getLowerBound(branchVisNodes) <= this->minCost) {
             branch(branchVisNodes, cost + this->getCostBetweenNodes(currentNode, *neighbour), *neighbour);
         }
     }
-
     if (visitedNodes.size() == this->nodes.size()) {
         cost += this->getCostBetweenNodes(visitedNodes.back(), startingNode);
         if (cost < this->minCost) {
@@ -55,7 +52,11 @@ double TSInstance::getLowerBound(std::vector<Node> subPath) {
 
     for (auto &node: this->nodes) {
         if (std::find(subPath.begin(), subPath.end() - 1, *node) == subPath.end() - 1) {
-            Edge *edge = *node->getEdges().begin();
+            std::vector<Edge *> edges = node->getEdges();
+            if (edges.empty()) {
+                continue;
+            }
+            Edge *edge = *edges.begin();
             cost += edge->getWeight();
         }
     }
@@ -81,6 +82,9 @@ void TSInstance::printStatistics() const {
     std::cout << "The optimal path length: " << this->minCost << std::endl;
     std::cout << "Calculation took: " << elapsed.count() << " ms" << std::endl;
 
+    if (this->bestHamiltonians.empty()) {
+        return;
+    }
     std::cout << "First hamiltonian: ";
     for (const Node &node: this->bestHamiltonians.front()) {
         std::cout << node.toString() << " ";
@@ -99,21 +103,24 @@ void TSInstance::saveAs(const std::string &fileName) const {
         weight << std::defaultfloat << edge->getWeight();
         fileContent << edge->getSourceNode()->toString() << " -> " << edge->getTargetNode()->toString()
                 << "[label=\"" << weight.str() << "\" weight=\"" << weight.str() << "\"";
-        auto it1 = std::find(this->bestHamiltonians[0].begin(), this->bestHamiltonians[0].end(),
-                             *edge->getSourceNode());
-        auto it2 = std::find(this->bestHamiltonians[0].begin(), this->bestHamiltonians[0].end(),
-                             *edge->getTargetNode());
-        auto dis1 = std::distance(this->bestHamiltonians[0].begin(), it2);
-        auto dis2 = std::distance(this->bestHamiltonians[0].begin(), it1);
-        if (it1 != this->bestHamiltonians[0].end() && it2 != this->bestHamiltonians[0].end()) {
-            if (dis1 - dis2 == 1) {
-                fileContent << "color=\"red\"";
+        if (!this->bestHamiltonians.empty()) {
+            auto it1 = std::find(this->bestHamiltonians[0].begin(), this->bestHamiltonians[0].end(),
+                                 *edge->getSourceNode());
+            auto it2 = std::find(this->bestHamiltonians[0].begin(), this->bestHamiltonians[0].end(),
+                                 *edge->getTargetNode());
+            auto dis1 = std::distance(this->bestHamiltonians[0].begin(), it2);
+            auto dis2 = std::distance(this->bestHamiltonians[0].begin(), it1);
+            if (it1 != this->bestHamiltonians[0].end() && it2 != this->bestHamiltonians[0].end()) {
+                if (dis1 - dis2 == 1) {
+                    fileContent << "color=\"red\"";
+                }
+                if (std::distance(this->bestHamiltonians[0].begin(), it1) == this->bestHamiltonians[0].size() - 1 &&
+                    std::distance(this->bestHamiltonians[0].begin(), it2) == 0) {
+                    fileContent << "color=\"red\"";
+                }
             }
-            if (std::distance(this->bestHamiltonians[0].begin(), it1) == this->bestHamiltonians[0].size()-1 && std::distance(this->bestHamiltonians[0].begin(), it2) == 0) {
-                fileContent << "color=\"red\"";
-            }
-
         }
+
         fileContent << "];" << std::endl;
     }
     fileContent << "}" << std::endl;

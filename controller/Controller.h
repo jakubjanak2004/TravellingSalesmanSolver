@@ -16,6 +16,8 @@ class Controller {
 std::queue<TSInstance> unsolvedInstances;
 
 public:
+static void printHeader();
+
     void run();
 
     void response(const std::string &userInput);

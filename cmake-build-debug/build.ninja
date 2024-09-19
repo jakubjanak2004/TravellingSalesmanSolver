@@ -51,7 +51,7 @@ build cmake_object_order_depends_target_TravellingSalesmanSolver: phony || .
 
 build CMakeFiles/TravellingSalesmanSolver.dir/main.cpp.o: CXX_COMPILER__TravellingSalesmanSolver_unscanned_Debug /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/main.cpp || cmake_object_order_depends_target_TravellingSalesmanSolver
   DEP_FILE = CMakeFiles/TravellingSalesmanSolver.dir/main.cpp.o.d
-  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
   INCLUDES = -I/opt/homebrew/Cellar/graphviz/12.1.1/include -I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
   OBJECT_DIR = CMakeFiles/TravellingSalesmanSolver.dir
   OBJECT_FILE_DIR = CMakeFiles/TravellingSalesmanSolver.dir
@@ -60,7 +60,7 @@ build CMakeFiles/TravellingSalesmanSolver.dir/main.cpp.o: CXX_COMPILER__Travelli
 
 build CMakeFiles/TravellingSalesmanSolver.dir/graph/Node.cpp.o: CXX_COMPILER__TravellingSalesmanSolver_unscanned_Debug /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/graph/Node.cpp || cmake_object_order_depends_target_TravellingSalesmanSolver
   DEP_FILE = CMakeFiles/TravellingSalesmanSolver.dir/graph/Node.cpp.o.d
-  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
   INCLUDES = -I/opt/homebrew/Cellar/graphviz/12.1.1/include -I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
   OBJECT_DIR = CMakeFiles/TravellingSalesmanSolver.dir
   OBJECT_FILE_DIR = CMakeFiles/TravellingSalesmanSolver.dir/graph
@@ -69,7 +69,7 @@ build CMakeFiles/TravellingSalesmanSolver.dir/graph/Node.cpp.o: CXX_COMPILER__Tr
 
 build CMakeFiles/TravellingSalesmanSolver.dir/graph/Edge.cpp.o: CXX_COMPILER__TravellingSalesmanSolver_unscanned_Debug /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/graph/Edge.cpp || cmake_object_order_depends_target_TravellingSalesmanSolver
   DEP_FILE = CMakeFiles/TravellingSalesmanSolver.dir/graph/Edge.cpp.o.d
-  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
   INCLUDES = -I/opt/homebrew/Cellar/graphviz/12.1.1/include -I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
   OBJECT_DIR = CMakeFiles/TravellingSalesmanSolver.dir
   OBJECT_FILE_DIR = CMakeFiles/TravellingSalesmanSolver.dir/graph
@@ -78,7 +78,7 @@ build CMakeFiles/TravellingSalesmanSolver.dir/graph/Edge.cpp.o: CXX_COMPILER__Tr
 
 build CMakeFiles/TravellingSalesmanSolver.dir/graph/Graph.cpp.o: CXX_COMPILER__TravellingSalesmanSolver_unscanned_Debug /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/graph/Graph.cpp || cmake_object_order_depends_target_TravellingSalesmanSolver
   DEP_FILE = CMakeFiles/TravellingSalesmanSolver.dir/graph/Graph.cpp.o.d
-  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
   INCLUDES = -I/opt/homebrew/Cellar/graphviz/12.1.1/include -I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
   OBJECT_DIR = CMakeFiles/TravellingSalesmanSolver.dir
   OBJECT_FILE_DIR = CMakeFiles/TravellingSalesmanSolver.dir/graph
@@ -87,7 +87,7 @@ build CMakeFiles/TravellingSalesmanSolver.dir/graph/Graph.cpp.o: CXX_COMPILER__T
 
 build CMakeFiles/TravellingSalesmanSolver.dir/graph/TSInstance.cpp.o: CXX_COMPILER__TravellingSalesmanSolver_unscanned_Debug /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/graph/TSInstance.cpp || cmake_object_order_depends_target_TravellingSalesmanSolver
   DEP_FILE = CMakeFiles/TravellingSalesmanSolver.dir/graph/TSInstance.cpp.o.d
-  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
   INCLUDES = -I/opt/homebrew/Cellar/graphviz/12.1.1/include -I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
   OBJECT_DIR = CMakeFiles/TravellingSalesmanSolver.dir
   OBJECT_FILE_DIR = CMakeFiles/TravellingSalesmanSolver.dir/graph
@@ -96,7 +96,7 @@ build CMakeFiles/TravellingSalesmanSolver.dir/graph/TSInstance.cpp.o: CXX_COMPIL
 
 build CMakeFiles/TravellingSalesmanSolver.dir/files/FileManager.cpp.o: CXX_COMPILER__TravellingSalesmanSolver_unscanned_Debug /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/files/FileManager.cpp || cmake_object_order_depends_target_TravellingSalesmanSolver
   DEP_FILE = CMakeFiles/TravellingSalesmanSolver.dir/files/FileManager.cpp.o.d
-  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
   INCLUDES = -I/opt/homebrew/Cellar/graphviz/12.1.1/include -I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
   OBJECT_DIR = CMakeFiles/TravellingSalesmanSolver.dir
   OBJECT_FILE_DIR = CMakeFiles/TravellingSalesmanSolver.dir/files
@@ -105,7 +105,7 @@ build CMakeFiles/TravellingSalesmanSolver.dir/files/FileManager.cpp.o: CXX_COMPI
 
 build CMakeFiles/TravellingSalesmanSolver.dir/controller/Controller.cpp.o: CXX_COMPILER__TravellingSalesmanSolver_unscanned_Debug /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/controller/Controller.cpp || cmake_object_order_depends_target_TravellingSalesmanSolver
   DEP_FILE = CMakeFiles/TravellingSalesmanSolver.dir/controller/Controller.cpp.o.d
-  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
   INCLUDES = -I/opt/homebrew/Cellar/graphviz/12.1.1/include -I/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
   OBJECT_DIR = CMakeFiles/TravellingSalesmanSolver.dir
   OBJECT_FILE_DIR = CMakeFiles/TravellingSalesmanSolver.dir/controller
@@ -121,7 +121,7 @@ build CMakeFiles/TravellingSalesmanSolver.dir/controller/Controller.cpp.o: CXX_C
 # Link the executable TravellingSalesmanSolver
 
 build TravellingSalesmanSolver: CXX_EXECUTABLE_LINKER__TravellingSalesmanSolver_Debug CMakeFiles/TravellingSalesmanSolver.dir/main.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/Node.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/Edge.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/Graph.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/graph/TSInstance.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/files/FileManager.cpp.o CMakeFiles/TravellingSalesmanSolver.dir/controller/Controller.cpp.o
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/Cellar/graphviz/12.1.1/lib  -lgvc  -lcgraph  -lcdt
   LINK_PATH = -L/opt/homebrew/Cellar/graphviz/12.1.1/lib
   OBJECT_DIR = CMakeFiles/TravellingSalesmanSolver.dir

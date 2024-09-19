@@ -16,16 +16,12 @@
 
 // Static method to read a .dot file with a digraph
 std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &filename) {
-    // Initialize the Graphviz context
     GVC_t *gvc = gvContext();
-    std::map<std::string, std::unique_ptr<Node> > nodesMap;
-    std::vector<std::unique_ptr<Node> > nodes;
-    std::vector<std::unique_ptr<Edge> > edges;
 
     // Open the .dot file
     FILE *file = fopen(filename.c_str(), "r");
     if (!file) {
-        std::cerr << "Error opening file: " << filename << std::endl;
+        std::cout << "Error opening file: " << filename << std::endl;
         return nullptr;
     }
 
@@ -34,17 +30,22 @@ std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &filename
     fclose(file);
 
     if (!graph) {
-        std::cerr << "Error reading DOT file: " << filename << std::endl;
+        std::cout << "Error reading DOT file: " << filename << std::endl;
         return nullptr;
     }
 
     // Check if the graph is a digraph
     if (!agisdirected(graph)) {
-        std::cerr << "The graph in the file is not a directed graph (digraph)." << std::endl;
+        std::cout << "The graph in the file is not a directed graph (digraph)." << std::endl;
         agclose(graph);
         gvFreeContext(gvc);
         return nullptr;
     }
+
+    // graph variables
+    std::map<std::string, std::unique_ptr<Node> > nodesMap;
+    std::vector<std::unique_ptr<Node> > nodes;
+    std::vector<std::unique_ptr<Edge> > edges;
 
     // Iterate over the nodes
     for (Agnode_t *node = agfstnode(graph); node; node = agnxtnode(graph, node)) {
@@ -58,9 +59,8 @@ std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &filename
             Agnode_t *tail = agtail(edge); // Source node
             Agnode_t *head = aghead(edge); // Destination node
 
-            const char *weightStr = agget(edge, "weight");
-            std::string weightString(weightStr);
-            double weight = std::stod(weightString);
+            const std::string weightStr = agget(edge, const_cast<char*>("weight"));
+            double weight = std::stod(weightStr);
 
             auto edgePtr = std::make_unique<Edge>(
                 nodesMap[agnameof(tail)].get(),
@@ -77,14 +77,15 @@ std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &filename
     gvFreeContext(gvc);
 
     // transforming nodesMap to nodes vector
-    for (auto &pair: nodesMap) {
-        nodes.push_back(std::move(pair.second));
+    nodes.reserve(nodesMap.size());
+    for (auto &[fst, snd]: nodesMap) {
+        nodes.push_back(std::move(snd));
     }
 
     return std::make_unique<TSInstance>(std::move(nodes), std::move(edges));
 }
 
-std::vector<std::filesystem::directory_entry> FileManager::getDotInstances(std::string directoryPath) {
+std::vector<std::filesystem::directory_entry> FileManager::getDotInstances(const std::string& directoryPath) {
     std::vector<std::filesystem::directory_entry> entries;
     for (const auto &entry: std::filesystem::directory_iterator(directoryPath)) {
         if (entry.is_regular_file() && entry.path().extension() == ".dot") {
@@ -108,6 +109,6 @@ void FileManager::saveSolution(const std::string &fileName, const std::string &f
 
         std::cout << "File saved successfully!" << std::endl;
     } else {
-        std::cerr << "Error opening the file!" << std::endl;
+        std::cout << "Error opening the file!" << std::endl;
     }
 }

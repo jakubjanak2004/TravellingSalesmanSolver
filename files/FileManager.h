@@ -15,7 +15,7 @@ class FileManager {
 public:
     static std::unique_ptr<TSInstance> readDotFile(const std::string &filename);
 
-    static std::vector<std::filesystem::directory_entry> getDotInstances(std::string directoryPath);
+    static std::vector<std::filesystem::directory_entry> getDotInstances(const std::string &directoryPath);
 
     static void saveSolution(const std::string& fileName, const std::string& fileContent);
 };
