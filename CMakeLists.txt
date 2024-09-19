@@ -22,7 +22,7 @@ message(STATUS "Graphviz libraries: ${GRAPHVIZ_LIBRARIES}")
 # Add library directories if necessary
 link_directories(${GRAPHVIZ_LIBRARY_DIRS})
 
-# Define the executable and add the source files
+# Define the executable for your project
 add_executable(TravellingSalesmanSolver
         main.cpp
         graph/Node.cpp
@@ -43,3 +43,31 @@ add_executable(TravellingSalesmanSolver
 
 # Link the Graphviz libraries
 target_link_libraries(TravellingSalesmanSolver ${GRAPHVIZ_LIBRARIES})
+
+# Download and link Google Test
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+# Define the test executable (with a separate main for tests)
+add_executable(run_tests
+        test/main.cpp  # Test main that runs all tests
+        test/test_TSInstance.cpp  # Your test file(s)
+        graph/Node.cpp  # Add the necessary source files that need to be tested
+        graph/Edge.cpp
+        graph/Graph.cpp
+        graph/TSInstance.cpp
+        files/FileManager.cpp
+        helper/Helper.cpp
+)
+
+# Link the test executable with Google Test and your source files
+target_link_libraries(run_tests gtest gtest_main ${GRAPHVIZ_LIBRARIES})
+
+# Add test target
+add_test(NAME run_tests COMMAND run_tests)

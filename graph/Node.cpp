@@ -36,6 +36,10 @@ bool Node::operator==(const Node &other) const {
     return this->name == other.name;
 }
 
+bool Node::operator!=(const Node &other) const {
+    return this->name != other.name;
+}
+
 std::vector<Node*> Node::getNeighbourNodes() const {
     std::vector<Node*> neighbours;
     neighbours.reserve(this->edges.size());
@@ -45,9 +49,10 @@ std::vector<Node*> Node::getNeighbourNodes() const {
     return neighbours;
 }
 
-std::vector<Edge*> Node::getEdges() {
+std::vector<Edge*> Node::getEdges() const {
     return this->edges;
 }
 
-
-
+std::string Node::getName() {
+    return this->name;
+}

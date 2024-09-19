@@ -4,7 +4,6 @@
 
 #include "Controller.h"
 #include "../files/FileManager.h"
-#include "../helper/Helper.h"
 
 #include <iostream>
 #include <random>
@@ -53,6 +52,9 @@ void Controller::response(const std::string &userInput) {
         this->createSyntheticInstance();
     } else if (userInput == "solve") {
         this->solve();
+    } else if (userInput == "hc") {
+        // heuristicCombination
+        this->heuristicCombo();
     } else if (userInput == "exit") {
         // do nothing as the do-while loop will end
     } else {
@@ -91,34 +93,11 @@ void Controller::createSyntheticInstance() {
     std::cout << "number of nodes: ";
     std::getline(std::cin, userInput);
     const int numOfNodes = std::stoi(userInput);
-
-    std::vector<std::unique_ptr<Node> > nodes;
-    std::vector<std::unique_ptr<Edge> > edges;
-    nodes.reserve(numOfNodes);
-    for (int i = 0; i < numOfNodes; i++) {
-        nodes.emplace_back(std::make_unique<Node>(std::to_string(i)));
-    }
-
-    long counter = 0;
-    for (int i = 0; i < nodes.size(); i++) {
-        for (int j = 0; j < nodes.size(); j++) {
-            if (i < j) {
-                auto edge1 = std::make_unique<Edge>(nodes[i].get(), nodes[j].get(), Helper::getRandomInteger(1, 10));
-                nodes[i]->addEdge(edge1.get());
-                auto edge2 = std::make_unique<Edge>(nodes[j].get(), nodes[i].get(), Helper::getRandomInteger(1, 10));
-                nodes[j]->addEdge(edge2.get());
-                edges.push_back(std::move(edge1));
-                edges.push_back(std::move(edge2));
-                counter++;
-            }
-        }
-    }
-
-    this->unsolvedInstances.emplace(std::move(nodes), std::move(edges));
+    this->unsolvedInstances.emplace(TSInstance::createSyntheticInstance(numOfNodes));
 }
 
 void Controller::solve() {
-    if(this->unsolvedInstances.empty()) {
+    if (this->unsolvedInstances.empty()) {
         std::cout << "Nothing to solve!" << std::endl;
         return;
     }
@@ -134,6 +113,20 @@ void Controller::solve() {
             std::getline(std::cin, userInput);
             instance.saveAs(userInput);
         }
+        this->unsolvedInstances.pop();
+    }
+}
+
+void Controller::heuristicCombo() {
+    if (this->unsolvedInstances.empty()) {
+        std::cout << "Nothing to approximate!" << std::endl;
+        return;
+    }
+    while (!this->unsolvedInstances.empty()) {
+        TSInstance &instance = this->unsolvedInstances.front();
+        const double result = instance.heuristicCombo();
+        std::cout << std::endl << instance.toString() << std::endl;
+        std::cout << "Heuristic Approximation: " << result << std::endl;
         this->unsolvedInstances.pop();
     }
 }

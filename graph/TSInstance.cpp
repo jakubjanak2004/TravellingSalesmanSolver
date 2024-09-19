@@ -3,6 +3,7 @@
 //
 
 #include "../files/FileManager.h"
+#include "../helper/Helper.h"
 #include "TSInstance.h"
 #include "Node.h"
 
@@ -14,13 +15,81 @@ TSInstance::TSInstance(std::vector<std::unique_ptr<Node> > nodes, std::vector<st
       startingNode(*this->nodes[0]) {
 }
 
+TSInstance TSInstance::createSyntheticInstance(const int numOfNodes) {
+    std::vector<std::unique_ptr<Node> > nodes;
+    std::vector<std::unique_ptr<Edge> > edges;
+    nodes.reserve(numOfNodes);
+    for (int i = 0; i < numOfNodes; i++) {
+        nodes.emplace_back(std::make_unique<Node>(std::to_string(i)));
+    }
+
+    long counter = 0;
+    for (int i = 0; i < nodes.size(); i++) {
+        for (int j = 0; j < nodes.size(); j++) {
+            if (i < j) {
+                auto edge1 = std::make_unique<Edge>(nodes[i].get(), nodes[j].get(), Helper::getRandomInteger(1, 10));
+                nodes[i]->addEdge(edge1.get());
+                auto edge2 = std::make_unique<Edge>(nodes[j].get(), nodes[i].get(), Helper::getRandomInteger(1, 10));
+                nodes[j]->addEdge(edge2.get());
+                edges.push_back(std::move(edge1));
+                edges.push_back(std::move(edge2));
+                counter++;
+            }
+        }
+    }
+
+    return {std::move(nodes), std::move(edges)};
+}
+
 std::vector<std::vector<Node> > TSInstance::solve() {
     const auto start = std::chrono::high_resolution_clock::now();
     const std::vector visitedNodes = {this->startingNode};
+    this->minCost = heuristicCombo();
     branch(visitedNodes, 0, this->startingNode);
     const auto end = std::chrono::high_resolution_clock::now();
-    this->elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    this->elapsed = end - start;
     return this->bestHamiltonianPaths;
+}
+
+std::vector<std::vector<Node> > TSInstance::bruteForceSolve() const {
+    std::vector<std::vector<Node> > allPerms;
+    std::vector<Node *> rawPtrNodes;
+
+    rawPtrNodes.reserve(this->nodes.size());
+    for (const auto &node: this->nodes) {
+        rawPtrNodes.push_back(node.get());
+    }
+
+    // Fix the first node
+    const Node *firstNode = rawPtrNodes.front();
+    std::vector<Node *> nextNodes(rawPtrNodes.begin() + 1, rawPtrNodes.end());
+
+    // Generate permutations of the remaining nodes
+    do {
+        std::vector<Node> currentPerm;
+        currentPerm.push_back(*firstNode); // Always start with the first node
+        for (const auto &nodePtr: nextNodes) {
+            currentPerm.push_back(*nodePtr);
+        }
+        allPerms.push_back(currentPerm); // Save the current permutation
+    } while (std::next_permutation(nextNodes.begin(), nextNodes.end(), [](Node *a, Node *b) {
+        return a->getName() < b->getName();
+    }));
+
+    double minCost = std::numeric_limits<double>::infinity();
+    std::vector<std::vector<Node> > bestHamiltonianPathsBrute;
+    for (const auto &perm: allPerms) {
+        double cost = getCostOfHamPath(perm);
+        if (cost < minCost) {
+            minCost = cost;
+            bestHamiltonianPathsBrute.clear();
+            bestHamiltonianPathsBrute.push_back(perm);
+        } else if (cost == minCost) {
+            bestHamiltonianPathsBrute.push_back(perm);
+        }
+    }
+
+    return bestHamiltonianPathsBrute;
 }
 
 void TSInstance::branch(std::vector<Node> visitedNodes, double cost, Node &currentNode) {
@@ -62,16 +131,50 @@ double TSInstance::getLowerBound(std::vector<Node> subPath) const {
     return cost;
 }
 
+double TSInstance::heuristicCombo() const {
+    std::vector<Node> greedyPath;
+
+    // Nearest Neighbor
+    Node node = this->startingNode;
+    do {
+        greedyPath.push_back(node);
+        std::vector<Edge*> edgesOfNode = greedyPath.back().getEdges();
+        for (const Edge *edge: edgesOfNode) {
+            if (auto it = std::find(greedyPath.begin(), greedyPath.end(), *edge->getTargetNode()); it == greedyPath.end()) {
+                node = *edge->getTargetNode();
+                break;
+            }
+        }
+    } while(greedyPath.size() < this->nodes.size());
+
+    // 2-opt
+    double minCost = getCostOfHamPath(greedyPath);
+    for(int i = 0; i < greedyPath.size(); i++) {
+        for (int j = 0; j < greedyPath.size(); j++) {
+            if (i == j) continue;
+            std::swap(greedyPath[i], greedyPath[j]);
+            if(double cost = getCostOfHamPath(greedyPath); cost < minCost) {
+                minCost = cost;
+            } else {
+                std::swap(greedyPath[i], greedyPath[j]);
+            }
+        }
+    }
+
+    // return the Cost of the best Hamiltonian Path found
+    return minCost;
+}
+
 double TSInstance::getMinCost() const {
     return this->minCost;
 }
 
 void TSInstance::printStatistics() const {
     std::cout << std::endl;
-    std::cout << "Travelling Salesman Instance with: " << this->nodes.size() << " nodes" << std::endl;
+    std::cout << this->toString() << std::endl;
     std::cout << "Solution set size: " << this->bestHamiltonianPaths.size() << std::endl;
     std::cout << "The optimal path length: " << this->minCost << std::endl;
-    std::cout << "Calculation took: " << elapsed.count() << " ms" << std::endl;
+    std::cout << "Calculation took: " << elapsed.count() / 1000000 << " ms (" << elapsed.count() << "ns)" << std::endl;
 
     if (this->bestHamiltonianPaths.empty()) {
         return;
@@ -117,4 +220,10 @@ void TSInstance::saveAs(const std::string &fileName) const {
     }
     fileContent << "}" << std::endl;
     FileManager::saveSolution(fileName, fileContent.str());
+}
+
+std::string TSInstance::toString() const {
+    std::ostringstream oss;
+    oss << "Travelling Salesman Instance with: " << this->nodes.size() << " nodes";
+    return oss.str();
 }

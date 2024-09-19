@@ -9,6 +9,7 @@ Graph::Graph(std::vector<std::unique_ptr<Node>> nodes, std::vector<std::unique_p
     if (this->nodes.empty()) {
         throw std::invalid_argument("Nodes vector cannot be empty!");
     }
+    std::sort(nodes.begin(), nodes.end());
 }
 
 double Graph::getCostBetweenNodes(Node &node1, const Node &node2) {
@@ -24,6 +25,14 @@ double Graph::getCostOfSubPath(std::vector<Node> subPath) {
     double cost = 0;
     for (int i = 0; i < subPath.size() - 1; i++) {
         cost += getCostBetweenNodes(subPath[i], subPath[i + 1]);
+    }
+    return cost;
+}
+
+double Graph::getCostOfHamPath(std::vector<Node> HamPath) {
+    double cost = 0;
+    for (int i = 0; i < HamPath.size(); i++) {
+        cost += getCostBetweenNodes(HamPath[i], HamPath[(i + 1)%HamPath.size()]);
     }
     return cost;
 }

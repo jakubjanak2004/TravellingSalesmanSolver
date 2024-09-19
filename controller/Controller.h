@@ -28,6 +28,8 @@ public:
 
     void solve();
 
+    void heuristicCombo();
+
     static void showHelp();
 };
 

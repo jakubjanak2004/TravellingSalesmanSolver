@@ -2,6 +2,6 @@
 -- Graphviz include directories: /opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;/opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;/opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
 -- Graphviz library directories: /opt/homebrew/Cellar/graphviz/12.1.1/lib
 -- Graphviz libraries: gvc;cgraph;cdt;cgraph;cdt
--- Configuring done (0.0s)
+-- Configuring done (0.2s)
 -- Generating done (0.0s)
 -- Build files have been written to: /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug

@@ -29,9 +29,13 @@ public:
 
     bool operator==(const Node &other) const;
 
+    bool operator!=(const Node &other) const;
+
     [[nodiscard]] std::vector<Node *> getNeighbourNodes() const;
 
-    [[nodiscard]] std::vector<Edge *> getEdges();
+    [[nodiscard]] std::vector<Edge *> getEdges() const;
+
+    std::string getName();
 };
 
 
