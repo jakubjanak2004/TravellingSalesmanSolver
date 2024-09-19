@@ -4,7 +4,7 @@
 
 #include "Edge.h"
 
-Edge::Edge(Node *sourceNode, Node *targetNode, double weight){
+Edge::Edge(Node *sourceNode, Node *targetNode, const double weight){
     this->sourceNode = sourceNode;
     this->targetNode = targetNode;
     this->weight = weight;

@@ -12,7 +12,7 @@ class TSInstance : public Graph {
     double minCost;
     Node startingNode;
     std::vector<Node> nodesExplored;
-    std::vector<std::vector<Node> > bestHamiltonians;
+    std::vector<std::vector<Node> > bestHamiltonianPaths;
     std::chrono::duration<long long, std::ratio<1, 1000> > elapsed{};
 
 public:
@@ -22,11 +22,9 @@ public:
 
     void branch(std::vector<Node> visitedNodes, double cost, Node &currentNode);
 
-    double getLowerBound(std::vector<Node> subPath);
+    [[nodiscard]] double getLowerBound(std::vector<Node> subPath) const;
 
-    double getCostOfSubPath(std::vector<Node> subPath);
-
-    double getMinCost() const;
+    [[nodiscard]] double getMinCost() const;
 
     void printStatistics() const;
 

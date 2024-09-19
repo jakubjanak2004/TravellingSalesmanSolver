@@ -3,15 +3,16 @@
 //
 
 #include "Node.h"
+
 #include "Edge.h"
 
 Node::Node(std::string name) {
-    this->name = name;
+    this->name = std::move(name);
 }
 
 void Node::addEdge(Edge* edge) {
     int addingIndex = 0;
-    for (auto &loopEdge : this->edges) {
+    for (const auto &loopEdge : this->edges) {
         if (loopEdge->getWeight() < edge->getWeight()) {
             addingIndex++;
         }
@@ -37,6 +38,7 @@ bool Node::operator==(const Node &other) const {
 
 std::vector<Node*> Node::getNeighbourNodes() const {
     std::vector<Node*> neighbours;
+    neighbours.reserve(this->edges.size());
     for (const Edge* edge : this->edges) {
         neighbours.push_back(edge->getTargetNode());
     }

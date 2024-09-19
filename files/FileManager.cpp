@@ -12,10 +12,13 @@
 #include <fstream>
 #include <iostream>
 #include <map>
-#include <memory>
 
-// Static method to read a .dot file with a digraph
+const std::string FileManager::INSTANCES_PATH = "../files/instances";
+
+const std::string FileManager::RESULTS_PATH = "../files/results";
+
 std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &filename) {
+    // graphviz context
     GVC_t *gvc = gvContext();
 
     // Open the .dot file
@@ -97,10 +100,8 @@ std::vector<std::filesystem::directory_entry> FileManager::getDotInstances(const
 }
 
 void FileManager::saveSolution(const std::string &fileName, const std::string &fileContent) {
-    std::ofstream outFile("../files/results/" + fileName + ".dot");
-
     // Check if the file is open
-    if (outFile.is_open()) {
+    if (std::ofstream outFile(RESULTS_PATH + "/" + fileName + ".dot"); outFile.is_open()) {
         // Write the string to the file
         outFile << fileContent;
 

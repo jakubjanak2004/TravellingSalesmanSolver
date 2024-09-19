@@ -9,27 +9,29 @@
 
 #include <string>
 #include <vector>
-#include <set>
 
 class Edge;
 
 class Node {
     std::string name;
-    std::vector<Edge*> edges;
+    std::vector<Edge *> edges;
 
 public:
-    Node(std::string name);
+    explicit Node(std::string name);
 
-    void addEdge(Edge* edge);
+    void addEdge(Edge *edge);
 
     [[nodiscard]] std::string toString() const;
 
     bool operator<(const Node &other) const;
+
     bool operator>(const Node &other) const;
+
     bool operator==(const Node &other) const;
 
-    std::vector<Node*> getNeighbourNodes() const;
-    std::vector<Edge*> getEdges();
+    [[nodiscard]] std::vector<Node *> getNeighbourNodes() const;
+
+    [[nodiscard]] std::vector<Edge *> getEdges();
 };
 
 

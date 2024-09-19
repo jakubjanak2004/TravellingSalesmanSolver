@@ -10,8 +10,8 @@
 #include "Node.h"
 
 class Edge {
-    Node* sourceNode;
-    Node* targetNode;
+    Node *sourceNode;
+    Node *targetNode;
     double weight{};
 
 public:
@@ -20,11 +20,12 @@ public:
     [[nodiscard]] std::string toString() const;
 
     bool operator<(const Edge &e) const;
+
     bool operator>(const Edge &e) const;
 
-    Node *getSourceNode() const;
+    [[nodiscard]] Node *getSourceNode() const;
 
-    [[nodiscard]] Node* getTargetNode() const;
+    [[nodiscard]] Node *getTargetNode() const;
 
     [[nodiscard]] double getWeight() const;
 };

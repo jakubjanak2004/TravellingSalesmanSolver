@@ -1,24 +1,7 @@
 /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -G Ninja -S /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver -B /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug
--- The C compiler identification is AppleClang 16.0.0.16000026
--- The CXX compiler identification is AppleClang 16.0.0.16000026
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: /Library/Developer/CommandLineTools/usr/bin/cc - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /Library/Developer/CommandLineTools/usr/bin/c++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Found PkgConfig: /opt/homebrew/bin/pkg-config (found version "0.29.2")
--- Checking for modules 'libgvc;libcdt;libcgraph'
---   Found libgvc, version 12.1.1
---   Found libcdt, version 12.1.1
---   Found libcgraph, version 12.1.1
 -- Graphviz include directories: /opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;/opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz;/opt/homebrew/Cellar/graphviz/12.1.1/include;/opt/homebrew/Cellar/graphviz/12.1.1/include/graphviz
 -- Graphviz library directories: /opt/homebrew/Cellar/graphviz/12.1.1/lib
 -- Graphviz libraries: gvc;cgraph;cdt;cgraph;cdt
--- Configuring done (5.5s)
+-- Configuring done (0.0s)
 -- Generating done (0.0s)
 -- Build files have been written to: /Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug

@@ -10,9 +10,12 @@
 
 #include "../graph/TSInstance.h"
 
-
 class FileManager {
 public:
+    static const std::string INSTANCES_PATH;
+
+    static const std::string RESULTS_PATH;
+
     static std::unique_ptr<TSInstance> readDotFile(const std::string &filename);
 
     static std::vector<std::filesystem::directory_entry> getDotInstances(const std::string &directoryPath);

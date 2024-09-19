@@ -37,6 +37,8 @@ add_executable(TravellingSalesmanSolver
         files/FileManager.h
         controller/Controller.cpp
         controller/Controller.h
+        helper/Helper.cpp
+        helper/Helper.h
 )
 
 # Link the Graphviz libraries

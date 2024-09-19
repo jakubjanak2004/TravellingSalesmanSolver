@@ -7,30 +7,28 @@
 
 #include "../graph/TSInstance.h"
 
-#include <iostream>
 #include <queue>
 
 
 class Controller {
-
-std::queue<TSInstance> unsolvedInstances;
+    std::queue<TSInstance> unsolvedInstances;
 
 public:
-static void printHeader();
+    static void printHeader();
 
     void run();
 
     void response(const std::string &userInput);
 
-    void showHelp();
-
     void loadInstance();
 
-void autoLoadInstances();
+    void autoLoadInstances();
 
-void createSyntheticInstance();
+    void createSyntheticInstance();
 
-void solve();
+    void solve();
+
+    static void showHelp();
 };
 
 
