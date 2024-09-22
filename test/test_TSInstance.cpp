@@ -26,7 +26,7 @@ protected:
 };
 
 TEST_P(SolveMethodResultTest, SolutionCorrectness) {
-    const std::set<std::vector<Node>> solveResult = convertToNodeSet(instance->solve());
+    const std::set<std::vector<Node>> solveResult = convertToNodeSet(instance->solve(""));
     const std::set<std::vector<Node>> bruteForceResult = convertToNodeSet(instance->bruteForceSolve());
 
     ASSERT_EQ(solveResult, bruteForceResult);

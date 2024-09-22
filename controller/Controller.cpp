@@ -51,7 +51,9 @@ void Controller::response(const std::string &userInput) {
         // createSyntheticInstance
         this->createSyntheticInstance();
     } else if (userInput == "solve") {
-        this->solve();
+        this->solve("");
+    } else if (userInput == "solve -p") {
+        this->solve("-p");
     } else if (userInput == "hc") {
         // heuristicCombination
         this->heuristicCombo();
@@ -96,15 +98,19 @@ void Controller::createSyntheticInstance() {
     this->unsolvedInstances.emplace(TSInstance::createSyntheticInstance(numOfNodes));
 }
 
-void Controller::solve() {
+void Controller::solve(const std::string &args) {
     if (this->unsolvedInstances.empty()) {
         std::cout << "Nothing to solve!" << std::endl;
         return;
     }
     while (!this->unsolvedInstances.empty()) {
-        TSInstance &instance = this->unsolvedInstances.front();
-        instance.solve();
+        auto &instance = this->unsolvedInstances.front();
+        instance.solve(args);
         instance.printStatistics();
+        if (!instance.isSolved()) {
+            this->unsolvedInstances.pop();
+            continue;
+        }
         std::string userInput;
         std::cout << "Save the result graph[y for yes]: ";
         std::getline(std::cin, userInput);
@@ -123,7 +129,7 @@ void Controller::heuristicCombo() {
         return;
     }
     while (!this->unsolvedInstances.empty()) {
-        TSInstance &instance = this->unsolvedInstances.front();
+        auto &instance = this->unsolvedInstances.front();
         const double result = instance.heuristicCombo();
         std::cout << std::endl << instance.toString() << std::endl;
         std::cout << "Heuristic Approximation: " << result << std::endl;

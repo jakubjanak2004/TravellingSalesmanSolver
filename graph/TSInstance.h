@@ -7,9 +7,14 @@
 
 #include "Graph.h"
 
+#include <mutex>
+#include <thread>
+
 
 class TSInstance : public Graph {
-    double minCost;
+    // std::mutex m_1; // mutex for thread safety of minCost
+    double minCost; // thread save minimal cost variable
+    bool solved;
     Node startingNode;
     std::vector<Node> nodesExplored;
     std::vector<std::vector<Node> > bestHamiltonianPaths;
@@ -20,17 +25,21 @@ public:
 
     static TSInstance createSyntheticInstance(int numOfNodes);
 
-    std::vector<std::vector<Node> > solve();
-
-    std::vector<std::vector<Node>> bruteForceSolve() const;
+    std::vector<std::vector<Node> > solve(const std::string& args);
 
     void branch(std::vector<Node> visitedNodes, double cost, Node &currentNode);
+
+    [[nodiscard]] std::vector<std::vector<Node>> bruteForceSolve() const;
 
     [[nodiscard]] double getLowerBound(std::vector<Node> subPath) const;
 
     [[nodiscard]] double heuristicCombo() const;
 
-    [[nodiscard]] double getMinCost() const;
+    [[nodiscard]] double getMinCost();
+
+    [[nodiscard]] bool isSolved() const;
+
+    void setMinCost(double minCost);
 
     void printStatistics() const;
 

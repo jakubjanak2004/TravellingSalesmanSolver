@@ -12,7 +12,8 @@
 TSInstance::TSInstance(std::vector<std::unique_ptr<Node> > nodes, std::vector<std::unique_ptr<Edge> > edges)
     : Graph(std::move(nodes), std::move(edges)),
       minCost(std::numeric_limits<double>::infinity()),
-      startingNode(*this->nodes[0]) {
+      startingNode(*this->nodes[0]),
+      solved(false) {
 }
 
 TSInstance TSInstance::createSyntheticInstance(const int numOfNodes) {
@@ -41,11 +42,15 @@ TSInstance TSInstance::createSyntheticInstance(const int numOfNodes) {
     return {std::move(nodes), std::move(edges)};
 }
 
-std::vector<std::vector<Node> > TSInstance::solve() {
+std::vector<std::vector<Node> > TSInstance::solve(const std::string& args) {
     const auto start = std::chrono::high_resolution_clock::now();
     const std::vector visitedNodes = {this->startingNode};
-    this->minCost = heuristicCombo();
-    branch(visitedNodes, 0, this->startingNode);
+    this->setMinCost(heuristicCombo());
+    if (args == "-p") {
+        std::cout << "Parallel Algo will be implemented" << std::endl;
+    } else {
+        branch(visitedNodes, 0, this->startingNode);
+    }
     const auto end = std::chrono::high_resolution_clock::now();
     this->elapsed = end - start;
     return this->bestHamiltonianPaths;
@@ -106,7 +111,7 @@ void TSInstance::branch(std::vector<Node> visitedNodes, double cost, Node &curre
     if (visitedNodes.size() == this->nodes.size()) {
         cost += getCostBetweenNodes(visitedNodes.back(), startingNode);
         if (cost < this->minCost) {
-            this->minCost = cost;
+            this->setMinCost(cost);
             this->bestHamiltonianPaths.clear();
             this->bestHamiltonianPaths.push_back(visitedNodes);
         } else if (cost == this->minCost) {
@@ -138,22 +143,23 @@ double TSInstance::heuristicCombo() const {
     Node node = this->startingNode;
     do {
         greedyPath.push_back(node);
-        std::vector<Edge*> edgesOfNode = greedyPath.back().getEdges();
+        std::vector<Edge *> edgesOfNode = greedyPath.back().getEdges();
         for (const Edge *edge: edgesOfNode) {
-            if (auto it = std::find(greedyPath.begin(), greedyPath.end(), *edge->getTargetNode()); it == greedyPath.end()) {
+            if (auto it = std::find(greedyPath.begin(), greedyPath.end(), *edge->getTargetNode());
+                it == greedyPath.end()) {
                 node = *edge->getTargetNode();
                 break;
             }
         }
-    } while(greedyPath.size() < this->nodes.size());
+    } while (greedyPath.size() < this->nodes.size());
 
     // 2-opt
     double minCost = getCostOfHamPath(greedyPath);
-    for(int i = 0; i < greedyPath.size(); i++) {
+    for (int i = 0; i < greedyPath.size(); i++) {
         for (int j = 0; j < greedyPath.size(); j++) {
             if (i == j) continue;
             std::swap(greedyPath[i], greedyPath[j]);
-            if(double cost = getCostOfHamPath(greedyPath); cost < minCost) {
+            if (const double cost = getCostOfHamPath(greedyPath); cost < minCost) {
                 minCost = cost;
             } else {
                 std::swap(greedyPath[i], greedyPath[j]);
@@ -165,20 +171,33 @@ double TSInstance::heuristicCombo() const {
     return minCost;
 }
 
-double TSInstance::getMinCost() const {
+double TSInstance::getMinCost() {
+    // std::lock_guard lock(m_1);
     return this->minCost;
+}
+
+void TSInstance::setMinCost(const double minCost) {
+    // std::lock_guard lock(m_1);
+    this->minCost = minCost;
+}
+
+bool TSInstance::isSolved() const {
+    return (!this->bestHamiltonianPaths.empty());
 }
 
 void TSInstance::printStatistics() const {
     std::cout << std::endl;
     std::cout << this->toString() << std::endl;
+
+    if (this->bestHamiltonianPaths.empty()) {
+        std::cout << "NO RESULT WAS FOUND" << std::endl;
+        return;
+    }
+
     std::cout << "Solution set size: " << this->bestHamiltonianPaths.size() << std::endl;
     std::cout << "The optimal path length: " << this->minCost << std::endl;
     std::cout << "Calculation took: " << elapsed.count() / 1000000 << " ms (" << elapsed.count() << "ns)" << std::endl;
 
-    if (this->bestHamiltonianPaths.empty()) {
-        return;
-    }
     std::cout << "First hamiltonian: ";
     for (const Node &node: this->bestHamiltonianPaths.front()) {
         std::cout << node.toString() << " ";

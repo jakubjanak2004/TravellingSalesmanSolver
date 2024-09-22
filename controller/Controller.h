@@ -12,6 +12,7 @@
 
 class Controller {
     std::queue<TSInstance> unsolvedInstances;
+    // std::queue<std::unique_ptr<TSInstance>> unsolvedInstances;
 
 public:
     static void printHeader();
@@ -26,7 +27,7 @@ public:
 
     void createSyntheticInstance();
 
-    void solve();
+    void solve(const std::string& args);
 
     void heuristicCombo();
 
