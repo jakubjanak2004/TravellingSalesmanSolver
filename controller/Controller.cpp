@@ -74,18 +74,18 @@ void Controller::loadInstance() {
     std::cout << "file path: ";
     std::getline(std::cin, filePath);
 
-    const std::unique_ptr<TSInstance> tsInstance = FileManager::readDotFile(filePath);
+    std::unique_ptr<TSInstance> tsInstance = FileManager::readDotFile(filePath);
     if (tsInstance == nullptr) {
         return;
     }
-    this->unsolvedInstances.push(std::move(*tsInstance));
+    this->unsolvedInstances.push_back(std::move(tsInstance));
 }
 
 void Controller::autoLoadInstances() {
     std::cout << "Loading all instances from " << FileManager::INSTANCES_PATH << " automatically" << std::endl;
     for (const auto &entry: FileManager::getDotInstances(FileManager::INSTANCES_PATH)) {
         std::unique_ptr<TSInstance> tsInstance = FileManager::readDotFile(entry.path().string());
-        this->unsolvedInstances.push(std::move(*tsInstance));
+        this->unsolvedInstances.push_back(std::move(tsInstance));
     }
 }
 
@@ -95,7 +95,7 @@ void Controller::createSyntheticInstance() {
     std::cout << "number of nodes: ";
     std::getline(std::cin, userInput);
     const int numOfNodes = std::stoi(userInput);
-    this->unsolvedInstances.emplace(TSInstance::createSyntheticInstance(numOfNodes));
+    this->unsolvedInstances.push_back(TSInstance::createSyntheticInstance(numOfNodes));
 }
 
 void Controller::solve(const std::string &args) {
@@ -105,10 +105,10 @@ void Controller::solve(const std::string &args) {
     }
     while (!this->unsolvedInstances.empty()) {
         auto &instance = this->unsolvedInstances.front();
-        instance.solve(args);
-        instance.printStatistics();
-        if (!instance.isSolved()) {
-            this->unsolvedInstances.pop();
+        instance->solve(args);
+        instance->printStatistics();
+        if (!instance->isSolved()) {
+            this->unsolvedInstances.pop_front();
             continue;
         }
         std::string userInput;
@@ -117,9 +117,9 @@ void Controller::solve(const std::string &args) {
         if (userInput == "y") {
             std::cout << "Name of the file: ";
             std::getline(std::cin, userInput);
-            instance.saveAs(userInput);
+            instance->saveAs(userInput);
         }
-        this->unsolvedInstances.pop();
+        this->unsolvedInstances.pop_front();
     }
 }
 
@@ -130,9 +130,9 @@ void Controller::heuristicCombo() {
     }
     while (!this->unsolvedInstances.empty()) {
         auto &instance = this->unsolvedInstances.front();
-        const double result = instance.heuristicCombo();
-        std::cout << std::endl << instance.toString() << std::endl;
+        const double result = instance->heuristicCombo();
+        std::cout << std::endl << instance->toString() << std::endl;
         std::cout << "Heuristic Approximation: " << result << std::endl;
-        this->unsolvedInstances.pop();
+        this->unsolvedInstances.pop_front();
     }
 }

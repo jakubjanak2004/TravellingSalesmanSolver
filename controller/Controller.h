@@ -11,8 +11,7 @@
 
 
 class Controller {
-    std::queue<TSInstance> unsolvedInstances;
-    // std::queue<std::unique_ptr<TSInstance>> unsolvedInstances;
+    std::deque<std::unique_ptr<TSInstance>> unsolvedInstances;
 
 public:
     static void printHeader();

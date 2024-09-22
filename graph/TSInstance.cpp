@@ -16,7 +16,7 @@ TSInstance::TSInstance(std::vector<std::unique_ptr<Node> > nodes, std::vector<st
       solved(false) {
 }
 
-TSInstance TSInstance::createSyntheticInstance(const int numOfNodes) {
+std::unique_ptr<TSInstance> TSInstance::createSyntheticInstance(const int numOfNodes) {
     std::vector<std::unique_ptr<Node> > nodes;
     std::vector<std::unique_ptr<Edge> > edges;
     nodes.reserve(numOfNodes);
@@ -39,7 +39,7 @@ TSInstance TSInstance::createSyntheticInstance(const int numOfNodes) {
         }
     }
 
-    return {std::move(nodes), std::move(edges)};
+    return std::make_unique<TSInstance>(std::move(nodes), std::move(edges));
 }
 
 std::vector<std::vector<Node> > TSInstance::solve(const std::string& args) {
@@ -47,7 +47,7 @@ std::vector<std::vector<Node> > TSInstance::solve(const std::string& args) {
     const std::vector visitedNodes = {this->startingNode};
     this->setMinCost(heuristicCombo());
     if (args == "-p") {
-        std::cout << "Parallel Algo will be implemented" << std::endl;
+        branchParallel(visitedNodes, 0, this->startingNode, 5);
     } else {
         branch(visitedNodes, 0, this->startingNode);
     }
@@ -120,6 +120,10 @@ void TSInstance::branch(std::vector<Node> visitedNodes, double cost, Node &curre
     }
 }
 
+void TSInstance::branchParallel(std::vector<Node> visitedNodes, double cost, Node &currentNode, int numberOfThreads) {
+    std::cout << "Branch Parallel Algo will be implemented" << std::endl;
+}
+
 double TSInstance::getLowerBound(std::vector<Node> subPath) const {
     double cost = getCostOfSubPath(subPath);
 
@@ -172,17 +176,17 @@ double TSInstance::heuristicCombo() const {
 }
 
 double TSInstance::getMinCost() {
-    // std::lock_guard lock(m_1);
+    std::lock_guard lock(m_1);
     return this->minCost;
 }
 
 void TSInstance::setMinCost(const double minCost) {
-    // std::lock_guard lock(m_1);
+    std::lock_guard lock(m_1);
     this->minCost = minCost;
 }
 
 bool TSInstance::isSolved() const {
-    return (!this->bestHamiltonianPaths.empty());
+    return !this->bestHamiltonianPaths.empty();
 }
 
 void TSInstance::printStatistics() const {

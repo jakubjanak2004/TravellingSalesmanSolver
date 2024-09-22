@@ -21,7 +21,7 @@ protected:
 
     void SetUp() override {
         const int numNodes = GetParam();
-        instance = std::make_unique<TSInstance>(TSInstance::createSyntheticInstance(numNodes));
+        instance = TSInstance::createSyntheticInstance(numNodes);
     }
 };
 

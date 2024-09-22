@@ -12,7 +12,7 @@
 
 
 class TSInstance : public Graph {
-    // std::mutex m_1; // mutex for thread safety of minCost
+    std::mutex m_1; // mutex for thread safety of minCost
     double minCost; // thread save minimal cost variable
     bool solved;
     Node startingNode;
@@ -23,11 +23,13 @@ class TSInstance : public Graph {
 public:
     TSInstance(std::vector<std::unique_ptr<Node> > nodes, std::vector<std::unique_ptr<Edge> > edges);
 
-    static TSInstance createSyntheticInstance(int numOfNodes);
+    static std::unique_ptr<TSInstance> createSyntheticInstance(int numOfNodes);
 
     std::vector<std::vector<Node> > solve(const std::string& args);
 
     void branch(std::vector<Node> visitedNodes, double cost, Node &currentNode);
+
+    void branchParallel(std::vector<Node> visitedNodes, double cost, Node &currentNode, int numberOfThreads);
 
     [[nodiscard]] std::vector<std::vector<Node>> bruteForceSolve() const;
 
