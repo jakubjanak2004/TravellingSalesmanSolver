@@ -76,3 +76,10 @@
 1345	1380	1727121646952569427	TravellingSalesmanSolver	cc790dc1df5ac162
 16	1495	1727121918171808105	CMakeFiles/TravellingSalesmanSolver.dir/graph/TSInstance.cpp.o	b5addc4de09f6304
 1495	1533	1727121919650522574	TravellingSalesmanSolver	cc790dc1df5ac162
+5	1281	1727122369816385426	CMakeFiles/TravellingSalesmanSolver.dir/graph/TSInstance.cpp.o	b5addc4de09f6304
+1282	1317	1727122371093390723	TravellingSalesmanSolver	cc790dc1df5ac162
+6	1102	1727123192074760817	CMakeFiles/TravellingSalesmanSolver.dir/main.cpp.o	87c61fe4cca32500
+7	1192	1727123192075762899	CMakeFiles/TravellingSalesmanSolver.dir/controller/Controller.cpp.o	a1ec0d217b764be4
+7	1246	1727123192075636524	CMakeFiles/TravellingSalesmanSolver.dir/files/FileManager.cpp.o	51bc37d5897ce42e
+6	1345	1727123192075373274	CMakeFiles/TravellingSalesmanSolver.dir/graph/TSInstance.cpp.o	b5addc4de09f6304
+1346	1382	1727123193414461884	TravellingSalesmanSolver	cc790dc1df5ac162

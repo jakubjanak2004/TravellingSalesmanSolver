@@ -130,19 +130,39 @@ void TSInstance::startBranchParallel(const std::vector<Node> &visitedNodes, doub
 }
 
 void TSInstance::branchParallel(std::vector<Node> visitedNodes, double cost, Node &currentNode) {
+    Node *firstNeighbour = nullptr;
+    std::vector<Node> firstBranchVisNodes;
+    double firstSendCost = 0;
+
     for (const std::vector<Node *> neighbours = currentNode.getNeighbourNodes(); Node *neighbour: neighbours) {
         if (std::find(visitedNodes.begin(), visitedNodes.end(), *neighbour) != visitedNodes.end()) {
             continue;
         }
         std::vector<Node> branchVisNodes = visitedNodes;
         branchVisNodes.push_back(*neighbour);
+        // I need to do this dept-first
         if (this->getLowerBound(branchVisNodes) <= getMinCost()) {
             double sendCost = cost + getCostBetweenNodes(currentNode, *neighbour);
-            post(*pool, [this, branchVisNodes, sendCost, neighbour] {
-                branchParallel(branchVisNodes, sendCost, *neighbour);
-            });
+
+            // For the first neighbor, store its data to run it immediately after posting others
+            if (!firstNeighbour) {
+                firstNeighbour = neighbour;
+                firstBranchVisNodes = branchVisNodes;
+                firstSendCost = sendCost;
+            } else {
+                // Post all other neighbors to the thread pool (parallel execution)
+                post(*pool, [this, branchVisNodes, sendCost, neighbour] {
+                    branchParallel(branchVisNodes, sendCost, *neighbour);
+                });
+            }
         }
     }
+
+    // After all neighbors are posted to the thread pool, handle the first neighbor immediately
+    if (firstNeighbour) {
+        branchParallel(firstBranchVisNodes, firstSendCost, *firstNeighbour);
+    }
+
     if (visitedNodes.size() == nodes.size()) {
         cost += getCostBetweenNodes(visitedNodes.back(), startingNode);
         if (cost < getMinCost()) {

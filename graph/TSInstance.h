@@ -7,7 +7,6 @@
 
 #include "Graph.h"
 
-#include <mutex>
 #include <boost/asio.hpp>
 #include <thread>
 
