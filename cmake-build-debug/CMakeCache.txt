@@ -17,6 +17,14 @@
 //Builds the googlemock subproject
 BUILD_GMOCK:BOOL=ON
 
+//The directory containing a CMake configuration file for Boost.
+Boost_DIR:PATH=/opt/homebrew/lib/cmake/Boost-1.85.0
+
+//Path to a file.
+Boost_INCLUDE_DIR:PATH=/opt/homebrew/include
+
+Boost_SYSTEM_LIBRARY_RELEASE:STRING=/opt/homebrew/lib/libboost_system-mt.dylib
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=CMAKE_ADDR2LINE-NOTFOUND
 
@@ -318,6 +326,12 @@ TravellingSalesmanSolver_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 TravellingSalesmanSolver_SOURCE_DIR:STATIC=/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver
 
+//The directory containing a CMake configuration file for boost_headers.
+boost_headers_DIR:PATH=/opt/homebrew/lib/cmake/boost_headers-1.85.0
+
+//The directory containing a CMake configuration file for boost_system.
+boost_system_DIR:PATH=/opt/homebrew/lib/cmake/boost_system-1.85.0
+
 //Value Computed by CMake
 gmock_BINARY_DIR:STATIC=/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug/_deps/googletest-build/googlemock
 
@@ -387,6 +401,8 @@ pkgcfg_lib_GRAPHVIZ_gvc:FILEPATH=/opt/homebrew/Cellar/graphviz/12.1.1/lib/libgvc
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: Boost_DIR
+Boost_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_ADDR2LINE
 CMAKE_ADDR2LINE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_AR
@@ -554,6 +570,8 @@ CMAKE_TAPI-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding Boost
+FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[/opt/homebrew/lib/cmake/Boost-1.85.0/BoostConfig.cmake][cfound components: system ][v1.85.0(1.75)]
 //Details about finding PkgConfig
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/opt/homebrew/bin/pkg-config][v0.29.2()]
 //Details about finding Python
@@ -625,6 +643,10 @@ _Python_INTERPRETER_SIGNATURE:INTERNAL=4a88e62a1732031393af8d56e6300efe
 _Python_NumPy_REASON_FAILURE:INTERNAL=
 __pkg_config_arguments_GRAPHVIZ:INTERNAL=REQUIRED;libgvc;libcdt;libcgraph
 __pkg_config_checked_GRAPHVIZ:INTERNAL=1
+//ADVANCED property for variable: boost_headers_DIR
+boost_headers_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: boost_system_DIR
+boost_system_DIR-ADVANCED:INTERNAL=1
 cmake_package_name:INTERNAL=GTest
 generated_dir:INTERNAL=/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug/_deps/googletest-build/googletest/generated
 //ADVANCED property for variable: gmock_build_tests

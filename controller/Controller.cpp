@@ -104,6 +104,7 @@ void Controller::solve(const std::string &args) {
         return;
     }
     while (!this->unsolvedInstances.empty()) {
+        std::cout << "Solving..." << std::endl;
         auto &instance = this->unsolvedInstances.front();
         instance->solve(args);
         instance->printStatistics();

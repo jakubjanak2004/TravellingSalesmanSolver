@@ -8,13 +8,14 @@
 #include "Graph.h"
 
 #include <mutex>
+#include <boost/asio.hpp>
 #include <thread>
 
 
 class TSInstance : public Graph {
     std::mutex m_1; // mutex for thread safety of minCost
+    std::unique_ptr<boost::asio::thread_pool> pool;
     double minCost; // thread save minimal cost variable
-    bool solved;
     Node startingNode;
     std::vector<Node> nodesExplored;
     std::vector<std::vector<Node> > bestHamiltonianPaths;
@@ -29,7 +30,9 @@ public:
 
     void branch(std::vector<Node> visitedNodes, double cost, Node &currentNode);
 
-    void branchParallel(std::vector<Node> visitedNodes, double cost, Node &currentNode, int numberOfThreads);
+    void startBranchParallel(const std::vector<Node> &visitedNodes, double cost, Node &currentNode, int numberOfThreads);
+
+    void branchParallel(std::vector<Node> visitedNodes, double cost, Node &currentNode);
 
     [[nodiscard]] std::vector<std::vector<Node>> bruteForceSolve() const;
 
@@ -42,6 +45,10 @@ public:
     [[nodiscard]] bool isSolved() const;
 
     void setMinCost(double minCost);
+
+    void clearBestHams();
+
+    void addBestHamiltonian(const std::vector<Node> &path);
 
     void printStatistics() const;
 

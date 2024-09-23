@@ -12,8 +12,7 @@
 TSInstance::TSInstance(std::vector<std::unique_ptr<Node> > nodes, std::vector<std::unique_ptr<Edge> > edges)
     : Graph(std::move(nodes), std::move(edges)),
       minCost(std::numeric_limits<double>::infinity()),
-      startingNode(*this->nodes[0]),
-      solved(false) {
+      startingNode(*this->nodes[0]) {
 }
 
 std::unique_ptr<TSInstance> TSInstance::createSyntheticInstance(const int numOfNodes) {
@@ -42,12 +41,13 @@ std::unique_ptr<TSInstance> TSInstance::createSyntheticInstance(const int numOfN
     return std::make_unique<TSInstance>(std::move(nodes), std::move(edges));
 }
 
-std::vector<std::vector<Node> > TSInstance::solve(const std::string& args) {
+std::vector<std::vector<Node> > TSInstance::solve(const std::string &args) {
     const auto start = std::chrono::high_resolution_clock::now();
     const std::vector visitedNodes = {this->startingNode};
     this->setMinCost(heuristicCombo());
     if (args == "-p") {
-        branchParallel(visitedNodes, 0, this->startingNode, 5);
+        // safe threads for M2 max: <= 8
+        startBranchParallel(visitedNodes, 0, this->startingNode, 5);
     } else {
         branch(visitedNodes, 0, this->startingNode);
     }
@@ -112,16 +112,47 @@ void TSInstance::branch(std::vector<Node> visitedNodes, double cost, Node &curre
         cost += getCostBetweenNodes(visitedNodes.back(), startingNode);
         if (cost < this->minCost) {
             this->setMinCost(cost);
-            this->bestHamiltonianPaths.clear();
-            this->bestHamiltonianPaths.push_back(visitedNodes);
+            clearBestHams();
+            addBestHamiltonian(visitedNodes);
         } else if (cost == this->minCost) {
-            this->bestHamiltonianPaths.push_back(visitedNodes);
+            addBestHamiltonian(visitedNodes);
         }
     }
 }
 
-void TSInstance::branchParallel(std::vector<Node> visitedNodes, double cost, Node &currentNode, int numberOfThreads) {
-    std::cout << "Branch Parallel Algo will be implemented" << std::endl;
+void TSInstance::startBranchParallel(const std::vector<Node> &visitedNodes, double cost, Node &currentNode,
+                                     int numberOfThreads) {
+    pool = std::make_unique<boost::asio::thread_pool>(numberOfThreads); // assign the thread pool
+    post(*pool, [&] {
+        branchParallel(visitedNodes, cost, currentNode); // start bb parallel
+    });
+    pool->join(); // join all threads in the thread pool
+}
+
+void TSInstance::branchParallel(std::vector<Node> visitedNodes, double cost, Node &currentNode) {
+    for (const std::vector<Node *> neighbours = currentNode.getNeighbourNodes(); Node *neighbour: neighbours) {
+        if (std::find(visitedNodes.begin(), visitedNodes.end(), *neighbour) != visitedNodes.end()) {
+            continue;
+        }
+        std::vector<Node> branchVisNodes = visitedNodes;
+        branchVisNodes.push_back(*neighbour);
+        if (this->getLowerBound(branchVisNodes) <= getMinCost()) {
+            double sendCost = cost + getCostBetweenNodes(currentNode, *neighbour);
+            post(*pool, [this, branchVisNodes, sendCost, neighbour] {
+                branchParallel(branchVisNodes, sendCost, *neighbour);
+            });
+        }
+    }
+    if (visitedNodes.size() == nodes.size()) {
+        cost += getCostBetweenNodes(visitedNodes.back(), startingNode);
+        if (cost < getMinCost()) {
+            setMinCost(cost);
+            clearBestHams();
+            addBestHamiltonian(visitedNodes);
+        } else if (cost == getMinCost()) {
+            addBestHamiltonian(visitedNodes);
+        }
+    }
 }
 
 double TSInstance::getLowerBound(std::vector<Node> subPath) const {
@@ -187,6 +218,16 @@ void TSInstance::setMinCost(const double minCost) {
 
 bool TSInstance::isSolved() const {
     return !this->bestHamiltonianPaths.empty();
+}
+
+void TSInstance::clearBestHams() {
+    std::lock_guard lock(m_1);
+    this->bestHamiltonianPaths.clear();
+}
+
+void TSInstance::addBestHamiltonian(const std::vector<Node> &path) {
+    std::lock_guard lock(m_1);
+    this->bestHamiltonianPaths.push_back(path);
 }
 
 void TSInstance::printStatistics() const {

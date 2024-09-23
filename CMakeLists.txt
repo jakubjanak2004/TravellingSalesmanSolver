@@ -22,6 +22,17 @@ message(STATUS "Graphviz libraries: ${GRAPHVIZ_LIBRARIES}")
 # Add library directories if necessary
 link_directories(${GRAPHVIZ_LIBRARY_DIRS})
 
+# Find Boost
+find_package(Boost 1.75 REQUIRED COMPONENTS system)
+
+if (Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+    message(STATUS "Boost include directories: ${Boost_INCLUDE_DIRS}")
+    message(STATUS "Boost libraries: ${Boost_LIBRARIES}")
+else()
+    message(FATAL_ERROR "Boost not found!")
+endif()
+
 # Define the executable for your project
 add_executable(TravellingSalesmanSolver
         main.cpp
@@ -41,8 +52,8 @@ add_executable(TravellingSalesmanSolver
         helper/Helper.h
 )
 
-# Link the Graphviz libraries
-target_link_libraries(TravellingSalesmanSolver ${GRAPHVIZ_LIBRARIES})
+# Link the Graphviz and Boost libraries
+target_link_libraries(TravellingSalesmanSolver ${GRAPHVIZ_LIBRARIES} Boost::system)
 
 # Download and link Google Test
 include(FetchContent)
@@ -66,8 +77,8 @@ add_executable(run_tests
         helper/Helper.cpp
 )
 
-# Link the test executable with Google Test and your source files
-target_link_libraries(run_tests gtest gtest_main ${GRAPHVIZ_LIBRARIES})
+# Link the test executable with Google Test, Graphviz, and Boost
+target_link_libraries(run_tests gtest gtest_main ${GRAPHVIZ_LIBRARIES} Boost::system)
 
 # Add test target
 add_test(NAME run_tests COMMAND run_tests)

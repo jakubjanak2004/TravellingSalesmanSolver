@@ -78,6 +78,12 @@
 			},
 			{
 				"command" : 6,
+				"file" : 2,
+				"line" : 29,
+				"parent" : 7
+			},
+			{
+				"command" : 6,
 				"file" : 1,
 				"line" : 75,
 				"parent" : 0
@@ -114,21 +120,25 @@
 				},
 				{
 					"backtrace" : 9,
+					"path" : "/opt/homebrew/include"
+				},
+				{
+					"backtrace" : 10,
 					"isSystem" : true,
 					"path" : "/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug/_deps/googletest-src/googlemock/include"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 10,
 					"isSystem" : true,
 					"path" : "/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug/_deps/googletest-src/googlemock"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 10,
 					"isSystem" : true,
 					"path" : "/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug/_deps/googletest-src/googletest/include"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 10,
 					"isSystem" : true,
 					"path" : "/Users/jakubjanak/CLionProjects/TravellingSalesmanSolver/cmake-build-debug/_deps/googletest-src/googletest"
 				}
@@ -138,7 +148,7 @@
 			{
 				"backtraces" : 
 				[
-					10
+					11
 				],
 				"standard" : "20"
 			},
