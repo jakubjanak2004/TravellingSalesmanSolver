@@ -16,9 +16,7 @@ class Controller {
 public:
     static void printHeader();
 
-    void run();
-
-    void response(const std::string &userInput);
+    void run(int argc, char *argv[]);
 
     void loadInstance();
 

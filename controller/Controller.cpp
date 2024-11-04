@@ -13,59 +13,57 @@
 
 void Controller::printHeader() {
     std::cout << "\033[1;34m";
-    std::cout << "********************************************" << std::endl;
-    std::cout << "*                                          *" << std::endl;
-    std::cout << "*       TTTTTTTT   SSSSSSS   SSSSSSS       *" << std::endl;
-    std::cout << "*          TT      SS        SS            *" << std::endl;
-    std::cout << "*          TT      SSSSSSS   SSSSSSS       *" << std::endl;
-    std::cout << "*          TT           SS        SS       *" << std::endl;
-    std::cout << "*          TT      SSSSSSS   SSSSSSS       *" << std::endl;
-    std::cout << "*                                          *" << std::endl;
-    std::cout << "********************************************" << std::endl;
+    std::cout << "                                               " << std::endl;
+    std::cout << R"(  TTTTTTTT\     $$$$$$$\     $$$$$$$\   )" << std::endl;
+    std::cout << "     TT  __|    $$  ____|    $$  ____|     " << std::endl;
+    std::cout << "     TT |       $$$$$$$\\     $$$$$$$\\    " << std::endl;
+    std::cout << "     TT |            $$ |         $$ |     " << std::endl;
+    std::cout << "     TT |       $$$$$$$ |    $$$$$$$ |     " << std::endl;
+    std::cout << R"(     \__|       \_______|    \_______|  )" << std::endl;
+    std::cout << std::endl;
     std::cout << "\033[0m";
 }
 
-void Controller::run() {
-    std::string userInput;
-
-    printHeader();
-    do {
-        std::cout << "Command: ";
-        std::getline(std::cin, userInput);
-
-        this->response(userInput);
-    } while (userInput != "exit");
-    std::cout << "Exiting the program" << std::endl;
-}
-
-void Controller::response(const std::string &userInput) {
-    if (userInput == "--help") {
-        showHelp();
-    } else if (userInput == "li") {
-        // loadInstance
-        this->loadInstance();
-    } else if (userInput == "alis") {
-        // autoLoadInstances
-        this->autoLoadInstances();
-    } else if (userInput == "csi") {
-        // createSyntheticInstance
-        this->createSyntheticInstance();
-    } else if (userInput == "solve") {
-        this->solve("");
-    } else if (userInput == "solve -p") {
-        this->solve("-p");
-    } else if (userInput == "hc") {
-        // heuristicCombination
-        this->heuristicCombo();
-    } else if (userInput == "exit") {
-        // do nothing as the do-while loop will end
-    } else {
-        std::cout << "Unknown Command: " << userInput << std::endl;
+void Controller::run(int argc, char *argv[]) {
+    for (int i = 1; i < argc; i++) {
+        std::string parameter = argv[i];
+        if (parameter == "-li") {
+            // loadInstance
+            this->loadInstance();
+        } else if (parameter == "-alis") {
+            // autoLoadInstances
+            this->autoLoadInstances();
+        } else if (parameter == "-csi") {
+            // createSyntheticInstance
+            this->createSyntheticInstance();
+        } else if (parameter == "-solve") {
+            this->solve("");
+        } else if (parameter == "-solve-p") {
+            this->solve("-p");
+        } else if (parameter == "-hc") {
+            // heuristicCombination
+            this->heuristicCombo();
+        } else {
+            std::cout << "Unknown Command: " << parameter << std::endl;
+        }
     }
+
+    std::cout << "Program Ended!" << std::endl;
 }
 
 void Controller::showHelp() {
-    std::cout << "showing help" << std::endl;
+    std::cout << std::endl;
+    std::cout << "####################Travelling Salesman Help:####################" << std::endl;
+    std::cout << "li: load instances from a path" << std::endl;
+    std::cout << "alis: auto load instances from a path" << std::endl;
+    std::cout << "csi: create synthetic instance" << std::endl;
+    std::cout << "solve: solve the buffered instances" << std::endl;
+    std::cout << "solve -p: solve with parallelization" << std::endl;
+    std::cout << "hc: approximate using nearest-neighbour & 2-Opt" << std::endl;
+    std::cout << "exit: exit the program" << std::endl << std::endl;
+    std::cout << "If unknown command xxx is given the program will respond with:" << std::endl;
+    std::cout << "Unknown Command: xxx" << std::endl;
+    std::cout << "#################################################################" << std::endl << std::endl;
 }
 
 void Controller::loadInstance() {

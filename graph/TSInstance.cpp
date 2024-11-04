@@ -47,7 +47,7 @@ std::vector<std::vector<Node> > TSInstance::solve(const std::string &args) {
     this->setMinCost(heuristicCombo());
     if (args == "-p") {
         // safe threads for M2 max: <= 8
-        startBranchParallel(visitedNodes, 0, this->startingNode, 5);
+        startBranchParallel(visitedNodes, 0, this->startingNode, 10);
     } else {
         branch(visitedNodes, 0, this->startingNode);
     }

@@ -21,6 +21,7 @@ message(STATUS "Graphviz libraries: ${GRAPHVIZ_LIBRARIES}")
 
 # Add library directories if necessary
 link_directories(${GRAPHVIZ_LIBRARY_DIRS})
+link_directories(/opt/homebrew/opt/graphviz/lib)
 
 # Find Boost
 find_package(Boost 1.75 REQUIRED COMPONENTS system)
