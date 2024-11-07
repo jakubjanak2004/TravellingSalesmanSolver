@@ -6,29 +6,29 @@
 #define CONTROLLER_H
 
 #include "../graph/TSInstance.h"
-
-#include <queue>
+#include <boost/program_options.hpp>
 
 
 class Controller {
     std::deque<std::unique_ptr<TSInstance>> unsolvedInstances;
+    boost::program_options::options_description desc = {"Arguments"};
 
 public:
+    Controller();
+
     static void printHeader();
 
-    void run(int argc, char *argv[]);
+    int run(int argc, char *argv[]);
 
-    void loadInstance();
+    void loadInstance(const std::string& file_name);
 
     void autoLoadInstances();
 
-    void createSyntheticInstance();
+    void createSyntheticInstance(int num_of_nodes);
 
     void solve(const std::string& args);
 
     void heuristicCombo();
-
-    static void showHelp();
 };
 
 
