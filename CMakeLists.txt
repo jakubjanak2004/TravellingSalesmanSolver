@@ -23,8 +23,8 @@ message(STATUS "Graphviz libraries: ${GRAPHVIZ_LIBRARIES}")
 link_directories(${GRAPHVIZ_LIBRARY_DIRS})
 link_directories(/opt/homebrew/opt/graphviz/lib)
 
-# Find Boost
-find_package(Boost 1.75 REQUIRED COMPONENTS system)
+# Find Boost with program_options and system components
+find_package(Boost 1.75 REQUIRED COMPONENTS system program_options)
 
 if (Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
@@ -35,7 +35,7 @@ else()
 endif()
 
 # Define the executable for your project
-add_executable(TravellingSalesmanSolver
+add_executable(tss
         main.cpp
         graph/Node.cpp
         graph/Node.h
@@ -54,7 +54,7 @@ add_executable(TravellingSalesmanSolver
 )
 
 # Link the Graphviz and Boost libraries
-target_link_libraries(TravellingSalesmanSolver ${GRAPHVIZ_LIBRARIES} Boost::system)
+target_link_libraries(tss ${GRAPHVIZ_LIBRARIES} Boost::system Boost::program_options)
 
 # Download and link Google Test
 include(FetchContent)
@@ -69,17 +69,24 @@ enable_testing()
 # Define the test executable (with a separate main for tests)
 add_executable(run_tests
         test/main.cpp  # Test main that runs all tests
-        test/test_TSInstance.cpp  # Your test file(s)
-        graph/Node.cpp  # Add the necessary source files that need to be tested
+        graph/Node.cpp
+        graph/Node.h
         graph/Edge.cpp
+        graph/Edge.h
         graph/Graph.cpp
+        graph/Graph.h
         graph/TSInstance.cpp
+        graph/TSInstance.h
         files/FileManager.cpp
+        files/FileManager.h
+        controller/Controller.cpp
+        controller/Controller.h
         helper/Helper.cpp
+        helper/Helper.h
 )
 
 # Link the test executable with Google Test, Graphviz, and Boost
-target_link_libraries(run_tests gtest gtest_main ${GRAPHVIZ_LIBRARIES} Boost::system)
+target_link_libraries(run_tests gtest gtest_main ${GRAPHVIZ_LIBRARIES} Boost::system Boost::program_options)
 
 # Add test target
 add_test(NAME run_tests COMMAND run_tests)
