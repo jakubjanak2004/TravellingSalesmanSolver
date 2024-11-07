@@ -25,7 +25,7 @@ public:
 
     static std::unique_ptr<TSInstance> createSyntheticInstance(int numOfNodes);
 
-    std::vector<std::vector<Node> > solve(const std::string& args);
+    std::vector<std::vector<Node> > solve(const std::string& arg);
 
     void branch(std::vector<Node> visitedNodes, double cost, Node &currentNode);
 
@@ -37,7 +37,11 @@ public:
 
     [[nodiscard]] double getLowerBound(std::vector<Node> subPath) const;
 
-    [[nodiscard]] double heuristicCombo() const;
+    void nearest_neighbour(std::vector<Node>& greedyPath) const;
+
+    double two_opt(std::vector<Node> greedyPath);
+
+    [[nodiscard]] double heuristicCombo();
 
     [[nodiscard]] double getMinCost();
 
