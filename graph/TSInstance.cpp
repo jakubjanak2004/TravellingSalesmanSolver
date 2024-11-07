@@ -45,7 +45,7 @@ std::vector<std::vector<Node> > TSInstance::solve(const std::string &args) {
     const auto start = std::chrono::high_resolution_clock::now();
     const std::vector visitedNodes = {this->startingNode};
     this->setMinCost(heuristicCombo());
-    if (args == "-p") {
+    if (args == "p") {
         // safe threads for M2 max: <= 8
         startBranchParallel(visitedNodes, 0, this->startingNode, 10);
     } else {
@@ -191,10 +191,7 @@ double TSInstance::getLowerBound(std::vector<Node> subPath) const {
     return cost;
 }
 
-double TSInstance::heuristicCombo() const {
-    std::vector<Node> greedyPath;
-
-    // Nearest Neighbor
+void TSInstance::nearest_neighbour(std::vector<Node>& greedyPath) const {
     Node node = this->startingNode;
     do {
         greedyPath.push_back(node);
@@ -207,8 +204,9 @@ double TSInstance::heuristicCombo() const {
             }
         }
     } while (greedyPath.size() < this->nodes.size());
+}
 
-    // 2-opt
+double TSInstance::two_opt(std::vector<Node> greedyPath) {
     double minCost = getCostOfHamPath(greedyPath);
     for (int i = 0; i < greedyPath.size(); i++) {
         for (int j = 0; j < greedyPath.size(); j++) {
@@ -224,6 +222,16 @@ double TSInstance::heuristicCombo() const {
 
     // return the Cost of the best Hamiltonian Path found
     return minCost;
+}
+
+double TSInstance::heuristicCombo() {
+    std::vector<Node> greedyPath;
+
+    // Nearest Neighbor
+    nearest_neighbour(greedyPath);
+
+    // 2-opt
+    return two_opt(greedyPath);
 }
 
 double TSInstance::getMinCost() {
