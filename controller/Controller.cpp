@@ -5,11 +5,24 @@
 #include "Controller.h"
 #include "../files/FileManager.h"
 
+
 #include <iostream>
 #include <random>
 #include <filesystem>
 #include <fstream>
 #include <string>
+
+Controller::Controller() {
+    desc.add_options()
+            ("help,h", "Print help message")
+            ("load-instances,l", boost::program_options::value<std::string>(), "Specify load instances file")
+            ("auto-load-instances,a", "Auto load instances from files/instances folder")
+            ("create-synthetic-instance,c", boost::program_options::value<int>(),
+             "Create synthetic instance (fully connected graph) with n vertices")
+            ("solve,s", "Solve the instances in queue")
+            ("solve-parallel,p", "Parallel solve the instances in queue")
+            ("heuristic-combo,e", "Use nearest neighbour + 2Opt to approximate the best path");
+}
 
 void Controller::printHeader() {
     std::cout << "\033[1;34m";
@@ -24,58 +37,61 @@ void Controller::printHeader() {
     std::cout << "\033[0m";
 }
 
-void Controller::run(int argc, char *argv[]) {
-    for (int i = 1; i < argc; i++) {
-        std::string parameter = argv[i];
-        if (parameter == "-li") {
-            // loadInstance
-            this->loadInstance();
-        } else if (parameter == "-alis") {
-            // autoLoadInstances
-            this->autoLoadInstances();
-        } else if (parameter == "-csi") {
-            // createSyntheticInstance
-            this->createSyntheticInstance();
-        } else if (parameter == "-solve") {
-            this->solve("");
-        } else if (parameter == "-solve-p") {
-            this->solve("-p");
-        } else if (parameter == "-hc") {
-            // heuristicCombination
-            this->heuristicCombo();
-        } else {
-            std::cout << "Unknown Command: " << parameter << std::endl;
+int Controller::run(int argc, char *argv[]) {
+    // print header every time
+    printHeader();
+
+    try {
+        boost::program_options::variables_map vm;
+        store(parse_command_line(argc, argv, desc), vm);
+        notify(vm);
+
+        // Print help message
+        if (argc == 1 || vm.contains("help")) {
+            std::cout << desc << std::endl;
+            return 0;
         }
+
+        // load / create instances
+        if (vm.contains("load-instances")) {
+            const std::string path = vm["load-instances"].as<std::string>();
+            loadInstance(path);
+        }
+
+        if (vm.contains("auto-load-instances")) {
+            autoLoadInstances();
+        }
+
+        if (vm.contains("create-synthetic-instance")) {
+            const int num_of_nodes = vm["create-synthetic-instance"].as<int>();
+            createSyntheticInstance(num_of_nodes);
+        }
+
+        // solving / approximation
+        if (vm.contains("solve")) {
+            solve("");
+        }
+
+        if (vm.contains("solve-parallel")) {
+            solve("p");
+        }
+        if (vm.contains("heuristic-combo")) {
+            heuristicCombo();
+        }
+        return 0;
+    } catch (const boost::program_options::error &ex) {
+        std::cerr << "Error: " << ex.what() << "\n";
+        std::cerr << desc << "\n";
+        return 1;
     }
-
-    std::cout << "Program Ended!" << std::endl;
 }
 
-void Controller::showHelp() {
-    std::cout << std::endl;
-    std::cout << "####################Travelling Salesman Help:####################" << std::endl;
-    std::cout << "li: load instances from a path" << std::endl;
-    std::cout << "alis: auto load instances from a path" << std::endl;
-    std::cout << "csi: create synthetic instance" << std::endl;
-    std::cout << "solve: solve the buffered instances" << std::endl;
-    std::cout << "solve -p: solve with parallelization" << std::endl;
-    std::cout << "hc: approximate using nearest-neighbour & 2-Opt" << std::endl;
-    std::cout << "exit: exit the program" << std::endl << std::endl;
-    std::cout << "If unknown command xxx is given the program will respond with:" << std::endl;
-    std::cout << "Unknown Command: xxx" << std::endl;
-    std::cout << "#################################################################" << std::endl << std::endl;
-}
-
-void Controller::loadInstance() {
-    std::string filePath;
-
-    std::cout << "file path: ";
-    std::getline(std::cin, filePath);
-
-    std::unique_ptr<TSInstance> tsInstance = FileManager::readDotFile(filePath);
+void Controller::loadInstance(const std::string &file_name) {
+    std::unique_ptr<TSInstance> tsInstance = FileManager::readDotFile(FileManager::INSTANCES_PATH + "/" + file_name);
     if (tsInstance == nullptr) {
         return;
     }
+    std::cout << "loaded: " << file_name << std::endl;
     this->unsolvedInstances.push_back(std::move(tsInstance));
 }
 
@@ -87,13 +103,9 @@ void Controller::autoLoadInstances() {
     }
 }
 
-void Controller::createSyntheticInstance() {
-    std::string userInput;
-
-    std::cout << "number of nodes: ";
-    std::getline(std::cin, userInput);
-    const int numOfNodes = std::stoi(userInput);
-    this->unsolvedInstances.push_back(TSInstance::createSyntheticInstance(numOfNodes));
+void Controller::createSyntheticInstance(const int num_of_nodes) {
+    this->unsolvedInstances.push_back(TSInstance::createSyntheticInstance(num_of_nodes));
+    std::cout << "created synthetic instance with: " << num_of_nodes << " nodes" << std::endl;
 }
 
 void Controller::solve(const std::string &args) {
