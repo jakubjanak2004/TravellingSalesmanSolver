@@ -24,7 +24,7 @@ std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &filename
     // Open the .dot file
     FILE *file = fopen(filename.c_str(), "r");
     if (!file) {
-        std::cout << "Error opening file: " << filename << std::endl;
+        std::cout << "Error opening file: " << filename << " in: " << INSTANCES_PATH << std::endl;
         return nullptr;
     }
 
@@ -92,7 +92,7 @@ std::vector<std::filesystem::directory_entry> FileManager::getDotInstances(const
     std::vector<std::filesystem::directory_entry> entries;
     for (const auto &entry: std::filesystem::directory_iterator(directoryPath)) {
         if (entry.is_regular_file() && entry.path().extension() == ".dot") {
-            std::cout << "Found: " << entry.path().filename() << std::endl;
+            std::cout << "found: " << entry.path().filename() << std::endl;
             entries.push_back(entry);
         }
     }
