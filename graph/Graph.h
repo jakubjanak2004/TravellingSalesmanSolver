@@ -16,7 +16,7 @@ public:
     Graph(std::vector<std::unique_ptr<Node>> nodes, std::vector<std::unique_ptr<Edge>> edges);
 
     [[nodiscard]] static double getCostBetweenNodes(Node &node1, const Node &node2);
-    [[nodiscard]] static double getCostOfSubPath(std::vector<Node> subPath) ;
+    [[nodiscard]] static double getCostOfSubPath(std::vector<Node> subPath);
     [[nodiscard]] static double getCostOfHamPath(std::vector<Node> HamPath);
 
     [[nodiscard]] const std::vector<std::unique_ptr<Node>>& getNodes() const;
