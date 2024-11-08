@@ -1,3 +1,4 @@
+# --------------------------------------------------------------the old cmake--------------------------------------------------------------
 cmake_minimum_required(VERSION 3.29)
 project(TravellingSalesmanSolver)
 
@@ -56,19 +57,15 @@ add_executable(tss
 # Link the Graphviz and Boost libraries
 target_link_libraries(tss ${GRAPHVIZ_LIBRARIES} Boost::system Boost::program_options)
 
-# Download and link Google Test
-include(FetchContent)
-FetchContent_Declare(
-        googletest
-        URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
-)
-FetchContent_MakeAvailable(googletest)
-
 enable_testing()
 
 # Define the test executable (with a separate main for tests)
 add_executable(run_tests
-        test/main.cpp  # Test main that runs all tests
+        test/main.cpp
+        test/test_TSInstance.cpp
+        test/catch.hpp
+        test/catch.cpp
+
         graph/Node.cpp
         graph/Node.h
         graph/Edge.cpp
@@ -86,7 +83,8 @@ add_executable(run_tests
 )
 
 # Link the test executable with Google Test, Graphviz, and Boost
-target_link_libraries(run_tests gtest gtest_main ${GRAPHVIZ_LIBRARIES} Boost::system Boost::program_options)
+target_link_libraries(run_tests ${GRAPHVIZ_LIBRARIES} Boost::system Boost::program_options)
 
 # Add test target
-add_test(NAME run_tests COMMAND run_tests)
+include(CTest)
+add_test(NAME all COMMAND run_tests)
