@@ -15,7 +15,7 @@ std::set<std::vector<Node> > convert_to_node_set(const std::vector<std::vector<N
 }
 
 // ------------------------------------------------ TESTS ------------------------------------------------
-TEST_CASE("Solve Correctness", "[all]") {
+TEST_CASE("Test Solve Correctness", "[all]") {
     std::unique_ptr<TSInstance> instance;
     SECTION("K(5)") {
         instance = TSInstance::create_synthetic_instance(5);
@@ -31,9 +31,30 @@ TEST_CASE("Solve Correctness", "[all]") {
 
         REQUIRE(solveResult == bruteForceResult);
     }
+    SECTION("K(7)") {
+        instance = TSInstance::create_synthetic_instance(7);
+        const std::set<std::vector<Node> > solveResult = convert_to_node_set(instance->solve(""));
+        const std::set<std::vector<Node> > bruteForceResult = convert_to_node_set(instance->brute_force_solve());
+
+        REQUIRE(solveResult == bruteForceResult);
+    }
+    SECTION("K(8)") {
+        instance = TSInstance::create_synthetic_instance(8);
+        const std::set<std::vector<Node> > solveResult = convert_to_node_set(instance->solve(""));
+        const std::set<std::vector<Node> > bruteForceResult = convert_to_node_set(instance->brute_force_solve());
+
+        REQUIRE(solveResult == bruteForceResult);
+    }
+    SECTION("K(9)") {
+        instance = TSInstance::create_synthetic_instance(9);
+        const std::set<std::vector<Node> > solveResult = convert_to_node_set(instance->solve(""));
+        const std::set<std::vector<Node> > bruteForceResult = convert_to_node_set(instance->brute_force_solve());
+
+        REQUIRE(solveResult == bruteForceResult);
+    }
 }
 
-TEST_CASE("Solve Parallel Correctness", "[all]") {
+TEST_CASE("Test Solve Parallel Correctness", "[all]") {
     std::unique_ptr<TSInstance> instance;
     SECTION("K(5)") {
         instance = TSInstance::create_synthetic_instance(5);
@@ -44,6 +65,27 @@ TEST_CASE("Solve Parallel Correctness", "[all]") {
     }
     SECTION("K(6)") {
         instance = TSInstance::create_synthetic_instance(6);
+        const std::set<std::vector<Node> > solveResult = convert_to_node_set(instance->solve("p"));
+        const std::set<std::vector<Node> > bruteForceResult = convert_to_node_set(instance->brute_force_solve());
+
+        REQUIRE(solveResult == bruteForceResult);
+    }
+    SECTION("K(7)") {
+        instance = TSInstance::create_synthetic_instance(7);
+        const std::set<std::vector<Node> > solveResult = convert_to_node_set(instance->solve("p"));
+        const std::set<std::vector<Node> > bruteForceResult = convert_to_node_set(instance->brute_force_solve());
+
+        REQUIRE(solveResult == bruteForceResult);
+    }
+    SECTION("K(8)") {
+        instance = TSInstance::create_synthetic_instance(8);
+        const std::set<std::vector<Node> > solveResult = convert_to_node_set(instance->solve("p"));
+        const std::set<std::vector<Node> > bruteForceResult = convert_to_node_set(instance->brute_force_solve());
+
+        REQUIRE(solveResult == bruteForceResult);
+    }
+    SECTION("K(9)") {
+        instance = TSInstance::create_synthetic_instance(9);
         const std::set<std::vector<Node> > solveResult = convert_to_node_set(instance->solve("p"));
         const std::set<std::vector<Node> > bruteForceResult = convert_to_node_set(instance->brute_force_solve());
 
