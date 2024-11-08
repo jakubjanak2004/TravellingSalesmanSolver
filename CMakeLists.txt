@@ -61,10 +61,12 @@ enable_testing()
 
 # Define the test executable (with a separate main for tests)
 add_executable(run_tests
-        test/test_main.cpp
-        test/test_TSInstance.cpp
         test/catch.hpp
         test/catch.cpp
+        test/test_main.cpp
+        test/test_TSInstance.cpp
+        test/test_Edge.cpp
+        test/test_Node.cpp
 
         graph/Node.cpp
         graph/Node.h
