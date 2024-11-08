@@ -61,7 +61,7 @@ enable_testing()
 
 # Define the test executable (with a separate main for tests)
 add_executable(run_tests
-        test/main.cpp
+        test/test_main.cpp
         test/test_TSInstance.cpp
         test/catch.hpp
         test/catch.cpp
