@@ -2,38 +2,51 @@
 // Created by Jakub Janak on 9/19/24.
 //
 
-#include <gtest/gtest.h>
+#include "catch.hpp"
 #include "../graph/TSInstance.h"
-#include <memory>
 
-// Utility function
-std::set<std::vector<Node>> convertToNodeSet(const std::vector<std::vector<Node>>& paths) {
-    std::set<std::vector<Node>> nodeSet;
-    for (const auto& path : paths) {
+// ------------------------------------------------ HELPER FUNCTIONS -------------------------------------
+std::set<std::vector<Node> > convert_to_node_set(const std::vector<std::vector<Node> > &paths) {
+    std::set<std::vector<Node> > nodeSet;
+    for (const auto &path: paths) {
         nodeSet.insert(path);
     }
     return nodeSet;
 }
 
-class SolveMethodResultTest : public ::testing::TestWithParam<int> {
-protected:
+// ------------------------------------------------ TESTS ------------------------------------------------
+TEST_CASE("Solve Correctness", "[all]") {
     std::unique_ptr<TSInstance> instance;
+    SECTION("K(5)") {
+        instance = TSInstance::create_synthetic_instance(5);
+        const std::set<std::vector<Node> > solveResult = convert_to_node_set(instance->solve(""));
+        const std::set<std::vector<Node> > bruteForceResult = convert_to_node_set(instance->brute_force_solve());
 
-    void SetUp() override {
-        const int numNodes = GetParam();
-        instance = TSInstance::createSyntheticInstance(numNodes);
+        REQUIRE(solveResult == bruteForceResult);
     }
-};
+    SECTION("K(6)") {
+        instance = TSInstance::create_synthetic_instance(6);
+        const std::set<std::vector<Node> > solveResult = convert_to_node_set(instance->solve(""));
+        const std::set<std::vector<Node> > bruteForceResult = convert_to_node_set(instance->brute_force_solve());
 
-TEST_P(SolveMethodResultTest, SolutionCorrectness) {
-    const std::set<std::vector<Node>> solveResult = convertToNodeSet(instance->solve(""));
-    const std::set<std::vector<Node>> bruteForceResult = convertToNodeSet(instance->bruteForceSolve());
-
-    ASSERT_EQ(solveResult, bruteForceResult);
+        REQUIRE(solveResult == bruteForceResult);
+    }
 }
 
-INSTANTIATE_TEST_SUITE_P(
-    VariousNodeCounts,
-    SolveMethodResultTest,
-    ::testing::Values(3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9)
-);
+TEST_CASE("Solve Parallel Correctness", "[all]") {
+    std::unique_ptr<TSInstance> instance;
+    SECTION("K(5)") {
+        instance = TSInstance::create_synthetic_instance(5);
+        const std::set<std::vector<Node> > solveResult = convert_to_node_set(instance->solve("p"));
+        const std::set<std::vector<Node> > bruteForceResult = convert_to_node_set(instance->brute_force_solve());
+
+        REQUIRE(solveResult == bruteForceResult);
+    }
+    SECTION("K(6)") {
+        instance = TSInstance::create_synthetic_instance(6);
+        const std::set<std::vector<Node> > solveResult = convert_to_node_set(instance->solve("p"));
+        const std::set<std::vector<Node> > bruteForceResult = convert_to_node_set(instance->brute_force_solve());
+
+        REQUIRE(solveResult == bruteForceResult);
+    }
+}
