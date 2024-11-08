@@ -67,6 +67,7 @@ add_executable(run_tests
         test/test_TSInstance.cpp
         test/test_Edge.cpp
         test/test_Node.cpp
+        test/test_Graph.cpp
 
         graph/Node.cpp
         graph/Node.h
