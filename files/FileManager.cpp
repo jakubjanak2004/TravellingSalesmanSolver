@@ -47,8 +47,8 @@ std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &filename
 
     // graph variables
     std::map<std::string, std::unique_ptr<Node> > nodesMap;
-    std::vector<std::unique_ptr<Node> > nodes;
-    std::vector<std::unique_ptr<Edge> > edges;
+    std::vector<std::shared_ptr<Node> > nodes;
+    std::vector<std::shared_ptr<Edge> > edges;
 
     // Iterate over the nodes
     for (Agnode_t *node = agfstnode(graph); node; node = agnxtnode(graph, node)) {

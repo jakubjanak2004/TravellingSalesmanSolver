@@ -4,7 +4,7 @@
 
 #include "Graph.h"
 
-Graph::Graph(std::vector<std::unique_ptr<Node>> nodes, std::vector<std::unique_ptr<Edge>> edges)
+Graph::Graph(std::vector<std::shared_ptr<Node>> nodes, std::vector<std::shared_ptr<Edge>> edges)
     : nodes(std::move(nodes)), edges(std::move(edges)) {
     if (this->nodes.empty()) {
         throw std::invalid_argument("Nodes vector cannot be empty!");
@@ -37,11 +37,11 @@ double Graph::get_cost_of_ham_path(std::vector<Node> HamPath) {
     return cost;
 }
 
-const std::vector<std::unique_ptr<Node>>& Graph::get_nodes() const {
+const std::vector<std::shared_ptr<Node>>& Graph::get_nodes() const {
     return this->nodes;
 }
 
-const std::vector<std::unique_ptr<Edge>>& Graph::get_edges() const {
+const std::vector<std::shared_ptr<Edge>>& Graph::get_edges() const {
     return this->edges;
 }
 

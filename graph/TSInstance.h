@@ -21,7 +21,7 @@ class TSInstance : public Graph {
     std::chrono::duration<long long, std::ratio<1, 1000000000> > elapsed{};
 
 public:
-    TSInstance(std::vector<std::unique_ptr<Node> > nodes, std::vector<std::unique_ptr<Edge> > edges);
+    TSInstance(std::vector<std::shared_ptr<Node> > nodes, std::vector<std::shared_ptr<Edge> > edges);
 
     static std::unique_ptr<TSInstance> create_synthetic_instance(int numOfNodes);
 

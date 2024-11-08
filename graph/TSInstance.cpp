@@ -9,15 +9,15 @@
 
 #include <sstream>
 
-TSInstance::TSInstance(std::vector<std::unique_ptr<Node> > nodes, std::vector<std::unique_ptr<Edge> > edges)
+TSInstance::TSInstance(std::vector<std::shared_ptr<Node> > nodes, std::vector<std::shared_ptr<Edge> > edges)
     : Graph(std::move(nodes), std::move(edges)),
       minCost(std::numeric_limits<double>::infinity()),
       startingNode(*this->nodes[0]) {
 }
 
 std::unique_ptr<TSInstance> TSInstance::create_synthetic_instance(const int numOfNodes) {
-    std::vector<std::unique_ptr<Node> > nodes;
-    std::vector<std::unique_ptr<Edge> > edges;
+    std::vector<std::shared_ptr<Node> > nodes;
+    std::vector<std::shared_ptr<Edge> > edges;
     nodes.reserve(numOfNodes);
     for (int i = 0; i < numOfNodes; i++) {
         nodes.emplace_back(std::make_unique<Node>(std::to_string(i)));
