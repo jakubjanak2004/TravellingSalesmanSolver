@@ -29,7 +29,7 @@ bool Node::operator<(const Node &other) const {
 }
 
 bool Node::operator>(const Node &other) const {
-    return this->name < other.name;
+    return this->name > other.name;
 }
 
 bool Node::operator==(const Node &other) const {
