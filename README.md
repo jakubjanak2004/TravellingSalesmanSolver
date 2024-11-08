@@ -9,7 +9,7 @@ User can also save the
  solution (there will be an option in the terminal once instance is solved).  
 
 ## The Problem Formulation
-Is a very famous problem in Computer Science.
+Traveling salesman is a very famous problem in Computer Science.
 Traveling Salesman problem or TSP asks the following:  
 Given a list of cities and the distances between each pair of cities,
 what is the shortest possible route that visits each city
