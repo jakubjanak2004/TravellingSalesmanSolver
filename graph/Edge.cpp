@@ -10,8 +10,8 @@ Edge::Edge(Node *sourceNode, Node *targetNode, const double weight){
     this->weight = weight;
 }
 
-std::string Edge::toString() const {
-    return "< " + this->sourceNode->toString() + " -> " + this->targetNode->toString() + " w: " +
+std::string Edge::to_string() const {
+    return "< " + this->sourceNode->to_string() + " -> " + this->targetNode->to_string() + " w: " +
            std::to_string(this->weight);
 }
 
@@ -23,14 +23,14 @@ bool Edge::operator>(const Edge &e) const {
     return this->weight > e.weight;
 }
 
-Node* Edge::getSourceNode() const {
+Node* Edge::get_source_node() const {
     return this->sourceNode;
 }
 
-Node* Edge::getTargetNode() const {
+Node* Edge::get_target_node() const {
     return this->targetNode;
 }
 
-double Edge::getWeight() const {
+double Edge::get_weight() const {
     return this->weight;
 }

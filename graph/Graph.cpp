@@ -12,36 +12,36 @@ Graph::Graph(std::vector<std::unique_ptr<Node>> nodes, std::vector<std::unique_p
     std::sort(nodes.begin(), nodes.end());
 }
 
-double Graph::getCostBetweenNodes(Node &node1, const Node &node2) {
-    for(const Edge* edge : node1.getEdges()) {
-        if (*edge->getTargetNode() == node2) {
-            return edge->getWeight();
+double Graph::get_cost_between_nodes(Node &node1, const Node &node2) {
+    for(const Edge* edge : node1.get_edges()) {
+        if (*edge->get_target_node() == node2) {
+            return edge->get_weight();
         }
     }
     return std::numeric_limits<double>::infinity();
 }
 
-double Graph::getCostOfSubPath(std::vector<Node> subPath) {
+double Graph::get_cost_of_sub_path(std::vector<Node> subPath) {
     double cost = 0;
     for (int i = 0; i < subPath.size() - 1; i++) {
-        cost += getCostBetweenNodes(subPath[i], subPath[i + 1]);
+        cost += get_cost_between_nodes(subPath[i], subPath[i + 1]);
     }
     return cost;
 }
 
-double Graph::getCostOfHamPath(std::vector<Node> HamPath) {
+double Graph::get_cost_of_ham_path(std::vector<Node> HamPath) {
     double cost = 0;
     for (int i = 0; i < HamPath.size(); i++) {
-        cost += getCostBetweenNodes(HamPath[i], HamPath[(i + 1)%HamPath.size()]);
+        cost += get_cost_between_nodes(HamPath[i], HamPath[(i + 1)%HamPath.size()]);
     }
     return cost;
 }
 
-const std::vector<std::unique_ptr<Node>>& Graph::getNodes() const {
+const std::vector<std::unique_ptr<Node>>& Graph::get_nodes() const {
     return this->nodes;
 }
 
-const std::vector<std::unique_ptr<Edge>>& Graph::getEdges() const {
+const std::vector<std::unique_ptr<Edge>>& Graph::get_edges() const {
     return this->edges;
 }
 

@@ -17,17 +17,17 @@ class Edge {
 public:
     Edge(Node *sourceNode, Node *targetNode, double weight);
 
-    [[nodiscard]] std::string toString() const;
+    [[nodiscard]] std::string to_string() const;
 
     bool operator<(const Edge &e) const;
 
     bool operator>(const Edge &e) const;
 
-    [[nodiscard]] Node *getSourceNode() const;
+    [[nodiscard]] Node *get_source_node() const;
 
-    [[nodiscard]] Node *getTargetNode() const;
+    [[nodiscard]] Node *get_target_node() const;
 
-    [[nodiscard]] double getWeight() const;
+    [[nodiscard]] double get_weight() const;
 };
 
 

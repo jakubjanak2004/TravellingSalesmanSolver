@@ -24,7 +24,7 @@ Controller::Controller() {
             ("heuristic-combo,e", "Use nearest neighbour + 2Opt to approximate the best path");
 }
 
-void Controller::printHeader() {
+void Controller::print_header() {
     std::cout << "\033[1;34m";
     std::cout << "                                               " << std::endl;
     std::cout << R"(  TTTTTTTT\     $$$$$$$\     $$$$$$$\   )" << std::endl;
@@ -39,7 +39,7 @@ void Controller::printHeader() {
 
 int Controller::run(int argc, char *argv[]) {
     // print header every time
-    printHeader();
+    print_header();
 
     try {
         boost::program_options::variables_map vm;
@@ -55,16 +55,16 @@ int Controller::run(int argc, char *argv[]) {
         // load / create instances
         if (vm.contains("load-instances")) {
             const std::string path = vm["load-instances"].as<std::string>();
-            loadInstance(path);
+            load_instance(path);
         }
 
         if (vm.contains("auto-load-instances")) {
-            autoLoadInstances();
+            auto_load_instances();
         }
 
         if (vm.contains("create-synthetic-instance")) {
             const int num_of_nodes = vm["create-synthetic-instance"].as<int>();
-            createSyntheticInstance(num_of_nodes);
+            create_synthetic_instance(num_of_nodes);
         }
 
         // solving / approximation
@@ -76,7 +76,7 @@ int Controller::run(int argc, char *argv[]) {
             solve("p");
         }
         if (vm.contains("heuristic-combo")) {
-            heuristicCombo();
+            heuristic_combo();
         }
         return 0;
     } catch (const boost::program_options::error &ex) {
@@ -86,7 +86,7 @@ int Controller::run(int argc, char *argv[]) {
     }
 }
 
-void Controller::loadInstance(const std::string &file_name) {
+void Controller::load_instance(const std::string &file_name) {
     std::unique_ptr<TSInstance> tsInstance = FileManager::readDotFile(FileManager::INSTANCES_PATH + "/" + file_name);
     if (tsInstance == nullptr) {
         return;
@@ -95,7 +95,7 @@ void Controller::loadInstance(const std::string &file_name) {
     this->unsolvedInstances.push_back(std::move(tsInstance));
 }
 
-void Controller::autoLoadInstances() {
+void Controller::auto_load_instances() {
     std::cout << "Loading all instances from " << FileManager::INSTANCES_PATH << " automatically" << std::endl;
     for (const auto &entry: FileManager::getDotInstances(FileManager::INSTANCES_PATH)) {
         std::unique_ptr<TSInstance> tsInstance = FileManager::readDotFile(entry.path().string());
@@ -103,8 +103,8 @@ void Controller::autoLoadInstances() {
     }
 }
 
-void Controller::createSyntheticInstance(const int num_of_nodes) {
-    this->unsolvedInstances.push_back(TSInstance::createSyntheticInstance(num_of_nodes));
+void Controller::create_synthetic_instance(const int num_of_nodes) {
+    this->unsolvedInstances.push_back(TSInstance::create_synthetic_instance(num_of_nodes));
     std::cout << "created synthetic instance with: " << num_of_nodes << " nodes" << std::endl;
 }
 
@@ -117,8 +117,8 @@ void Controller::solve(const std::string &args) {
         std::cout << "Solving..." << std::endl;
         auto &instance = this->unsolvedInstances.front();
         instance->solve(args);
-        instance->printStatistics();
-        if (!instance->isSolved()) {
+        instance->print_statistics();
+        if (!instance->is_solved()) {
             this->unsolvedInstances.pop_front();
             continue;
         }
@@ -128,21 +128,21 @@ void Controller::solve(const std::string &args) {
         if (userInput == "y") {
             std::cout << "Name of the file: ";
             std::getline(std::cin, userInput);
-            instance->saveAs(userInput);
+            instance->save(userInput);
         }
         this->unsolvedInstances.pop_front();
     }
 }
 
-void Controller::heuristicCombo() {
+void Controller::heuristic_combo() {
     if (this->unsolvedInstances.empty()) {
         std::cout << "Nothing to approximate!" << std::endl;
         return;
     }
     while (!this->unsolvedInstances.empty()) {
         auto &instance = this->unsolvedInstances.front();
-        const double result = instance->heuristicCombo();
-        std::cout << std::endl << instance->toString() << std::endl;
+        const double result = instance->heuristic_combo();
+        std::cout << std::endl << instance->to_string() << std::endl;
         std::cout << "Heuristic Approximation: " << result << std::endl;
         this->unsolvedInstances.pop_front();
     }

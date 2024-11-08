@@ -6,7 +6,7 @@
 
 #include <random>
 
-int Helper::getRandomInteger(const int from, const int to) {
+int Helper::get_random_integer(const int from, const int to) {
     std::random_device rd;
     std::mt19937 rng(rd());
 

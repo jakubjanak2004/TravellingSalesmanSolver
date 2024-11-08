@@ -16,19 +16,19 @@ class Controller {
 public:
     Controller();
 
-    static void printHeader();
+    static void print_header();
 
     int run(int argc, char *argv[]);
 
-    void loadInstance(const std::string& file_name);
+    void load_instance(const std::string& file_name);
 
-    void autoLoadInstances();
+    void auto_load_instances();
 
-    void createSyntheticInstance(int num_of_nodes);
+    void create_synthetic_instance(int num_of_nodes);
 
     void solve(const std::string& args);
 
-    void heuristicCombo();
+    void heuristic_combo();
 };
 
 

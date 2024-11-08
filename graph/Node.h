@@ -19,9 +19,9 @@ class Node {
 public:
     explicit Node(std::string name);
 
-    void addEdge(Edge *edge);
+    void add_edge(Edge *edge);
 
-    [[nodiscard]] std::string toString() const;
+    [[nodiscard]] std::string to_string() const;
 
     bool operator<(const Node &other) const;
 
@@ -31,11 +31,11 @@ public:
 
     bool operator!=(const Node &other) const;
 
-    [[nodiscard]] std::vector<Node *> getNeighbourNodes() const;
+    [[nodiscard]] std::vector<Node *> get_neighbour_nodes() const;
 
-    [[nodiscard]] std::vector<Edge *> getEdges() const;
+    [[nodiscard]] std::vector<Edge *> get_edges() const;
 
-    std::string getName();
+    std::string get_name();
 };
 
 

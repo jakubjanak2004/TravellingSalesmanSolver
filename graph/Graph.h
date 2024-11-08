@@ -15,12 +15,12 @@ class Graph {
 public:
     Graph(std::vector<std::unique_ptr<Node>> nodes, std::vector<std::unique_ptr<Edge>> edges);
 
-    [[nodiscard]] static double getCostBetweenNodes(Node &node1, const Node &node2);
-    [[nodiscard]] static double getCostOfSubPath(std::vector<Node> subPath);
-    [[nodiscard]] static double getCostOfHamPath(std::vector<Node> HamPath);
+    [[nodiscard]] static double get_cost_between_nodes(Node &node1, const Node &node2);
+    [[nodiscard]] static double get_cost_of_sub_path(std::vector<Node> subPath);
+    [[nodiscard]] static double get_cost_of_ham_path(std::vector<Node> HamPath);
 
-    [[nodiscard]] const std::vector<std::unique_ptr<Node>>& getNodes() const;
-    [[nodiscard]] const std::vector<std::unique_ptr<Edge>>& getEdges() const;
+    [[nodiscard]] const std::vector<std::unique_ptr<Node>>& get_nodes() const;
+    [[nodiscard]] const std::vector<std::unique_ptr<Edge>>& get_edges() const;
 
 protected:
     std::vector<std::unique_ptr<Node> > nodes;

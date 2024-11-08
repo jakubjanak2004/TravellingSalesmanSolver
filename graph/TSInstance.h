@@ -23,41 +23,41 @@ class TSInstance : public Graph {
 public:
     TSInstance(std::vector<std::unique_ptr<Node> > nodes, std::vector<std::unique_ptr<Edge> > edges);
 
-    static std::unique_ptr<TSInstance> createSyntheticInstance(int numOfNodes);
+    static std::unique_ptr<TSInstance> create_synthetic_instance(int numOfNodes);
 
     std::vector<std::vector<Node> > solve(const std::string& arg);
 
     void branch(std::vector<Node> visitedNodes, double cost, Node &currentNode);
 
-    void startBranchParallel(const std::vector<Node> &visitedNodes, double cost, Node &currentNode, int numberOfThreads);
+    void start_branch_parallel(const std::vector<Node> &visitedNodes, double cost, Node &currentNode, int numberOfThreads);
 
-    void branchParallel(std::vector<Node> visitedNodes, double cost, Node &currentNode);
+    void branch_parallel(std::vector<Node> visitedNodes, double cost, Node &currentNode);
 
-    [[nodiscard]] std::vector<std::vector<Node>> bruteForceSolve() const;
+    [[nodiscard]] std::vector<std::vector<Node>> brute_force_solve() const;
 
-    [[nodiscard]] double getLowerBound(std::vector<Node> subPath) const;
+    [[nodiscard]] double get_lower_bound(std::vector<Node> subPath) const;
 
     void nearest_neighbour(std::vector<Node>& greedyPath) const;
 
     double two_opt(std::vector<Node> greedyPath);
 
-    [[nodiscard]] double heuristicCombo();
+    [[nodiscard]] double heuristic_combo();
 
-    [[nodiscard]] double getMinCost();
+    [[nodiscard]] double get_min_cost();
 
-    [[nodiscard]] bool isSolved() const;
+    [[nodiscard]] bool is_solved() const;
 
-    void setMinCost(double minCost);
+    void set_min_cost(double minCost);
 
-    void clearBestHams();
+    void clear_best_hams();
 
-    void addBestHamiltonian(const std::vector<Node> &path);
+    void add_best_hamiltonian(const std::vector<Node> &path);
 
-    void printStatistics() const;
+    void print_statistics() const;
 
-    void saveAs(const std::string &fileName) const;
+    void save(const std::string &fileName) const;
 
-    [[nodiscard]] std::string toString() const;
+    [[nodiscard]] std::string to_string() const;
 };
 
 

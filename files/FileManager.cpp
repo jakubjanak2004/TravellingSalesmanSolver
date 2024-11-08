@@ -70,7 +70,7 @@ std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &filename
                 nodesMap[agnameof(head)].get(),
                 weight
             );
-            nodesMap[agnameof(tail)]->addEdge(edgePtr.get());
+            nodesMap[agnameof(tail)]->add_edge(edgePtr.get());
             edges.push_back(std::move(edgePtr));
         }
     }

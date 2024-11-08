@@ -9,7 +9,7 @@
 
 class Helper {
 public:
-    static int getRandomInteger(int from, int to);
+    static int get_random_integer(int from, int to);
 };
 
 
