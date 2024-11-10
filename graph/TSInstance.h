@@ -25,7 +25,7 @@ public:
 
     static std::unique_ptr<TSInstance> create_synthetic_instance(int numOfNodes);
 
-    std::vector<std::vector<Node> > solve(const std::string& arg);
+    std::vector<std::vector<Node> > solve(const std::string& arg, int num_of_threads = 4);
 
     void branch(std::vector<Node> visitedNodes, double cost, Node &currentNode);
 
