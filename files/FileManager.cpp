@@ -17,14 +17,14 @@ const std::string FileManager::INSTANCES_PATH = "../files/instances";
 
 const std::string FileManager::RESULTS_PATH = "../files/results";
 
-std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &filename) {
+std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &file_name) {
     // graphviz context
     GVC_t *gvc = gvContext();
 
     // Open the .dot file
-    FILE *file = fopen(filename.c_str(), "r");
+    FILE *file = fopen(file_name.c_str(), "r");
     if (!file) {
-        std::cout << "Error opening file: " << filename << " in: " << INSTANCES_PATH << std::endl;
+        std::cout << "Error opening file: " << file_name << " in: " << INSTANCES_PATH << std::endl;
         return nullptr;
     }
 
@@ -33,7 +33,7 @@ std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &filename
     fclose(file);
 
     if (!graph) {
-        std::cout << "Error reading DOT file: " << filename << std::endl;
+        std::cout << "Error reading DOT file: " << file_name << std::endl;
         return nullptr;
     }
 
@@ -88,9 +88,9 @@ std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &filename
     return std::make_unique<TSInstance>(std::move(nodes), std::move(edges));
 }
 
-std::vector<std::filesystem::directory_entry> FileManager::getDotInstances(const std::string& directoryPath) {
+std::vector<std::filesystem::directory_entry> FileManager::getDotInstances(const std::string& directory_path) {
     std::vector<std::filesystem::directory_entry> entries;
-    for (const auto &entry: std::filesystem::directory_iterator(directoryPath)) {
+    for (const auto &entry: std::filesystem::directory_iterator(directory_path)) {
         if (entry.is_regular_file() && entry.path().extension() == ".dot") {
             std::cout << "found: " << entry.path().filename() << std::endl;
             entries.push_back(entry);
@@ -99,11 +99,29 @@ std::vector<std::filesystem::directory_entry> FileManager::getDotInstances(const
     return entries;
 }
 
-void FileManager::saveSolution(const std::string &fileName, const std::string &fileContent) {
+void FileManager::saveSolution(const std::string &file_name, const std::string &file_content) {
+    // creating the results folder if not exists
+    if (!std::filesystem::exists(RESULTS_PATH)) {
+        if (std::filesystem::create_directory(RESULTS_PATH)) {
+            std::cout << "Created results directory: " << RESULTS_PATH << std::endl;
+        } else {
+            std::cout << "Error creating results directory: " << RESULTS_PATH << std::endl;
+        }
+    }
+
+    // check for output file conflicts
+    int num = 1;
+    std::string output_file;
+    do {
+        std::string number_string = (num == 1) ? "" : "_" + std::to_string(num);
+        output_file = RESULTS_PATH + "/" + file_name + number_string + ".dot";
+        num++;
+    } while (std::filesystem::exists(output_file));
+
     // Check if the file is open
-    if (std::ofstream outFile(RESULTS_PATH + "/" + fileName + ".dot"); outFile.is_open()) {
+    if (std::ofstream outFile(output_file); outFile.is_open()) {
         // Write the string to the file
-        outFile << fileContent;
+        outFile << file_content;
 
         // Close the file
         outFile.close();
