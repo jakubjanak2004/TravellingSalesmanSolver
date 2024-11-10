@@ -1,3 +1,4 @@
 # clion ignored files
 .idea
 cmake-build-debug
+/files/results/
