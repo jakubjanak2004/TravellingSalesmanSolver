@@ -67,7 +67,7 @@ int Controller::run(int argc, char *argv[]) {
             create_synthetic_instance(num_of_nodes);
         }
 
-        // solving / approximation
+        // solving
         if (vm.contains("solve")) {
             solve("");
         }
@@ -76,6 +76,8 @@ int Controller::run(int argc, char *argv[]) {
             const int num_of_threads = vm["solve-parallel"].as<int>();
             solve("p", num_of_threads);
         }
+
+        // approximation
         if (vm.contains("heuristic-combo")) {
             heuristic_combo();
         }
