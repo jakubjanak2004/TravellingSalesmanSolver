@@ -26,7 +26,7 @@ public:
 
     void create_synthetic_instance(int num_of_nodes);
 
-    void solve(const std::string& args, int num_of_threads);
+    void solve(int num_of_threads = 1); // not multithreaded by default
 
     void heuristic_combo();
 };

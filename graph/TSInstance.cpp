@@ -41,12 +41,11 @@ std::unique_ptr<TSInstance> TSInstance::create_synthetic_instance(const int numO
     return std::make_unique<TSInstance>(std::move(nodes), std::move(edges));
 }
 
-std::vector<std::vector<Node> > TSInstance::solve(const std::string &args, const int num_of_threads) {
+std::vector<std::vector<Node> > TSInstance::solve(const int num_of_threads) {
     const auto start = std::chrono::high_resolution_clock::now();
     const std::vector visitedNodes = {this->startingNode};
     this->set_min_cost(heuristic_combo());
-    if (args == "p") {
-        // safe threads for M2 max: <= 8
+    if (num_of_threads > 1) {
         start_branch_parallel(visitedNodes, 0, this->startingNode, num_of_threads);
     } else {
         branch(visitedNodes, 0, this->startingNode);

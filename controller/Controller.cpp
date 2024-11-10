@@ -69,12 +69,19 @@ int Controller::run(int argc, char *argv[]) {
 
         // solving
         if (vm.contains("solve")) {
-            solve("");
+            solve();
         }
 
         if (vm.contains("solve-parallel")) {
             const int num_of_threads = vm["solve-parallel"].as<int>();
-            solve("p", num_of_threads);
+            if (num_of_threads <= 0) {
+                std::cerr << "Number of threads must be an integer >= 1" << std::endl;
+                return 1;
+            }
+            if (num_of_threads == 1) {
+                std::cerr << "For single threaded solving call --solve" << std::endl;
+            }
+            solve(num_of_threads);
         }
 
         // approximation
@@ -111,7 +118,7 @@ void Controller::create_synthetic_instance(const int num_of_nodes) {
     std::cout << "created synthetic instance with: " << num_of_nodes << " nodes" << std::endl;
 }
 
-void Controller::solve(const std::string &args, const int num_of_threads) {
+void Controller::solve(const int num_of_threads) {
     if (this->unsolvedInstances.empty()) {
         std::cout << "Nothing to solve!" << std::endl;
         return;
@@ -119,7 +126,7 @@ void Controller::solve(const std::string &args, const int num_of_threads) {
     while (!this->unsolvedInstances.empty()) {
         std::cout << "Solving..." << std::endl;
         auto &instance = this->unsolvedInstances.front();
-        instance->solve(args, num_of_threads);
+        instance->solve(num_of_threads);
         instance->print_statistics();
         if (!instance->is_solved()) {
             this->unsolvedInstances.pop_front();
