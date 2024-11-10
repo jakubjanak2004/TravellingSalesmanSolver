@@ -13,12 +13,7 @@ class Controller {
     std::deque<std::unique_ptr<TSInstance>> unsolvedInstances;
     boost::program_options::options_description desc = {"Arguments"};
 
-public:
-    Controller();
-
     static void print_header();
-
-    int run(int argc, char *argv[]);
 
     void load_instance(const std::string& file_name);
 
@@ -29,6 +24,12 @@ public:
     void solve(int num_of_threads = 1); // not multithreaded by default
 
     void heuristic_combo();
+
+public:
+    Controller();
+
+    int run(int argc, char *argv[]);
+
 };
 
 

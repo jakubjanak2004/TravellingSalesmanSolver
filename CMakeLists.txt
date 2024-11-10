@@ -83,6 +83,7 @@ add_executable(run_tests
         controller/Controller.h
         helper/Helper.cpp
         helper/Helper.h
+        test/catch.hpp
 )
 
 # Link the test executable with Google Test, Graphviz, and Boost

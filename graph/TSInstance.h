@@ -20,20 +20,11 @@ class TSInstance : public Graph {
     std::vector<std::vector<Node> > bestHamiltonianPaths;
     std::chrono::duration<long long, std::ratio<1, 1000000000> > elapsed{};
 
-public:
-    TSInstance(std::vector<std::shared_ptr<Node> > nodes, std::vector<std::shared_ptr<Edge> > edges);
-
-    static std::unique_ptr<TSInstance> create_synthetic_instance(int numOfNodes);
-
-    std::vector<std::vector<Node> > solve(int num_of_threads = 1); // not multithreaded by default
-
     void branch(std::vector<Node> visitedNodes, double cost, Node &currentNode);
 
     void start_branch_parallel(const std::vector<Node> &visitedNodes, double cost, Node &currentNode, int numberOfThreads);
 
     void branch_parallel(std::vector<Node> visitedNodes, double cost, Node &currentNode);
-
-    [[nodiscard]] std::vector<std::vector<Node>> brute_force_solve() const;
 
     [[nodiscard]] double get_lower_bound(std::vector<Node> subPath) const;
 
@@ -41,17 +32,26 @@ public:
 
     double two_opt(std::vector<Node> greedyPath);
 
-    [[nodiscard]] double heuristic_combo();
-
     [[nodiscard]] double get_min_cost();
-
-    [[nodiscard]] bool is_solved() const;
 
     void set_min_cost(double minCost);
 
     void clear_best_hams();
 
     void add_best_hamiltonian(const std::vector<Node> &path);
+
+public:
+    TSInstance(std::vector<std::shared_ptr<Node> > nodes, std::vector<std::shared_ptr<Edge> > edges);
+
+    static std::unique_ptr<TSInstance> create_synthetic_instance(int numOfNodes);
+
+    std::vector<std::vector<Node> > solve(int num_of_threads = 1); // not multithreaded by default
+
+    [[nodiscard]] std::vector<std::vector<Node>> brute_force_solve() const;
+
+    [[nodiscard]] double heuristic_combo();
+
+    [[nodiscard]] bool is_solved() const;
 
     void print_statistics() const;
 
