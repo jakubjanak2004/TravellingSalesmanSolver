@@ -17,7 +17,7 @@ const std::string FileManager::INSTANCES_PATH = "../files/instances";
 
 const std::string FileManager::RESULTS_PATH = "../files/results";
 
-std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &file_name) {
+std::unique_ptr<TSInstance> FileManager::read_dot_file(const std::string &file_name) {
     // graphviz context
     GVC_t *gvc = gvContext();
 
@@ -88,7 +88,7 @@ std::unique_ptr<TSInstance> FileManager::readDotFile(const std::string &file_nam
     return std::make_unique<TSInstance>(std::move(nodes), std::move(edges));
 }
 
-std::vector<std::filesystem::directory_entry> FileManager::getDotInstances(const std::string& directory_path) {
+std::vector<std::filesystem::directory_entry> FileManager::get_dot_instances(const std::string& directory_path) {
     std::vector<std::filesystem::directory_entry> entries;
     for (const auto &entry: std::filesystem::directory_iterator(directory_path)) {
         if (entry.is_regular_file() && entry.path().extension() == ".dot") {
@@ -99,7 +99,7 @@ std::vector<std::filesystem::directory_entry> FileManager::getDotInstances(const
     return entries;
 }
 
-void FileManager::saveSolution(const std::string &file_name, const std::string &file_content) {
+void FileManager::save_solution(const std::string &file_name, const std::string &file_content) {
     // creating the results folder if not exists
     if (!std::filesystem::exists(RESULTS_PATH)) {
         if (std::filesystem::create_directory(RESULTS_PATH)) {

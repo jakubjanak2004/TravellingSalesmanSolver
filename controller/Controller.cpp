@@ -97,7 +97,7 @@ int Controller::run(int argc, char *argv[]) {
 }
 
 void Controller::load_instance(const std::string &file_name) {
-    std::unique_ptr<TSInstance> tsInstance = FileManager::readDotFile(FileManager::INSTANCES_PATH + "/" + file_name);
+    std::unique_ptr<TSInstance> tsInstance = FileManager::read_dot_file(FileManager::INSTANCES_PATH + "/" + file_name);
     if (tsInstance == nullptr) {
         return;
     }
@@ -107,8 +107,8 @@ void Controller::load_instance(const std::string &file_name) {
 
 void Controller::auto_load_instances() {
     std::cout << "Loading all instances from " << FileManager::INSTANCES_PATH << " automatically" << std::endl;
-    for (const auto &entry: FileManager::getDotInstances(FileManager::INSTANCES_PATH)) {
-        std::unique_ptr<TSInstance> tsInstance = FileManager::readDotFile(entry.path().string());
+    for (const auto &entry: FileManager::get_dot_instances(FileManager::INSTANCES_PATH)) {
+        std::unique_ptr<TSInstance> tsInstance = FileManager::read_dot_file(entry.path().string());
         this->unsolvedInstances.push_back(std::move(tsInstance));
     }
 }

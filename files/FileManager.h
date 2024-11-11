@@ -16,11 +16,11 @@ public:
 
     static const std::string RESULTS_PATH;
 
-    static std::unique_ptr<TSInstance> readDotFile(const std::string &file_name);
+    static std::unique_ptr<TSInstance> read_dot_file(const std::string &file_name);
 
-    static std::vector<std::filesystem::directory_entry> getDotInstances(const std::string &directory_path);
+    static std::vector<std::filesystem::directory_entry> get_dot_instances(const std::string &directory_path);
 
-    static void saveSolution(const std::string& file_name, const std::string& file_content);
+    static void save_solution(const std::string& file_name, const std::string& file_content);
 };
 
 
