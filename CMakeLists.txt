@@ -83,11 +83,29 @@ add_executable(run_tests
         controller/Controller.h
         helper/Helper.cpp
         helper/Helper.h
-        test/catch.hpp
 )
 
-# Link the test executable with Google Test, Graphviz, and Boost
+add_executable(stats
+        files/stats_main.cpp
+
+        graph/Node.cpp
+        graph/Node.h
+        graph/Edge.cpp
+        graph/Edge.h
+        graph/Graph.cpp
+        graph/Graph.h
+        graph/TSInstance.cpp
+        graph/TSInstance.h
+        files/FileManager.cpp
+        files/FileManager.h
+        controller/Controller.cpp
+        controller/Controller.h
+        helper/Helper.cpp
+        helper/Helper.h
+)
+
 target_link_libraries(run_tests ${GRAPHVIZ_LIBRARIES} Boost::system Boost::program_options)
+target_link_libraries(stats ${GRAPHVIZ_LIBRARIES} Boost::system Boost::program_options)
 
 # Add test target
 include(CTest)
