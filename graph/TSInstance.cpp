@@ -310,7 +310,7 @@ void TSInstance::save(const std::string &fileName) const {
         fileContent << "];" << std::endl;
     }
     fileContent << "}" << std::endl;
-    FileManager::saveSolution(fileName, fileContent.str());
+    FileManager::save_solution(fileName, fileContent.str());
 }
 
 std::string TSInstance::to_string() const {
