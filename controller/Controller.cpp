@@ -135,7 +135,7 @@ void Controller::solve(const int num_of_threads) {
         std::string userInput;
         std::cout << "Save the result graph[y for yes]: ";
         std::getline(std::cin, userInput);
-        if (userInput == "y") {
+        if (userInput.find('y') != std::string::npos) {
             std::cout << "Name of the file: ";
             std::getline(std::cin, userInput);
             instance->save(userInput);
