@@ -91,7 +91,7 @@ void compare_bb_and_bb_parallel() {
     write_to_csv(data_to_csv, "solve_vs_solve_parallel.csv");
 }
 
-// COMPARE DIFFERENT PARALLELS WITH DIFFERENT THREAD NUMBERS
+// TODO: COMPARE DIFFERENT PARALLELS WITH DIFFERENT THREAD NUMBERS
 // --------------------------------------------------------------------------------------------------------------------
 
 
