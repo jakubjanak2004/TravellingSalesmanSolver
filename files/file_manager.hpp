@@ -4,15 +4,15 @@
 #include <string>
 #include <__filesystem/directory_entry.h>
 
-#include "../graph/TSInstance.hpp"
+#include "../graph/ts_instance.hpp"
 
-class FileManager {
+class file_manager {
 public:
     static const std::string INSTANCES_PATH;
 
     static const std::string RESULTS_PATH;
 
-    static std::unique_ptr<TSInstance> read_dot_file(const std::string &file_name);
+    static std::unique_ptr<ts_instance> read_dot_file(const std::string &file_name);
 
     static std::vector<std::filesystem::directory_entry> get_dot_instances(const std::string &directory_path);
 

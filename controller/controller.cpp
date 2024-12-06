@@ -1,5 +1,5 @@
-#include "Controller.hpp"
-#include "../files/FileManager.hpp"
+#include "controller.hpp"
+#include "../files/file_manager.hpp"
 
 
 #include <iostream>
@@ -8,7 +8,7 @@
 #include <fstream>
 #include <string>
 
-Controller::Controller() {
+controller::controller() {
     desc.add_options()
             ("help,h", "Print help message")
             ("load-instances,l", boost::program_options::value<std::string>(), "Specify load instances file")
@@ -20,7 +20,7 @@ Controller::Controller() {
             ("heuristic-combo,e", "Use nearest neighbour + 2Opt to approximate the best path");
 }
 
-void Controller::print_header() {
+void controller::print_header() {
     std::cout << "\033[1;34m";
     std::cout << "                                               " << std::endl;
     std::cout << R"(  TTTTTTTT\     $$$$$$$\     $$$$$$$\   )" << std::endl;
@@ -33,7 +33,7 @@ void Controller::print_header() {
     std::cout << "\033[0m";
 }
 
-int Controller::run(int argc, char *argv[]) {
+int controller::run(int argc, char *argv[]) {
     // print header every time
     print_header();
 
@@ -92,8 +92,8 @@ int Controller::run(int argc, char *argv[]) {
     }
 }
 
-void Controller::load_instance(const std::string &file_name) {
-    std::unique_ptr<TSInstance> tsInstance = FileManager::read_dot_file(FileManager::INSTANCES_PATH + "/" + file_name);
+void controller::load_instance(const std::string &file_name) {
+    std::unique_ptr<ts_instance> tsInstance = file_manager::read_dot_file(file_manager::INSTANCES_PATH + "/" + file_name);
     if (tsInstance == nullptr) {
         return;
     }
@@ -101,20 +101,20 @@ void Controller::load_instance(const std::string &file_name) {
     this->unsolvedInstances.push_back(std::move(tsInstance));
 }
 
-void Controller::auto_load_instances() {
-    std::cout << "Loading all instances from " << FileManager::INSTANCES_PATH << " automatically" << std::endl;
-    for (const auto &entry: FileManager::get_dot_instances(FileManager::INSTANCES_PATH)) {
-        std::unique_ptr<TSInstance> tsInstance = FileManager::read_dot_file(entry.path().string());
+void controller::auto_load_instances() {
+    std::cout << "Loading all instances from " << file_manager::INSTANCES_PATH << " automatically" << std::endl;
+    for (const auto &entry: file_manager::get_dot_instances(file_manager::INSTANCES_PATH)) {
+        std::unique_ptr<ts_instance> tsInstance = file_manager::read_dot_file(entry.path().string());
         this->unsolvedInstances.push_back(std::move(tsInstance));
     }
 }
 
-void Controller::create_synthetic_instance(const int num_of_nodes) {
-    this->unsolvedInstances.push_back(TSInstance::create_synthetic_instance(num_of_nodes));
+void controller::create_synthetic_instance(const int num_of_nodes) {
+    this->unsolvedInstances.push_back(ts_instance::create_synthetic_instance(num_of_nodes));
     std::cout << "created synthetic instance with: " << num_of_nodes << " nodes" << std::endl;
 }
 
-void Controller::solve(const int num_of_threads) {
+void controller::solve(const int num_of_threads) {
     if (this->unsolvedInstances.empty()) {
         std::cout << "Nothing to solve!" << std::endl;
         return;
@@ -140,7 +140,7 @@ void Controller::solve(const int num_of_threads) {
     }
 }
 
-void Controller::heuristic_combo() {
+void controller::heuristic_combo() {
     if (this->unsolvedInstances.empty()) {
         std::cout << "Nothing to approximate!" << std::endl;
         return;

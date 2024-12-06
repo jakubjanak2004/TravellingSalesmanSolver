@@ -3,11 +3,11 @@
 #include "../graph/Node.hpp"
 
 TEST_CASE("Get neighbour nodes should get nodes connected to our node with an edge") {
-    Node n1 = Node("a");
-    Node n2 = Node("b");
-    Node n3 = Node("not connected");
-    Edge e1 = Edge(&n1, &n2, 1);
-    Edge e2 = Edge(&n2, &n1, 1);
+    node n1 = node("a");
+    node n2 = node("b");
+    node n3 = node("not connected");
+    edge e1 = edge(&n1, &n2, 1);
+    edge e2 = edge(&n2, &n1, 1);
     n1.add_edge(&e1);
     n1.add_edge(&e2);
     n2.add_edge(&e1);
@@ -30,10 +30,10 @@ TEST_CASE("Get neighbour nodes should get nodes connected to our node with an ed
 }
 
 TEST_CASE("Test the operators '<' and '>'", "[all]") {
-    Node n1 = Node("a");
-    Node n2 =  Node("aa");
-    Node n3 = Node("ab");
-    Node n4 = Node("b");
+    node n1 = node("a");
+    node n2 =  node("aa");
+    node n3 = node("ab");
+    node n4 = node("b");
     SECTION("'a' < 'aa' should be true, testing both < and >") {
         REQUIRE(n1 < n2);
         REQUIRE(n2 > n1);
@@ -49,8 +49,8 @@ TEST_CASE("Test the operators '<' and '>'", "[all]") {
 }
 
 TEST_CASE("Test the operators '==' and '!='", "[all]") {
-    Node n1 = Node("a");
-    Node n2 = Node("b");
+    node n1 = node("a");
+    node n2 = node("b");
     SECTION("Node should be equal with itself") {
         REQUIRE(n1 == n1);
         REQUIRE_FALSE(n1 != n1);

@@ -4,10 +4,10 @@
 #include "../graph/Node.hpp"
 #include <set>
 
-class Helper {
+class helper {
 public:
     static int get_random_integer(int from, int to);
-    static std::set<std::vector<Node> > convert_to_node_set(const std::vector<std::vector<Node> > &paths);
+    static std::set<std::vector<node> > convert_to_node_set(const std::vector<std::vector<node> > &paths);
 };
 
 

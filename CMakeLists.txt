@@ -39,19 +39,19 @@ endif()
 add_executable(tss
         main.cpp
         graph/Node.cpp
-        graph/Node.hpp
+        graph/node.hpp
         graph/Edge.cpp
-        graph/Edge.hpp
+        graph/edge.hpp
         graph/Graph.cpp
-        graph/Graph.hpp
-        graph/TSInstance.cpp
-        graph/TSInstance.hpp
-        files/FileManager.cpp
-        files/FileManager.hpp
+        graph/graph.hpp
+        graph/ts_instance.cpp
+        graph/ts_instance.hpp
+        files/file_manager.cpp
+        files/file_manager.hpp
         controller/Controller.cpp
-        controller/Controller.hpp
+        controller/controller.hpp
         helper/Helper.cpp
-        helper/Helper.hpp
+        helper/helper.hpp
 )
 
 # Link the Graphviz and Boost libraries
@@ -64,44 +64,44 @@ add_executable(run_tests
         test/catch.hpp
         test/catch.cpp
         test/test_main.cpp
-        test/test_TSInstance.cpp
+        test/test_ts_instance.cpp
         test/test_Edge.cpp
         test/test_Node.cpp
         test/test_Graph.cpp
 
         graph/Node.cpp
-        graph/Node.hpp
+        graph/node.hpp
         graph/Edge.cpp
-        graph/Edge.hpp
+        graph/edge.hpp
         graph/Graph.cpp
-        graph/Graph.hpp
-        graph/TSInstance.cpp
-        graph/TSInstance.hpp
-        files/FileManager.cpp
-        files/FileManager.hpp
+        graph/graph.hpp
+        graph/ts_instance.cpp
+        graph/ts_instance.hpp
+        files/file_manager.cpp
+        files/file_manager.hpp
         controller/Controller.cpp
-        controller/Controller.hpp
+        controller/controller.hpp
         helper/Helper.cpp
-        helper/Helper.hpp
+        helper/helper.hpp
 )
 
 add_executable(stats
         files/stats_main.cpp
 
         graph/Node.cpp
-        graph/Node.hpp
+        graph/node.hpp
         graph/Edge.cpp
-        graph/Edge.hpp
+        graph/edge.hpp
         graph/Graph.cpp
-        graph/Graph.hpp
-        graph/TSInstance.cpp
-        graph/TSInstance.hpp
-        files/FileManager.cpp
-        files/FileManager.hpp
+        graph/graph.hpp
+        graph/ts_instance.cpp
+        graph/ts_instance.hpp
+        files/file_manager.cpp
+        files/file_manager.hpp
         controller/Controller.cpp
-        controller/Controller.hpp
+        controller/controller.hpp
         helper/Helper.cpp
-        helper/Helper.hpp
+        helper/helper.hpp
 )
 
 target_link_libraries(run_tests ${GRAPHVIZ_LIBRARIES} Boost::system Boost::program_options)

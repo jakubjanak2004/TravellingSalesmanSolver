@@ -1,7 +1,7 @@
-#include "Helper.hpp"
+#include "helper.hpp"
 #include <random>
 
-int Helper::get_random_integer(const int from, const int to) {
+int helper::get_random_integer(const int from, const int to) {
     std::random_device rd;
     std::mt19937 rng(rd());
 
@@ -10,8 +10,8 @@ int Helper::get_random_integer(const int from, const int to) {
     return intDist(rng);
 }
 
-std::set<std::vector<Node> > Helper::convert_to_node_set(const std::vector<std::vector<Node> > &paths) {
-    std::set<std::vector<Node> > nodeSet;
+std::set<std::vector<node> > helper::convert_to_node_set(const std::vector<std::vector<node> > &paths) {
+    std::set<std::vector<node> > nodeSet;
     for (const auto &path: paths) {
         nodeSet.insert(path);
     }

@@ -1,6 +1,5 @@
-#include "controller/Controller.hpp"
+#include "controller/controller.hpp"
 
-int main(int argc, char *argv[]) {
-    auto controller = Controller();
-    controller.run(argc, argv);
+int main(const int argc, char *argv[]) {
+    controller().run(argc, argv);
 }

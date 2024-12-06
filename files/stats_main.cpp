@@ -1,4 +1,4 @@
-#include "../graph/TSInstance.hpp"
+#include "../graph/ts_instance.hpp"
 #include "../helper/Helper.hpp"
 
 #include <fstream>
@@ -36,7 +36,7 @@ void compare_brute_force_solve() {
     for (int i = 3; i <= max_instance_size; i++) {
         for (int j = 1; j <= data_per_instance_size; j++) {
             std::cout << "K(" + std::to_string(i) + ") num:" + std::to_string(j) << std::endl;
-            std::unique_ptr<TSInstance> instance = TSInstance::create_synthetic_instance(i);
+            std::unique_ptr<ts_instance> instance = ts_instance::create_synthetic_instance(i);
 
             // solve
             auto start = std::chrono::high_resolution_clock::now();
@@ -51,8 +51,8 @@ void compare_brute_force_solve() {
             data_to_csv.push_back(std::to_string(i) + ", brute_force, " + std::to_string(time.count()));
 
             // test the correctness
-            const std::set<std::vector<Node> > solveResult = Helper::convert_to_node_set(solve_paths);
-            const std::set<std::vector<Node> > bruteForceResult = Helper::convert_to_node_set(
+            const std::set<std::vector<node> > solveResult = helper::convert_to_node_set(solve_paths);
+            const std::set<std::vector<node> > bruteForceResult = helper::convert_to_node_set(
                 brute_force_paths);
         }
     }
@@ -67,7 +67,7 @@ void compare_bb_and_bb_parallel() {
     for (int i = 3; i <= max_instance_size; i++) {
         for (int j = 1; j <= data_per_instance_size; j++) {
             std::cout << "K(" + std::to_string(i) + ") num:" + std::to_string(j) << std::endl;
-            std::unique_ptr<TSInstance> instance = TSInstance::create_synthetic_instance(i);
+            std::unique_ptr<ts_instance> instance = ts_instance::create_synthetic_instance(i);
 
             // solve
             auto start = std::chrono::high_resolution_clock::now();
@@ -82,8 +82,8 @@ void compare_bb_and_bb_parallel() {
             data_to_csv.push_back(std::to_string(i) + ", bb_parallel, " + std::to_string(time.count()));
 
             // test the correctness
-            const std::set<std::vector<Node> > solveResult = Helper::convert_to_node_set(solve_paths);
-            const std::set<std::vector<Node> > solve_parallel_result = Helper::convert_to_node_set(
+            const std::set<std::vector<node> > solveResult = helper::convert_to_node_set(solve_paths);
+            const std::set<std::vector<node> > solve_parallel_result = helper::convert_to_node_set(
                 brute_force_paths);
         }
     }

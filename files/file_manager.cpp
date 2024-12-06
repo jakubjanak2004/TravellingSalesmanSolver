@@ -1,7 +1,7 @@
-#include "FileManager.hpp"
-#include "../graph/TSInstance.hpp"
-#include "../graph/Node.hpp"
-#include "../graph/Edge.hpp"
+#include "file_manager.hpp"
+#include "../graph/ts_instance.hpp"
+#include "../graph/node.hpp"
+#include "../graph/edge.hpp"
 
 #include <graphviz/gvc.h>
 #include <graphviz/cgraph.h>
@@ -9,11 +9,11 @@
 #include <iostream>
 #include <map>
 
-const std::string FileManager::INSTANCES_PATH = "../files/instances";
+const std::string file_manager::INSTANCES_PATH = "../files/instances";
 
-const std::string FileManager::RESULTS_PATH = "../files/results";
+const std::string file_manager::RESULTS_PATH = "../files/results";
 
-std::unique_ptr<TSInstance> FileManager::read_dot_file(const std::string &file_name) {
+std::unique_ptr<ts_instance> file_manager::read_dot_file(const std::string &file_name) {
     // graphviz context
     GVC_t *gvc = gvContext();
 
@@ -42,26 +42,26 @@ std::unique_ptr<TSInstance> FileManager::read_dot_file(const std::string &file_n
     }
 
     // graph variables
-    std::map<std::string, std::unique_ptr<Node> > nodesMap;
-    std::vector<std::shared_ptr<Node> > nodes;
-    std::vector<std::shared_ptr<Edge> > edges;
+    std::map<std::string, std::unique_ptr<node> > nodesMap;
+    std::vector<std::shared_ptr<node> > nodes;
+    std::vector<std::shared_ptr<edge> > edges;
 
     // Iterate over the nodes
-    for (Agnode_t *node = agfstnode(graph); node; node = agnxtnode(graph, node)) {
-        std::string nodeName = agnameof(node);
-        nodesMap.insert(std::make_pair(nodeName, std::make_unique<Node>(nodeName)));
+    for (Agnode_t *n = agfstnode(graph); n; n = agnxtnode(graph, n)) {
+        std::string nodeName = agnameof(n);
+        nodesMap.insert(std::make_pair(nodeName, std::make_unique<node>(nodeName)));
     }
 
     // Iterate over the edges (directed)
     for (Agnode_t *node = agfstnode(graph); node; node = agnxtnode(graph, node)) {
-        for (Agedge_t *edge = agfstout(graph, node); edge; edge = agnxtout(graph, edge)) {
-            Agnode_t *tail = agtail(edge); // Source node
-            Agnode_t *head = aghead(edge); // Destination node
+        for (Agedge_t *e = agfstout(graph, node); e; e = agnxtout(graph, e)) {
+            Agnode_t *tail = agtail(e); // Source node
+            Agnode_t *head = aghead(e); // Destination node
 
-            const std::string weightStr = agget(edge, const_cast<char*>("weight"));
+            const std::string weightStr = agget(e, const_cast<char*>("weight"));
             double weight = std::stod(weightStr);
 
-            auto edgePtr = std::make_unique<Edge>(
+            auto edgePtr = std::make_unique<edge>(
                 nodesMap[agnameof(tail)].get(),
                 nodesMap[agnameof(head)].get(),
                 weight
@@ -81,10 +81,10 @@ std::unique_ptr<TSInstance> FileManager::read_dot_file(const std::string &file_n
         nodes.push_back(std::move(snd));
     }
 
-    return std::make_unique<TSInstance>(std::move(nodes), std::move(edges));
+    return std::make_unique<ts_instance>(std::move(nodes), std::move(edges));
 }
 
-std::vector<std::filesystem::directory_entry> FileManager::get_dot_instances(const std::string& directory_path) {
+std::vector<std::filesystem::directory_entry> file_manager::get_dot_instances(const std::string& directory_path) {
     std::vector<std::filesystem::directory_entry> entries;
     for (const auto &entry: std::filesystem::directory_iterator(directory_path)) {
         if (entry.is_regular_file() && entry.path().extension() == ".dot") {
@@ -95,7 +95,7 @@ std::vector<std::filesystem::directory_entry> FileManager::get_dot_instances(con
     return entries;
 }
 
-void FileManager::save_solution(const std::string &file_name, const std::string &file_content) {
+void file_manager::save_solution(const std::string &file_name, const std::string &file_content) {
     // creating the results folder if not exists
     if (!std::filesystem::exists(RESULTS_PATH)) {
         if (std::filesystem::create_directory(RESULTS_PATH)) {

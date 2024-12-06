@@ -1,12 +1,12 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "../graph/TSInstance.hpp"
+#include "../graph/ts_instance.hpp"
 #include <boost/program_options.hpp>
 
 
-class Controller {
-    std::deque<std::unique_ptr<TSInstance>> unsolvedInstances;
+class controller {
+    std::deque<std::unique_ptr<ts_instance>> unsolvedInstances;
     boost::program_options::options_description desc = {"Arguments"};
 
     static void print_header();
@@ -22,7 +22,7 @@ class Controller {
     void heuristic_combo();
 
 public:
-    Controller();
+    controller();
 
     int run(int argc, char *argv[]);
 
