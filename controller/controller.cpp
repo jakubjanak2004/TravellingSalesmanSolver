@@ -1,4 +1,5 @@
 #include "controller.hpp"
+#include "../helper/helper.hpp"
 #include "../files/file_manager.hpp"
 
 
@@ -110,7 +111,7 @@ void controller::auto_load_instances() {
 }
 
 void controller::create_synthetic_instance(const int num_of_nodes) {
-    this->unsolvedInstances.push_back(ts_instance::create_synthetic_instance(num_of_nodes));
+    this->unsolvedInstances.push_back(helper::create_synthetic_instance(num_of_nodes));
     std::cout << "created synthetic instance with: " << num_of_nodes << " nodes" << std::endl;
 }
 

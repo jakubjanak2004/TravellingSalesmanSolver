@@ -36,7 +36,7 @@ void compare_brute_force_solve() {
     for (int i = 3; i <= max_instance_size; i++) {
         for (int j = 1; j <= data_per_instance_size; j++) {
             std::cout << "K(" + std::to_string(i) + ") num:" + std::to_string(j) << std::endl;
-            std::unique_ptr<ts_instance> instance = ts_instance::create_synthetic_instance(i);
+            std::unique_ptr<ts_instance> instance = helper::create_synthetic_instance(i);
 
             // solve
             auto start = std::chrono::high_resolution_clock::now();
@@ -67,7 +67,7 @@ void compare_bb_and_bb_parallel() {
     for (int i = 3; i <= max_instance_size; i++) {
         for (int j = 1; j <= data_per_instance_size; j++) {
             std::cout << "K(" + std::to_string(i) + ") num:" + std::to_string(j) << std::endl;
-            std::unique_ptr<ts_instance> instance = ts_instance::create_synthetic_instance(i);
+            std::unique_ptr<ts_instance> instance = helper::create_synthetic_instance(i);
 
             // solve
             auto start = std::chrono::high_resolution_clock::now();

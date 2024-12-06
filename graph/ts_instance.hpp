@@ -39,9 +39,7 @@ class ts_instance : public graph {
 public:
     ts_instance(std::vector<std::shared_ptr<node> > nodes, std::vector<std::shared_ptr<edge> > edges);
 
-    static std::unique_ptr<ts_instance> create_synthetic_instance(int numOfNodes);
-
-    std::vector<std::vector<node> > solve(int num_of_threads = 1); // not multithreaded by default
+    std::vector<std::vector<node> > solve(int num_of_threads = 1);
 
     [[nodiscard]] std::vector<std::vector<node>> brute_force_solve() const;
 
@@ -57,4 +55,4 @@ public:
 };
 
 
-#endif //TSINSTANCE_H
+#endif
