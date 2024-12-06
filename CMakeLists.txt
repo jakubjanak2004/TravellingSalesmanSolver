@@ -83,6 +83,8 @@ add_executable(run_tests
         controller/controller.hpp
         helper/Helper.cpp
         helper/helper.hpp
+        graph/strategy/solve_strategy.hpp
+        graph/strategy/solve_strategy.hpp
 )
 
 add_executable(stats
