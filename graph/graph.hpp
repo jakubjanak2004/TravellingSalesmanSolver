@@ -1,8 +1,8 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include "Node.hpp"
-#include "Edge.hpp"
+#include "node.hpp"
+#include "edge.hpp"
 
 #include <vector>
 

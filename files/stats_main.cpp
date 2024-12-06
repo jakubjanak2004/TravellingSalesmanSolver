@@ -1,5 +1,5 @@
 #include "../graph/ts_instance.hpp"
-#include "../helper/Helper.hpp"
+#include "../helper/helper.hpp"
 
 #include <fstream>
 #include <iostream>

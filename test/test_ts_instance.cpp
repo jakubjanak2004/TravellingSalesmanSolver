@@ -1,6 +1,6 @@
 #include "catch.hpp"
 #include "../graph/ts_instance.hpp"
-#include "../helper/Helper.hpp"
+#include "../helper/helper.hpp"
 
 TEST_CASE("Test Solve Correctness", "[all]") {
     std::unique_ptr<ts_instance> instance;
