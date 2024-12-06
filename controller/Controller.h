@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 9/15/24.
-//
-
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 

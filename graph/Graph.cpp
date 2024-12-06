@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 9/14/24.
-//
-
 #include "Graph.h"
 
 Graph::Graph(std::vector<std::shared_ptr<Node>> nodes, std::vector<std::shared_ptr<Edge>> edges)

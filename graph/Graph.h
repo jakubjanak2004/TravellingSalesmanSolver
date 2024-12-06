@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 9/14/24.
-//
-
 #ifndef GRAPH_H
 #define GRAPH_H
 

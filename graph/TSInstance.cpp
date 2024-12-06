@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 9/14/24.
-//
-
 #include "../files/FileManager.h"
 #include "../helper/Helper.h"
 #include "TSInstance.h"

@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 11/8/24.
-//
-
 #include "catch.hpp"
 #include "../graph/Edge.h"
 #include "../graph/Node.h"

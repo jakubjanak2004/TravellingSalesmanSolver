@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 9/14/24.
-//
-
 #include "FileManager.h"
 #include "../graph/TSInstance.h"
 #include "../graph/Node.h"

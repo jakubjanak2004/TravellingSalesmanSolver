@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 9/15/24.
-//
-
 #include "Controller.h"
 #include "../files/FileManager.h"
 

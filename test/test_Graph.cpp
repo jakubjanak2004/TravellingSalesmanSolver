@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 11/8/24.
-//
-
 #include "catch.hpp"
 #include "../graph/Graph.h"
 

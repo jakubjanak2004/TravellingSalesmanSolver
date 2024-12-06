@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 9/14/24.
-//
-
 #ifndef TSINSTANCE_H
 #define TSINSTANCE_H
 

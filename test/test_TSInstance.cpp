@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 9/19/24.
-//
-
 #include "catch.hpp"
 #include "../graph/TSInstance.h"
 #include "../helper/Helper.h"

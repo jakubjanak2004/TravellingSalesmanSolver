@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 9/14/24.
-//
-
 #include "Edge.h"
 
 Edge::Edge(Node *sourceNode, Node *targetNode, const double weight){

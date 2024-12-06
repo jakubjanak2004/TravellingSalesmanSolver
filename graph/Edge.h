@@ -1,7 +1,3 @@
-//
-// Created by Jakub Janak on 9/14/24.
-//
-
 #ifndef EDGE_H
 #define EDGE_H
 
