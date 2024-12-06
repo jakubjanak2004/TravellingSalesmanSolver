@@ -16,6 +16,10 @@ public:
 
     static std::vector<std::filesystem::directory_entry> get_dot_instances(const std::string &directory_path);
 
+    static void folder_exists_check();
+
+    static void file_naming_conflicts_check(const std::string &file_name, std::string &output_file);
+
     static void save_solution(const std::string& file_name, const std::string& file_content);
 };
 
