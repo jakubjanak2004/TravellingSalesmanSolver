@@ -39,19 +39,19 @@ endif()
 add_executable(tss
         main.cpp
         graph/Node.cpp
-        graph/Node.h
+        graph/Node.hpp
         graph/Edge.cpp
-        graph/Edge.h
+        graph/Edge.hpp
         graph/Graph.cpp
-        graph/Graph.h
+        graph/Graph.hpp
         graph/TSInstance.cpp
-        graph/TSInstance.h
+        graph/TSInstance.hpp
         files/FileManager.cpp
-        files/FileManager.h
+        files/FileManager.hpp
         controller/Controller.cpp
-        controller/Controller.h
+        controller/Controller.hpp
         helper/Helper.cpp
-        helper/Helper.h
+        helper/Helper.hpp
 )
 
 # Link the Graphviz and Boost libraries
@@ -70,38 +70,38 @@ add_executable(run_tests
         test/test_Graph.cpp
 
         graph/Node.cpp
-        graph/Node.h
+        graph/Node.hpp
         graph/Edge.cpp
-        graph/Edge.h
+        graph/Edge.hpp
         graph/Graph.cpp
-        graph/Graph.h
+        graph/Graph.hpp
         graph/TSInstance.cpp
-        graph/TSInstance.h
+        graph/TSInstance.hpp
         files/FileManager.cpp
-        files/FileManager.h
+        files/FileManager.hpp
         controller/Controller.cpp
-        controller/Controller.h
+        controller/Controller.hpp
         helper/Helper.cpp
-        helper/Helper.h
+        helper/Helper.hpp
 )
 
 add_executable(stats
         files/stats_main.cpp
 
         graph/Node.cpp
-        graph/Node.h
+        graph/Node.hpp
         graph/Edge.cpp
-        graph/Edge.h
+        graph/Edge.hpp
         graph/Graph.cpp
-        graph/Graph.h
+        graph/Graph.hpp
         graph/TSInstance.cpp
-        graph/TSInstance.h
+        graph/TSInstance.hpp
         files/FileManager.cpp
-        files/FileManager.h
+        files/FileManager.hpp
         controller/Controller.cpp
-        controller/Controller.h
+        controller/Controller.hpp
         helper/Helper.cpp
-        helper/Helper.h
+        helper/Helper.hpp
 )
 
 target_link_libraries(run_tests ${GRAPHVIZ_LIBRARIES} Boost::system Boost::program_options)
