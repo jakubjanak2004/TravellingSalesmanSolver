@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../graph/Graph.h"
+#include "../graph/Graph.hpp"
 
 TEST_CASE("Test Constructor", "[all]") {
     SECTION("empty nodes vector should throw invalid_argument") {

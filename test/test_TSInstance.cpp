@@ -1,6 +1,6 @@
 #include "catch.hpp"
-#include "../graph/TSInstance.h"
-#include "../helper/Helper.h"
+#include "../graph/TSInstance.hpp"
+#include "../helper/Helper.hpp"
 
 TEST_CASE("Test Solve Correctness", "[all]") {
     std::unique_ptr<TSInstance> instance;

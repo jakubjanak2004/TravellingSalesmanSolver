@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../graph/Edge.h"
+#include "../graph/Edge.hpp"
 
 TEST_CASE("Test The Operators '>' and '<'", "[all]") {
     Node n1 = Node("A");

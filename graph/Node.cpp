@@ -1,6 +1,6 @@
-#include "Node.h"
+#include "Node.hpp"
 
-#include "Edge.h"
+#include "Edge.hpp"
 
 Node::Node(std::string name) {
     this->name = std::move(name);

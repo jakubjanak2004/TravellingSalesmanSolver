@@ -1,4 +1,4 @@
-#include "Graph.h"
+#include "Graph.hpp"
 
 Graph::Graph(std::vector<std::shared_ptr<Node>> nodes, std::vector<std::shared_ptr<Edge>> edges)
     : nodes(std::move(nodes)), edges(std::move(edges)) {

@@ -1,5 +1,5 @@
-#include "../graph/TSInstance.h"
-#include "../helper/Helper.h"
+#include "../graph/TSInstance.hpp"
+#include "../helper/Helper.hpp"
 
 #include <fstream>
 #include <iostream>

@@ -1,7 +1,7 @@
-#include "../files/FileManager.h"
-#include "../helper/Helper.h"
-#include "TSInstance.h"
-#include "Node.h"
+#include "../files/FileManager.hpp"
+#include "../helper/Helper.hpp"
+#include "TSInstance.hpp"
+#include "Node.hpp"
 
 #include <sstream>
 

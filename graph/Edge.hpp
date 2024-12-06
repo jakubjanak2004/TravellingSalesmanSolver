@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "Node.h"
+#include "Node.hpp"
 
 class Edge {
     Node *sourceNode;

@@ -1,7 +1,7 @@
 #ifndef TSINSTANCE_H
 #define TSINSTANCE_H
 
-#include "Graph.h"
+#include "Graph.hpp"
 
 #include <boost/asio.hpp>
 #include <thread>

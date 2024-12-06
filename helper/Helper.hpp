@@ -1,7 +1,7 @@
 #ifndef HELPER_H
 #define HELPER_H
 
-#include "../graph/Node.h"
+#include "../graph/Node.hpp"
 #include <set>
 
 class Helper {

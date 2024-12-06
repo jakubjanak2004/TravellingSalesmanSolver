@@ -1,4 +1,4 @@
-#include "Helper.h"
+#include "Helper.hpp"
 #include <random>
 
 int Helper::get_random_integer(const int from, const int to) {

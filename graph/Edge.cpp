@@ -1,4 +1,4 @@
-#include "Edge.h"
+#include "Edge.hpp"
 
 Edge::Edge(Node *sourceNode, Node *targetNode, const double weight){
     this->sourceNode = sourceNode;

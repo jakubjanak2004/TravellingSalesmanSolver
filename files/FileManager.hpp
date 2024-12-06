@@ -4,7 +4,7 @@
 #include <string>
 #include <__filesystem/directory_entry.h>
 
-#include "../graph/TSInstance.h"
+#include "../graph/TSInstance.hpp"
 
 class FileManager {
 public:

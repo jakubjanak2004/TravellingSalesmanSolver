@@ -1,4 +1,4 @@
-#include "controller/Controller.h"
+#include "controller/Controller.hpp"
 
 int main(int argc, char *argv[]) {
     auto controller = Controller();

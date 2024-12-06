@@ -1,7 +1,7 @@
-#include "FileManager.h"
-#include "../graph/TSInstance.h"
-#include "../graph/Node.h"
-#include "../graph/Edge.h"
+#include "FileManager.hpp"
+#include "../graph/TSInstance.hpp"
+#include "../graph/Node.hpp"
+#include "../graph/Edge.hpp"
 
 #include <graphviz/gvc.h>
 #include <graphviz/cgraph.h>

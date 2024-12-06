@@ -1,7 +1,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "../graph/TSInstance.h"
+#include "../graph/TSInstance.hpp"
 #include <boost/program_options.hpp>
 
 
