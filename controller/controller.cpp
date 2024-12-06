@@ -2,7 +2,6 @@
 #include "../helper/helper.hpp"
 #include "../files/file_manager.hpp"
 
-
 #include <iostream>
 #include <random>
 #include <filesystem>
@@ -17,7 +16,8 @@ controller::controller() {
             ("create-synthetic-instance,c", boost::program_options::value<int>(),
              "Create synthetic instance (fully connected graph) with n vertices")
             ("solve,s", "Solve the instances in queue")
-            ("solve-parallel,p", boost::program_options::value<int>(), "Parallel solve the instances in queue, with number of threads")
+            ("solve-parallel,p", boost::program_options::value<int>(),
+             "Parallel solve the instances in queue, with number of threads")
             ("heuristic-combo,e", "Use nearest neighbour + 2Opt to approximate the best path");
 }
 
@@ -34,7 +34,7 @@ void controller::print_header() {
     std::cout << "\033[0m";
 }
 
-int controller::run(int argc, char *argv[]) {
+int controller::run(const int argc, char *argv[]) {
     // print header every time
     print_header();
 
@@ -94,7 +94,8 @@ int controller::run(int argc, char *argv[]) {
 }
 
 void controller::load_instance(const std::string &file_name) {
-    std::unique_ptr<ts_instance> tsInstance = file_manager::read_dot_file(file_manager::INSTANCES_PATH + "/" + file_name);
+    std::unique_ptr<ts_instance> tsInstance = file_manager::read_dot_file(
+        file_manager::INSTANCES_PATH + "/" + file_name);
     if (tsInstance == nullptr) {
         return;
     }
