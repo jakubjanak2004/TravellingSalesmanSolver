@@ -13,6 +13,7 @@ const std::string file_manager::INSTANCES_PATH = "../files/instances";
 
 const std::string file_manager::RESULTS_PATH = "../files/results";
 
+// TODO: refactor the read dot file
 std::unique_ptr<ts_instance> file_manager::read_dot_file(const std::string &file_name) {
     // graphviz context
     GVC_t *gvc = gvContext();
@@ -95,8 +96,7 @@ std::vector<std::filesystem::directory_entry> file_manager::get_dot_instances(co
     return entries;
 }
 
-void file_manager::save_solution(const std::string &file_name, const std::string &file_content) {
-    // creating the results folder if not exists
+void file_manager::folder_exists_check() {
     if (!std::filesystem::exists(RESULTS_PATH)) {
         if (std::filesystem::create_directory(RESULTS_PATH)) {
             std::cout << "Created results directory: " << RESULTS_PATH << std::endl;
@@ -104,15 +104,24 @@ void file_manager::save_solution(const std::string &file_name, const std::string
             std::cout << "Error creating results directory: " << RESULTS_PATH << std::endl;
         }
     }
+}
 
-    // check for output file conflicts
+void file_manager::file_naming_conflicts_check(const std::string &file_name, std::string &output_file) {
     int num = 1;
-    std::string output_file;
     do {
         std::string number_string = (num == 1) ? "" : "_" + std::to_string(num);
         output_file = RESULTS_PATH + "/" + file_name + number_string + ".dot";
         num++;
     } while (std::filesystem::exists(output_file));
+}
+
+void file_manager::save_solution(const std::string &file_name, const std::string &file_content) {
+    // creating the results folder if not exists
+    folder_exists_check();
+
+    // check for output file conflicts
+    std::string output_file;
+    file_naming_conflicts_check(file_name, output_file);
 
     // Check if the file is open
     if (std::ofstream outFile(output_file); outFile.is_open()) {
