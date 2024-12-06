@@ -1,5 +1,5 @@
-#include "Node.hpp"
-#include "Edge.hpp"
+#include "node.hpp"
+#include "edge.hpp"
 
 node::node(std::string name) {
     this->name = std::move(name);
