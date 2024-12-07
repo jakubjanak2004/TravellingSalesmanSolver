@@ -52,6 +52,8 @@ public:
     void save(const std::string &fileName) const;
 
     [[nodiscard]] std::string to_string() const;
+
+    void reset_solution();
 };
 
 

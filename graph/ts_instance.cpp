@@ -288,3 +288,8 @@ std::string ts_instance::to_string() const {
     oss << "Travelling Salesman Instance with: " << this->nodes.size() << " nodes";
     return oss.str();
 }
+
+void ts_instance::reset_solution() {
+    bestHamiltonianPaths.clear();
+    minCost = std::numeric_limits<double>::infinity();
+}
