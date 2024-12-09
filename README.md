@@ -7,7 +7,8 @@ Users can also save the solution once the instance is solved; an option will be 
 
 ## The Problem Formulation
 
-The Traveling Salesman Problem (TSP) is a very famous problem in Computer Science.  
+The Traveling Salesman Problem (TSP) is a very famous problem in Computer Science. 
+Especially because a polynomial algorithm has not been found, therefore TSP is a NP-hard problem.
 The Traveling Salesman Problem (TSP) asks the following:  
 Given a list of cities and the distances between each pair of cities,  
 what is the shortest possible route that visits each city exactly once and returns to the origin city?
@@ -20,33 +21,61 @@ $N = \{v_1, v_2, \dots, v_n\} $ is a set of nodes,
 $E = \{e_1, e_2, \dots, e_n\} $ is a set of edges,  
 $w: E \to \mathbb{R}^+ $ is a weight function, returning the weight of an edge.
 
+An alternative definition for set $ E $ is that it is a relation on a set of nodes $ E \subseteq N \times N $.
+Then the weight function would be defined as $w: N \times N \to \mathbb{R}^+ $ or $ w: (v_i, v_j) \to \mathbb{R}^+ $ where $ v_i, v_j \in N $.
+
 The goal is to find a Hamiltonian cycle $H \subseteq E$ such that:
-1. Each node in \( N \) is visited exactly once, and at the end returns to the starting node.
-2. The total weight of \( H \) is minimal.
+1. Each node in $ N $ is visited exactly once, and at the end returns to the starting node.
+2. The total weight of $ H $ is minimal.
 
 ### Objective Function:
-Find a permutation \( \pi \) of \( \{1, 2, \dots, n\} \) such that the total cost of the cycle \( C(\pi) \) is minimized:  
-\[
-\min C(\pi) = \sum_{i=1}^{n} w(a(\pi(i), \pi(i+1)))
-\]
-where \( \pi(n + 1) \) is defined as \( \pi(1) \) to complete the cycle.
+Find a permutation $ \pi $ of $ \{1, 2, \dots, n\} $ such that the total cost of the cycle $ C(\pi) $ is minimized:
 
-The branch of mathematics that studies this type of optimization problem is called Combinatorial Optimization.
+$$
+\min C(\pi) = \sum_{i=1}^{n} w(v_{\pi(i)}, v_{\pi(i+1)})
+$$
+
+where $ \pi(n + 1) $ is defined as $ \pi(1) $ to complete the cycle.
 
 The easiest solution would be to find every permutation and see what the total weight would be.  
 Then, find the set of Hamiltonian cycles with the minimal path.  
-The problem here is that the computational complexity of such a solution is \( O(n!) \), and therefore,  
+The problem here is that the computational complexity of such an algorithm is $ O(n!) $, and therefore,  
 we will very quickly find ourselves in a place where we are unable to find the solution in normal time.
-(In practice, the complexity is \( (n-1)! \) because we can set some node to always be first).
+(In practice, the complexity is $ O\left( (n-1)! \right) $ because we can set one node to be always first). 
+If we was dealing with undirected graphs, the complexity would be $ O\left( \frac{(n-1)!}{2} \right) $.
+But that is still growing incredibly fast:  
+
+| $ n $ | $ O\left( (n-1)! \right) $            | $ O\left( \frac{(n-1)!}{2} \right) $       |
+|-------|---------------------|------------------|
+| 3     | 2                   | 1                |
+| 4     | 6                   | 3                |
+| 5     | 24                  | 12               |
+| 6     | 120                 | 60               |
+| 7     | 720                 | 360              |
+| 8     | 5,040               | 2,520            |
+| 9     | 40,320              | 20,160           |
+| 10    | 362,880             | 181,440          |
+| 11    | 3,628,800           | 1,814,400        |
+| 12    | 39,916,800          | 19,958,400       |
+| 13    | 479,001,600         | 239,500,800      |
+| 14    | 6,227,020,800       | 3,113,510,400    |
+| 15    | 87,178,291,200      | 43,589,145,600   |
+| 16    | 1,307,674,368,000   | 653,837,184,000  |
+| 17    | 20,922,789,888,000  | 10,461,394,944,000 |
+| 18    | 355,687,428,096,000 | 177,843,714,048,000 |
+| 19    | 6,402,373,705,728,000 | 3,201,186,852,864,000 |
+| 20    | 121,645,100,408,832,000 | 60,822,550,204,416,000 |
 
 The next possibility is to solve the Traveling Salesman by converting it into a Linear Program (LP).
+However, this was not an approach that I have used.
 
-A very popular algorithm is the Branch and Bound algorithm.  
-This algorithm finds the set of Hamiltonian paths that are minimal and is considered an exact algorithm.
+The Branch and Bound algorithm is a widely popular choice for solving TSP. 
+It is known for its strong practical performance and its ability to be parallelized with ease. 
+This makes it an excellent approach for my work.
 
 ## Approximation
 
-The most efficient way to obtain a good solution for a Traveling Salesman Problem instance is not by solving it exactly, but by finding a path that, while not necessarily optimal, is still very good.  
+The most efficient way to get a good solution for a Traveling Salesman Problem instance is not by solving it exactly, but by finding a path that, while not necessarily optimal, is still very good.  
 This method, known as approximation, can be performed much more quickly than exact methods.  
 In real-life scenarios, approximation is often preferred over exact solutions, especially when dealing with large instances that contain many nodes and edges (e.g., 1,000 or 10,000 nodes).  
 ![Approximate vs Exact Solution](data_analysis/exact_vs_approx.png)
@@ -56,14 +85,6 @@ In real-life scenarios, approximation is often preferred over exact solutions, e
 Branch and Bound (B&B) are a powerful algorithms for finding exact solutions to problems in Combinatorial Optimization, particularly Linear Programs.  
 It systematically explores the search space while eliminating branches (subproblems) that cannot lead to a better solution than the current best.  
 We will be using the B&B algorithm for solving the Traveling Salesman Problem (TSP).
-
-The solution time with Branch and Bound is significantly better when compared to the brute-force approach:
-
-![Brute force vs B&B](data_analysis/brute_force_vs_branch_bound.png)
-
-However, even with B&B, we cannot always guarantee that the problem will be solved in a reasonable amount of time.
-
-
 
 ### Steps
 
@@ -82,6 +103,24 @@ However, even with B&B, we cannot always guarantee that the problem will be solv
 5. **Termination**
    - The algorithm terminates when all tours have been either explored or pruned, and the current best solution is the optimal solution for the Traveling Salesman Problem (TSP).
 
+#### My bounding function
+I will use a basic bounding function due to its simplicity and fast execution. 
+While it is quick to implement and runs efficiently, 
+its main drawback is that it does not provide as aggressive a bound as more sophisticated methods, 
+such as those based on Minimum Spanning Trees (MST). 
+As a result, it may not prune the search space as effectively, 
+potentially leading to less optimal performance in comparison to more advanced bounding techniques.
+
+The function:
+
+$ N_v = \{v_1, v_2, \dots, v_n\} $ is the subpath chosen by the algorithm,  
+$ N_u = \{v_1, v_2, \dots, v_m\} = N \setminus N_v $ is the set of nodes not yet included in the path.
+$$ 
+b(N_v, N_u) = \sum_{i=1}^{n} w(v_{i}, v_{i+1}) +  \sum_{i=1}^{m} w(min(v_i))
+$$
+Here, $ \min(v) $ denotes the minimal outgoing edge $ e $ from node $ v $, where $ e = (v, w) $ and $ w \in N \setminus \{v\}$
+
+
 ### Pseudo-code:
 ```plaintext
 1. Initialize:
@@ -98,6 +137,12 @@ However, even with B&B, we cannot always guarantee that the problem will be solv
 
 3. Return best_solution as the optimal tour
 ```
+
+The solution time with Branch and Bound is significantly better when compared to the brute-force approach:
+
+![Brute force vs B&B](data_analysis/brute_force_vs_branch_bound.png)
+
+However, even with B&B, we cannot always guarantee that the problem will be solved in a reasonable amount of time.
 
 ### Parallelization
 
@@ -175,12 +220,8 @@ You need to specify the number of threads the program can use.
 This command will approximate the solution using the Nearest Neighbor & 2-Opt heuristic approach. 
 This is the same method used by the Branch and Bound and Branch and Bound Parallel algorithms to approximate solutions.
 
-### Load and solve
-```bash
-./tss load solve
-```
+### How to run?
 You need to load the instances first and then pick a solving method(or approximation).
-
 An example command to load all instances and solve using 10 threads:
 ```bash
 ./tss -a -p 10
