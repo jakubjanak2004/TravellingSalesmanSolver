@@ -158,10 +158,22 @@ To achieve this, I use two mutexes to ensure that updates are thread-safe.
 However, the biggest challenge is ensuring Depth-First Search (DFS) is used instead of Breadth-First Search (BFS). 
 To address this, the method call is added to the thread pool, but only for the first neighbor does the thread continue its search.
 
-The parallelized version of B&B performs much better than the synchronized version:
+The parallelized version of the branch and bound (B&B) algorithm significantly outperforms 
+the single-threaded version. 
+I compared the performance of both versions, with the parallel B&B using 10 threads, 
+as this setup provides the best efficiency on my current computer. 
+The results clearly show that the parallel version offers a substantial performance 
+improvement over the single-threaded approach.
+
 ![Brute Force vs B&B](data_analysis/synchronized_vs_parallel_bb.png)
 
-The scaling of the algorithm with varying numbers of threads is also impressive:
+The parallelized version of the branch and bound algorithm scales efficiently. 
+I tested its performance by solving the same instance of the problem using different numbers of threads, 
+ranging from 2 to 10. The scaling observed was impressive. 
+However, I was unable to test with more than 10 threads, as my computer's hardware limits its ability to efficiently parallelize beyond that point. 
+As a result, I am concerned that any further increase in thread count would not reflect true 
+scaling improvements but rather be hindered by hardware constraints.
+
 ![Brute Force vs B&B](data_analysis/algorithm_speedup_across_thread_counts.png)
 
 ## Implementation
