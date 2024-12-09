@@ -25,8 +25,8 @@ An alternative definition for set $ E $ is that it is a relation on a set of nod
 Then the weight function would be defined as $` w: N \times N \to \mathbb{R}^+ `$ or $` w: (v_i, v_j) \to \mathbb{R}^+ `$ where $` v_i, v_j \in N `$.
 
 The goal is to find a Hamiltonian cycle $` H \subseteq E `$ such that:
-1. Each node in $ N $ is visited exactly once, and at the end returns to the starting node.
-2. The total weight of $ H $ is minimal.
+1. Each node in $` N `$ is visited exactly once, and at the end returns to the starting node.
+2. The total weight of $` H `$ is minimal.
 
 ### Objective Function:
 Find a permutation $` \pi `$ of $` \{1, 2, \dots, n\} `$ such that the total cost of the cycle $` C(\pi) `$ is minimized:
@@ -114,12 +114,13 @@ potentially leading to less optimal performance in comparison to more advanced b
 The function:
 
 $` N_v = \{v_1, v_2, \dots, v_n\} `$ is the subpath chosen by the algorithm,  
-$` N_u = \{u_1, u_2, \dots, u_m\} = N \setminus N_v `$ is the set of nodes not yet included in the path.
-$$ 
-b(N_v, N_u) = \sum_{i=1}^{n} w(v_{i}, v_{i+1}) +  \sum_{i=1}^{m} w(min(u_i))
-$$
-Here, $` \min(u) `$ denotes the minimal outgoing edge $` e `$ from node $` u `$, where $` e = (u, v) `$ and $` v \in N \setminus \{u\} `$
+$` N_u = \{u_1, u_2, \dots, u_m\} = N \setminus N_v `$ is the set of nodes not yet included in the path.  
 
+$$ 
+b(N_v, N_u) = \sum_{i=1}^{n} w(v_{i}, v_{i+1}) + \sum_{i=1}^{m} w(min(u_i))
+$$
+
+Here, $` \min(u) `$ denotes the minimal outgoing edge $` e `$ from node $` u `$, where $` e = (u, v) `$ and $` v \in N \setminus \{u\} `$
 
 ### Pseudo-code:
 ```plaintext
