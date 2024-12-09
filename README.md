@@ -114,11 +114,11 @@ potentially leading to less optimal performance in comparison to more advanced b
 The function:
 
 $ N_v = \{v_1, v_2, \dots, v_n\} $ is the subpath chosen by the algorithm,  
-$ N_u = \{v_1, v_2, \dots, v_m\} = N \setminus N_v $ is the set of nodes not yet included in the path.
+$ N_u = \{u_1, u_2, \dots, u_m\} = N \setminus N_v $ is the set of nodes not yet included in the path.
 $$ 
-b(N_v, N_u) = \sum_{i=1}^{n} w(v_{i}, v_{i+1}) +  \sum_{i=1}^{m} w(min(v_i))
+b(N_v, N_u) = \sum_{i=1}^{n} w(v_{i}, v_{i+1}) +  \sum_{i=1}^{m} w(min(u_i))
 $$
-Here, $ \min(v) $ denotes the minimal outgoing edge $ e $ from node $ v $, where $ e = (v, w) $ and $ w \in N \setminus \{v\}$
+Here, $ \min(u) $ denotes the minimal outgoing edge $ e $ from node $ u $, where $ e = (u, v) $ and $ v \in N \setminus \{u\}$
 
 
 ### Pseudo-code:
