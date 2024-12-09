@@ -127,12 +127,13 @@ void ts_instance::branch_parallel(std::vector<node> visitedNodes, double cost, c
         }
     }
 
-    // After all neighbors are posted to the thread pool, handle the first neighbor immediately
+    // After all, neighbors are posted to the thread pool, handle the first neighbor immediately
     if (firstNeighbour) {
         branch_parallel(firstBranchVisNodes, firstSendCost, *firstNeighbour);
     }
 
     if (visitedNodes.size() == nodes.size()) {
+        std::lock_guard lock(m_1);
         cost += get_cost_between_nodes(visitedNodes.back(), startingNode);
         if (cost < get_min_cost()) {
             set_min_cost(cost);
@@ -204,12 +205,11 @@ double ts_instance::heuristic_combo() const {
 }
 
 double ts_instance::get_min_cost() {
-    std::lock_guard lock(m_1);
+    std::lock_guard lock(m_2);
     return this->minCost;
 }
 
 void ts_instance::set_min_cost(const double minCost) {
-    std::lock_guard lock(m_1);
     this->minCost = minCost;
 }
 
@@ -218,12 +218,10 @@ bool ts_instance::is_solved() const {
 }
 
 void ts_instance::clear_best_hams() {
-    std::lock_guard lock(m_1);
     this->bestHamiltonianPaths.clear();
 }
 
 void ts_instance::add_best_hamiltonian(const std::vector<node> &path) {
-    std::lock_guard lock(m_1);
     this->bestHamiltonianPaths.push_back(path);
 }
 

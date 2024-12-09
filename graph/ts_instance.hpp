@@ -8,7 +8,8 @@
 
 
 class ts_instance : public graph {
-    std::mutex m_1; // mutex for thread safety of minCost
+    std::mutex m_1;
+    std::mutex m_2;
     std::unique_ptr<boost::asio::thread_pool> pool;
     double minCost; // thread save minimal cost variable
     node startingNode;
@@ -28,8 +29,6 @@ class ts_instance : public graph {
 
     static double two_opt(std::vector<node> greedyPath);
 
-    [[nodiscard]] double get_min_cost();
-
     void set_min_cost(double minCost);
 
     void clear_best_hams();
@@ -37,6 +36,8 @@ class ts_instance : public graph {
     void add_best_hamiltonian(const std::vector<node> &path);
 
 public:
+    [[nodiscard]] double get_min_cost();
+
     ts_instance(std::vector<std::shared_ptr<node> > nodes, std::vector<std::shared_ptr<edge> > edges);
 
     std::vector<std::vector<node> > solve(int num_of_threads = 1);
