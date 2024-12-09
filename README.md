@@ -16,36 +16,36 @@ what is the shortest possible route that visits each city exactly once and retur
 It is not particularly hard to define the problem, but it is tough to solve it effectively (maybe even impossible).
 
 The mathematical definition would be:  
-Given a directed, weighted graph $G = (N, E)$, where:  
-$`N = \{v_1, v_2, \dots, v_n\} `$ is a set of nodes,  
-$E = \{e_1, e_2, \dots, e_n\} $ is a set of edges,  
-$w: E \to \mathbb{R}^+ $ is a weight function, returning the weight of an edge.
+Given a directed, weighted graph $` G = (N, E) `$, where:  
+$` N = \{v_1, v_2, \dots, v_n\} `$ is a set of nodes,  
+$` E = \{e_1, e_2, \dots, e_n\} `$ is a set of edges,  
+$` w: E \to \mathbb{R}^+ `$ is a weight function, returning the weight of an edge.
 
-An alternative definition for set $ E $ is that it is a relation on a set of nodes $ E \subseteq N \times N $.
-Then the weight function would be defined as $w: N \times N \to \mathbb{R}^+ $ or $ w: (v_i, v_j) \to \mathbb{R}^+ $ where $ v_i, v_j \in N $.
+An alternative definition for set $ E $ is that it is a relation on a set of nodes $` E \subseteq N \times N `$.
+Then the weight function would be defined as $` w: N \times N \to \mathbb{R}^+ `$ or $` w: (v_i, v_j) \to \mathbb{R}^+ `$ where $` v_i, v_j \in N `$.
 
-The goal is to find a Hamiltonian cycle $H \subseteq E$ such that:
+The goal is to find a Hamiltonian cycle $` H \subseteq E `$ such that:
 1. Each node in $ N $ is visited exactly once, and at the end returns to the starting node.
 2. The total weight of $ H $ is minimal.
 
 ### Objective Function:
-Find a permutation $ \pi $ of $ \{1, 2, \dots, n\} $ such that the total cost of the cycle $ C(\pi) $ is minimized:
+Find a permutation $` \pi `$ of $` \{1, 2, \dots, n\} `$ such that the total cost of the cycle $` C(\pi) `$ is minimized:
 
 $$
 \min C(\pi) = \sum_{i=1}^{n} w(v_{\pi(i)}, v_{\pi(i+1)})
 $$
 
-where $ \pi(n + 1) $ is defined as $ \pi(1) $ to complete the cycle.
+where $` \pi(n + 1) `$ is defined as $` \pi(1) `$ to complete the cycle.
 
 The easiest solution would be to find every permutation and see what the total weight would be.  
 Then, find the set of Hamiltonian cycles with the minimal path.  
-The problem here is that the computational complexity of such an algorithm is $ O(n!) $, and therefore,  
+The problem here is that the computational complexity of such an algorithm is $` O(n!) `$, and therefore,  
 we will very quickly find ourselves in a place where we are unable to find the solution in normal time.
-(In practice, the complexity is $ O\left( (n-1)! \right) $ because we can set one node to be always first). 
-If we was dealing with undirected graphs, the complexity would be $ O\left( \frac{(n-1)!}{2} \right) $.
+(In practice, the complexity is $` O\left( (n-1)! \right) `$ because we can set one node to be always first). 
+If we was dealing with undirected graphs, the complexity would be $` O\left( \frac{(n-1)!}{2} \right) `$.
 But that is still growing incredibly fast:  
 
-| $ n $ | $ O\left( (n-1)! \right) $            | $ O\left( \frac{(n-1)!}{2} \right) $       |
+| $` n `$ | $` O\left( (n-1)! \right) `$            | $` O\left( \frac{(n-1)!}{2} \right) `$       |
 |-------|---------------------|------------------|
 | 3     | 2                   | 1                |
 | 4     | 6                   | 3                |
@@ -113,12 +113,12 @@ potentially leading to less optimal performance in comparison to more advanced b
 
 The function:
 
-$ N_v = \{v_1, v_2, \dots, v_n\} $ is the subpath chosen by the algorithm,  
-$ N_u = \{u_1, u_2, \dots, u_m\} = N \setminus N_v $ is the set of nodes not yet included in the path.
+$` N_v = \{v_1, v_2, \dots, v_n\} `$ is the subpath chosen by the algorithm,  
+$` N_u = \{u_1, u_2, \dots, u_m\} = N \setminus N_v `$ is the set of nodes not yet included in the path.
 $$ 
 b(N_v, N_u) = \sum_{i=1}^{n} w(v_{i}, v_{i+1}) +  \sum_{i=1}^{m} w(min(u_i))
 $$
-Here, $ \min(u) $ denotes the minimal outgoing edge $ e $ from node $ u $, where $ e = (u, v) $ and $ v \in N \setminus \{u\}$
+Here, $` \min(u) `$ denotes the minimal outgoing edge $` e `$ from node $` u `$, where $` e = (u, v) `$ and $` v \in N \setminus \{u\} `$
 
 
 ### Pseudo-code:
