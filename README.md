@@ -15,12 +15,12 @@ what is the shortest possible route that visits each city exactly once and retur
 It is not particularly hard to define the problem, but it is tough to solve it effectively (maybe even impossible).
 
 The mathematical definition would be:  
-Given a directed, weighted graph \( G = (N, E) \), where:  
-\( N = \{v_1, v_2, \dots, v_n\} \) is a set of nodes,  
-\( E = \{e_1, e_2, \dots, e_n\} \) is a set of edges,  
-\( w: E \to \mathbb{R}^+ \) is a weight function, returning the weight of an edge.
+Given a directed, weighted graph $G = (N, E)$, where:  
+$N = \{v_1, v_2, \dots, v_n\} $ is a set of nodes,  
+$E = \{e_1, e_2, \dots, e_n\} $ is a set of edges,  
+$w: E \to \mathbb{R}^+ $ is a weight function, returning the weight of an edge.
 
-The goal is to find a Hamiltonian cycle \( H \subseteq E \) such that:
+The goal is to find a Hamiltonian cycle $H \subseteq E$ such that:
 1. Each node in \( N \) is visited exactly once, and at the end returns to the starting node.
 2. The total weight of \( H \) is minimal.
 
