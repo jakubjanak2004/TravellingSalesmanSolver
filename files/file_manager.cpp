@@ -46,24 +46,11 @@ bool file_manager::load_graph(const std::string &file_name, GVC_t *gvc, Agraph_t
     return false;
 }
 
-// TODO: refactor the read dot file
-std::unique_ptr<ts_instance> file_manager::read_dot_file(const std::string &file_name) {
-    // graphviz context
-    GVC_t *gvc = gvContext();
-
-    Agraph_t *graph;
-    std::unique_ptr<ts_instance> value1;
-    if (load_graph(file_name, gvc, graph, value1)) return value1;
-
-    // graph variables
-    std::map<std::string, std::unique_ptr<node> > nodesMap;
-    std::vector<std::shared_ptr<node> > nodes;
-    std::vector<std::shared_ptr<edge> > edges;
-
+void file_manager::load_graph_into_program(Agraph_t *graph, std::map<std::string, std::shared_ptr<node>>& nodesMap, std::vector<std::shared_ptr<edge>>& edges) {
     // Iterate over the nodes
     for (Agnode_t *n = agfstnode(graph); n; n = agnxtnode(graph, n)) {
         std::string nodeName = agnameof(n);
-        nodesMap.insert(std::make_pair(nodeName, std::make_unique<node>(nodeName)));
+        nodesMap.insert(std::make_pair(nodeName, std::make_shared<node>(nodeName)));
     }
 
     // Iterate over the edges (directed)
@@ -84,6 +71,24 @@ std::unique_ptr<ts_instance> file_manager::read_dot_file(const std::string &file
             edges.push_back(std::move(edgePtr));
         }
     }
+}
+
+std::unique_ptr<ts_instance> file_manager::read_dot_file(const std::string &file_name) {
+    // graphviz context
+    GVC_t *gvc = gvContext();
+
+    // loading graph from a file
+    Agraph_t *graph;
+    std::unique_ptr<ts_instance> value1;
+    if (load_graph(file_name, gvc, graph, value1)) return value1;
+
+    // graph variables
+    std::map<std::string, std::shared_ptr<node> > nodesMap;
+    std::vector<std::shared_ptr<node> > nodes;
+    std::vector<std::shared_ptr<edge> > edges;
+
+    // converting graph into vectors of nodes and edges
+    load_graph_into_program(graph, nodesMap, edges);
 
     // Free the graph and close the context
     agclose(graph);
