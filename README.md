@@ -21,7 +21,7 @@ $` N = \{v_1, v_2, \dots, v_n\} `$ is a set of nodes,
 $` E = \{e_1, e_2, \dots, e_n\} `$ is a set of edges,  
 $` w: E \to \mathbb{R}^+ `$ is a weight function, returning the weight of an edge.
 
-An alternative definition for set $ E $ is that it is a relation on a set of nodes $` E \subseteq N \times N `$.
+An alternative definition for set $` E `$ is that it is a relation on a set of nodes $` E \subseteq N \times N `$.
 Then the weight function would be defined as $` w: N \times N \to \mathbb{R}^+ `$ or $` w: (v_i, v_j) \to \mathbb{R}^+ `$ where $` v_i, v_j \in N `$.
 
 The goal is to find a Hamiltonian cycle $` H \subseteq E `$ such that:
