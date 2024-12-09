@@ -132,8 +132,10 @@ Here, $ \min(v) $ denotes the minimal outgoing edge $ e $ from node $ v $, where
    - Connect the neighbour to the current sub-tour
    - If the bound is <= minimal tour, call recursive search()
    - If the length of the tour equals the number of nodes:
-      - If the cost is less than the minimal tour cost, clear the set of best tours and add the current tour
-      - Else if the cost is the same as the minimal cost, add the current tour to the set of best tours
+      - If the cost is less than the minimal tour cost, 
+            clear the set of best tours and add the current tour
+      - Else if the cost is the same as the minimal cost, 
+            add the current tour to the set of best tours
 
 3. Return best_solution as the optimal tour
 ```
