@@ -63,8 +63,8 @@ void compare_brute_force_solve() {
 }
 
 void compare_bb_and_bb_parallel() {
-    int max_instance_size = 13;
-    int data_per_instance_size = 20;
+    int max_instance_size = 12;
+    int data_per_instance_size = 30;
 
     for (int i = 3; i <= max_instance_size; i++) {
         for (int j = 1; j <= data_per_instance_size; j++) {
@@ -95,9 +95,9 @@ void compare_bb_and_bb_parallel() {
 }
 
 void compare_parallel_with_different_num_of_threads() {
-    int instance_size = 8;
+    int instance_size = 10;
     size_t max_number_of_threads = std::thread::hardware_concurrency();
-    int data_per_algo = 20;
+    int data_per_algo = 100;
 
     for (size_t j = 1; j <= data_per_algo; j++) {
         std::cout << "K(" + std::to_string(instance_size) + ") num:" + std::to_string(j) << std::endl;
@@ -114,9 +114,28 @@ void compare_parallel_with_different_num_of_threads() {
     write_to_csv(data_to_csv, "comparing_different_num_of_threads.csv");
 }
 
+void compare_approximation_vs_exact_solution() {
+    int max_instance_size = 10;
+    int data_per_instance_size = 100;
+    for (size_t i = 4; i <= max_instance_size; i++) {
+        for (int j = 0; j < data_per_instance_size; j++) {
+            std::cout << "K(" + std::to_string(i) + ") num:" << j << std::endl;
+            std::unique_ptr<ts_instance> instance = helper::create_synthetic_instance(i);
+
+            auto approximation = instance->heuristic_combo();
+            instance->solve();
+            auto exact_solution = instance->get_min_cost();
+            data_to_csv.push_back(
+                std::to_string(i) + ", " + std::to_string(approximation) + ", " + std::to_string(exact_solution));
+        }
+    }
+    write_to_csv(data_to_csv, "approximation_vs_exact_solution.csv");
+}
+
 int main() {
     set_stats_up();
     compare_brute_force_solve();
     compare_bb_and_bb_parallel();
     compare_parallel_with_different_num_of_threads();
+    compare_approximation_vs_exact_solution();
 }
