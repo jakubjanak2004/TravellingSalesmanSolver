@@ -17,7 +17,7 @@ It is not particularly hard to define the problem, but it is tough to solve it e
 
 The mathematical definition would be:  
 Given a directed, weighted graph $G = (N, E)$, where:  
-$N = \{v_1, v_2, \dots, v_n\} $ is a set of nodes,  
+$`N = \{v_1, v_2, \dots, v_n\} `$ is a set of nodes,  
 $E = \{e_1, e_2, \dots, e_n\} $ is a set of edges,  
 $w: E \to \mathbb{R}^+ $ is a weight function, returning the weight of an edge.
 
