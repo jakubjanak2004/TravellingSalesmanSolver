@@ -17,8 +17,7 @@ public:
 
     static bool load_graph(const std::string &file_name, GVC_t *gvc, Agraph_t *&graph, std::unique_ptr<ts_instance> &value1);
 
-    static void load_graph_into_program(Agraph_t *graph, std::map<std::string, std::shared_ptr<node>>& nodesMap,
-                                        std::vector<std::shared_ptr<edge>>& edges);
+    static void load_graph_into_program(Agraph_t *graph, std::map<std::string, std::shared_ptr<node> > &nodesMap, std::vector<std::shared_ptr<edge> > &edges);
 
     static std::unique_ptr<ts_instance> read_dot_file(const std::string &file_name);
 
@@ -28,7 +27,7 @@ public:
 
     static void file_naming_conflicts_check(const std::string &file_name, std::string &output_file);
 
-    static void save_solution(const std::string& file_name, const std::string& file_content);
+    static void save_solution(const std::string &file_name, const std::string &file_content);
 };
 
 
