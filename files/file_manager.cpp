@@ -13,25 +13,26 @@ const std::string file_manager::INSTANCES_PATH = "../files/instances";
 
 const std::string file_manager::RESULTS_PATH = "../files/results";
 
-// TODO: refactor the read dot file
-std::unique_ptr<ts_instance> file_manager::read_dot_file(const std::string &file_name) {
-    // graphviz context
-    GVC_t *gvc = gvContext();
-
+bool file_manager::load_graph(const std::string &file_name, GVC_t *gvc, Agraph_t *&graph, std::unique_ptr<ts_instance> &value1) {
     // Open the .dot file
     FILE *file = fopen(file_name.c_str(), "r");
+
+    // error opening the file
     if (!file) {
         std::cout << "Error opening file: " << file_name << " in: " << INSTANCES_PATH << std::endl;
-        return nullptr;
+        value1 = nullptr;
+        return true;
     }
 
-    // Parse the .dot file into a graph (digraph)
-    Agraph_t *graph = agread(file, nullptr);
+    // done a reading file
+    graph = agread(file, nullptr);
     fclose(file);
 
+    // graph isn't parsed
     if (!graph) {
         std::cout << "Error reading DOT file: " << file_name << std::endl;
-        return nullptr;
+        value1 = nullptr;
+        return true;
     }
 
     // Check if the graph is a digraph
@@ -39,8 +40,20 @@ std::unique_ptr<ts_instance> file_manager::read_dot_file(const std::string &file
         std::cout << "The graph in the file is not a directed graph (digraph)." << std::endl;
         agclose(graph);
         gvFreeContext(gvc);
-        return nullptr;
+        value1 = nullptr;
+        return true;
     }
+    return false;
+}
+
+// TODO: refactor the read dot file
+std::unique_ptr<ts_instance> file_manager::read_dot_file(const std::string &file_name) {
+    // graphviz context
+    GVC_t *gvc = gvContext();
+
+    Agraph_t *graph;
+    std::unique_ptr<ts_instance> value1;
+    if (load_graph(file_name, gvc, graph, value1)) return value1;
 
     // graph variables
     std::map<std::string, std::unique_ptr<node> > nodesMap;
