@@ -1,6 +1,6 @@
 #include "catch.hpp"
-#include "../graph/Edge.hpp"
-#include "../graph/Node.hpp"
+#include "../graph/edge.hpp"
+#include "../graph/node.hpp"
 
 TEST_CASE("Get neighbour nodes should get nodes connected to our node with an edge") {
     node n1 = node("a");
