@@ -1,6 +1,7 @@
 #include "controller.hpp"
 #include "../helper/helper.hpp"
 #include "../files/file_manager.hpp"
+#include "controller_strategy/controller_strategy.hpp"
 
 #include <iostream>
 #include <random>
@@ -8,7 +9,7 @@
 #include <fstream>
 #include <string>
 
-controller::controller() {
+controller::controller(): cont(this) {
     desc.add_options()
             ("help,h", "Print help message")
             ("load-instances,l", boost::program_options::value<std::string>(), "Specify load instances file")
@@ -35,7 +36,6 @@ void controller::print_header() {
 }
 
 int controller::run(const int argc, char *argv[]) {
-    // print header every time
     print_header();
 
     try {
@@ -43,54 +43,26 @@ int controller::run(const int argc, char *argv[]) {
         store(parse_command_line(argc, argv, desc), vm);
         notify(vm);
 
-        // Print help message
-        if (argc == 1 || vm.contains("help")) {
-            std::cout << desc << std::endl;
-            return 0;
+        const auto parsed = boost::program_options::command_line_parser(argc, argv).options(desc).allow_unregistered().run();
+
+        store(parsed, vm);
+        notify(vm);
+
+        // Check for unrecognized commands
+        auto unrecognized = collect_unrecognized(parsed.options, boost::program_options::include_positional);
+        if (!unrecognized.empty()) {
+            throw std::runtime_error("Unrecognized command: " + unrecognized[0]);
         }
 
-        // load / create instances
-        if (vm.contains("load-instances")) {
-            const std::string path = vm["load-instances"].as<std::string>();
-            load_instance(path);
-        }
-
-        if (vm.contains("auto-load-instances")) {
-            auto_load_instances();
-        }
-
-        if (vm.contains("create-synthetic-instance")) {
-            const int num_of_nodes = vm["create-synthetic-instance"].as<int>();
-            create_synthetic_instance(num_of_nodes);
-        }
-
-        // solving
-        if (vm.contains("solve")) {
-            solve();
-        }
-
-        if (vm.contains("solve-parallel")) {
-            const int num_of_threads = vm["solve-parallel"].as<int>();
-            if (num_of_threads <= 0) {
-                std::cerr << "Number of threads must be an integer >= 1" << std::endl;
-                return 1;
-            }
-            if (num_of_threads == 1) {
-                std::cerr << "For single threaded solving call --solve" << std::endl;
-            }
-            solve(num_of_threads);
-        }
-
-        // approximation
-        if (vm.contains("heuristic-combo")) {
-            heuristic_combo();
-        }
-        return 0;
-    } catch (const boost::program_options::error &ex) {
+        cont.run_strategy(argc, vm);
+    } catch (const std::runtime_error& error) {
+        std::cerr << error.what() << std::endl;
+        return 1;
+    }catch (const boost::program_options::error &ex) {
         std::cerr << "Error: " << ex.what() << "\n";
-        std::cerr << desc << "\n";
         return 1;
     }
+    return 0;
 }
 
 void controller::load_instance(const std::string &file_name) {
@@ -154,4 +126,8 @@ void controller::heuristic_combo() {
         std::cout << "Heuristic Approximation: " << result << std::endl;
         this->unsolvedInstances.pop_front();
     }
+}
+
+boost::program_options::options_description controller::get_desc() {
+    return desc;
 }
