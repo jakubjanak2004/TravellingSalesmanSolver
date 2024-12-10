@@ -50,6 +50,8 @@ add_executable(tss
         files/file_manager.hpp
         controller/Controller.cpp
         controller/controller.hpp
+        controller/controller_strategy/controller_strategy.cpp
+        controller/controller_strategy/controller_strategy.hpp
         helper/Helper.cpp
         helper/helper.hpp
 )
@@ -81,10 +83,10 @@ add_executable(run_tests
         files/file_manager.hpp
         controller/Controller.cpp
         controller/controller.hpp
+        controller/controller_strategy/controller_strategy.cpp
+        controller/controller_strategy/controller_strategy.hpp
         helper/Helper.cpp
         helper/helper.hpp
-        graph/strategy/solve_strategy.hpp
-        graph/strategy/solve_strategy.hpp
 )
 
 add_executable(stats
@@ -102,6 +104,8 @@ add_executable(stats
         files/file_manager.hpp
         controller/Controller.cpp
         controller/controller.hpp
+        controller/controller_strategy/controller_strategy.cpp
+        controller/controller_strategy/controller_strategy.hpp
         helper/Helper.cpp
         helper/helper.hpp
 )
