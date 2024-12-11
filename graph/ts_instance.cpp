@@ -7,22 +7,22 @@
 
 ts_instance::ts_instance(std::vector<std::shared_ptr<node> > nodes, std::vector<std::shared_ptr<edge> > edges)
     : graph(std::move(nodes), std::move(edges)),
-      minCost(std::numeric_limits<double>::infinity()),
-      startingNode(*this->nodes[0]) {
+      min_cost(std::numeric_limits<double>::infinity()),
+      starting_node(*this->nodes[0]) {
 }
 
 std::vector<std::vector<node> > ts_instance::solve(const int num_of_threads) {
     const auto start = std::chrono::high_resolution_clock::now();
-    const std::vector visitedNodes = {this->startingNode};
+    const std::vector visitedNodes = {this->starting_node};
     this->set_min_cost(heuristic_combo());
     if (num_of_threads > 1) {
-        start_branch_parallel(visitedNodes, 0, this->startingNode, num_of_threads);
+        start_branch_parallel(visitedNodes, 0, this->starting_node, num_of_threads);
     } else {
-        branch(visitedNodes, 0, this->startingNode);
+        branch(visitedNodes, 0, this->starting_node);
     }
     const auto end = std::chrono::high_resolution_clock::now();
     this->elapsed = end - start;
-    return this->bestHamiltonianPaths;
+    return this->best_hamiltonian_paths;
 }
 
 std::vector<std::vector<node> > ts_instance::brute_force_solve() const {
@@ -73,17 +73,17 @@ void ts_instance::branch(std::vector<node> visitedNodes, double cost, const node
         }
         std::vector<node> branchVisNodes = visitedNodes;
         branchVisNodes.push_back(*neighbour);
-        if (this->get_lower_bound(branchVisNodes) <= this->minCost) {
+        if (this->get_lower_bound(branchVisNodes) <= this->min_cost) {
             branch(branchVisNodes, cost + get_cost_between_nodes(currentNode, *neighbour), *neighbour);
         }
     }
     if (visitedNodes.size() == this->nodes.size()) {
-        cost += get_cost_between_nodes(visitedNodes.back(), startingNode);
-        if (cost < this->minCost) {
+        cost += get_cost_between_nodes(visitedNodes.back(), starting_node);
+        if (cost < this->min_cost) {
             this->set_min_cost(cost);
             clear_best_hams();
             add_best_hamiltonian(visitedNodes);
-        } else if (cost == this->minCost) {
+        } else if (cost == this->min_cost) {
             add_best_hamiltonian(visitedNodes);
         }
     }
@@ -134,7 +134,7 @@ void ts_instance::branch_parallel(std::vector<node> visitedNodes, double cost, c
 
     if (visitedNodes.size() == nodes.size()) {
         std::lock_guard lock(m_1);
-        cost += get_cost_between_nodes(visitedNodes.back(), startingNode);
+        cost += get_cost_between_nodes(visitedNodes.back(), starting_node);
         if (cost < get_min_cost()) {
             set_min_cost(cost);
             clear_best_hams();
@@ -162,7 +162,7 @@ double ts_instance::get_lower_bound(std::vector<node> subPath) const {
 }
 
 void ts_instance::nearest_neighbour(std::vector<node>& greedyPath) const {
-    node node = this->startingNode;
+    node node = this->starting_node;
     do {
         greedyPath.push_back(node);
         std::vector<edge *> edges_of_node = greedyPath.back().get_edges();
@@ -206,40 +206,40 @@ double ts_instance::heuristic_combo() const {
 
 double ts_instance::get_min_cost() {
     std::lock_guard lock(m_2);
-    return this->minCost;
+    return this->min_cost;
 }
 
 void ts_instance::set_min_cost(const double minCost) {
-    this->minCost = minCost;
+    this->min_cost = minCost;
 }
 
 bool ts_instance::is_solved() const {
-    return !this->bestHamiltonianPaths.empty();
+    return !this->best_hamiltonian_paths.empty();
 }
 
 void ts_instance::clear_best_hams() {
-    this->bestHamiltonianPaths.clear();
+    this->best_hamiltonian_paths.clear();
 }
 
 void ts_instance::add_best_hamiltonian(const std::vector<node> &path) {
-    this->bestHamiltonianPaths.push_back(path);
+    this->best_hamiltonian_paths.push_back(path);
 }
 
 void ts_instance::print_statistics() const {
     std::cout << std::endl;
     std::cout << this->to_string() << std::endl;
 
-    if (this->bestHamiltonianPaths.empty()) {
+    if (this->best_hamiltonian_paths.empty()) {
         std::cout << "NO RESULT WAS FOUND" << std::endl;
         return;
     }
 
-    std::cout << "Solution set size: " << this->bestHamiltonianPaths.size() << std::endl;
-    std::cout << "The optimal path length: " << this->minCost << std::endl;
+    std::cout << "Solution set size: " << this->best_hamiltonian_paths.size() << std::endl;
+    std::cout << "The optimal path length: " << this->min_cost << std::endl;
     std::cout << "Calculation took: " << elapsed.count() / 1000000 << " ms (" << elapsed.count() << "ns)" << std::endl;
 
     std::cout << "First hamiltonian: ";
-    for (const node &node: this->bestHamiltonianPaths.front()) {
+    for (const node &node: this->best_hamiltonian_paths.front()) {
         std::cout << node.to_string() << " ";
     }
     std::cout << std::endl;
@@ -256,20 +256,20 @@ void ts_instance::save(const std::string &fileName) const {
         weight << std::defaultfloat << edge->get_weight();
         fileContent << edge->get_source_node()->to_string() << " -> " << edge->get_target_node()->to_string()
                 << "[label=\"" << weight.str() << "\" weight=\"" << weight.str() << "\"";
-        if (!this->bestHamiltonianPaths.empty()) {
-            auto it1 = std::ranges::find(this->bestHamiltonianPaths[0],
+        if (!this->best_hamiltonian_paths.empty()) {
+            auto it1 = std::ranges::find(this->best_hamiltonian_paths[0],
                                          *edge->get_source_node());
-            auto it2 = std::ranges::find(this->bestHamiltonianPaths[0],
+            auto it2 = std::ranges::find(this->best_hamiltonian_paths[0],
                                          *edge->get_target_node());
-            auto dis1 = std::distance(this->bestHamiltonianPaths[0].begin(), it2);
-            auto dis2 = std::distance(this->bestHamiltonianPaths[0].begin(), it1);
-            if (it1 != this->bestHamiltonianPaths[0].end() && it2 != this->bestHamiltonianPaths[0].end()) {
+            auto dis1 = std::distance(this->best_hamiltonian_paths[0].begin(), it2);
+            auto dis2 = std::distance(this->best_hamiltonian_paths[0].begin(), it1);
+            if (it1 != this->best_hamiltonian_paths[0].end() && it2 != this->best_hamiltonian_paths[0].end()) {
                 if (dis1 - dis2 == 1) {
                     fileContent << "color=\"red\"";
                 }
-                if (std::distance(this->bestHamiltonianPaths[0].begin(), it1) == this->bestHamiltonianPaths[0].size() -
+                if (std::distance(this->best_hamiltonian_paths[0].begin(), it1) == this->best_hamiltonian_paths[0].size() -
                     1 &&
-                    std::distance(this->bestHamiltonianPaths[0].begin(), it2) == 0) {
+                    std::distance(this->best_hamiltonian_paths[0].begin(), it2) == 0) {
                     fileContent << "color=\"red\"";
                 }
             }
@@ -288,6 +288,6 @@ std::string ts_instance::to_string() const {
 }
 
 void ts_instance::reset_solution() {
-    bestHamiltonianPaths.clear();
-    minCost = std::numeric_limits<double>::infinity();
+    best_hamiltonian_paths.clear();
+    min_cost = std::numeric_limits<double>::infinity();
 }

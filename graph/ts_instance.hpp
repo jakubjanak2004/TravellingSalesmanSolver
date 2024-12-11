@@ -11,10 +11,10 @@ class ts_instance : public graph {
     std::mutex m_1;
     std::mutex m_2;
     std::unique_ptr<boost::asio::thread_pool> pool;
-    double minCost; // thread save minimal cost variable
-    node startingNode;
-    std::vector<node> nodesExplored;
-    std::vector<std::vector<node> > bestHamiltonianPaths;
+    double min_cost; // thread save minimal cost variable
+    node starting_node;
+    std::vector<node> nodes_explored;
+    std::vector<std::vector<node> > best_hamiltonian_paths;
     std::chrono::duration<long long, std::ratio<1, 1000000000> > elapsed{};
 
     void branch(std::vector<node> visitedNodes, double cost, const node &currentNode);
@@ -40,7 +40,7 @@ public:
 
     ts_instance(std::vector<std::shared_ptr<node> > nodes, std::vector<std::shared_ptr<edge> > edges);
 
-    std::vector<std::vector<node> > solve(int num_of_threads = 1);
+    std::vector<std::vector<node>> solve(int num_of_threads = 1);
 
     [[nodiscard]] std::vector<std::vector<node>> brute_force_solve() const;
 
