@@ -1,11 +1,10 @@
-# --------------------------------------------------------------the old cmake--------------------------------------------------------------
 cmake_minimum_required(VERSION 3.29)
 project(TravellingSalesmanSolver)
 
 # Set the C++ standard to 20
 set(CMAKE_CXX_STANDARD 20)
 
-# Set the path for Graphviz
+# Set the path for Graphviz(direct, dl, fetch package... from web easiest)
 set(CMAKE_PREFIX_PATH "/opt/homebrew/opt/graphviz")
 
 # Find Graphviz package using pkg-config
