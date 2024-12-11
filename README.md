@@ -73,7 +73,7 @@ The Branch and Bound algorithm is a widely popular choice for solving TSP.
 It is known for its strong practical performance and its ability to be parallelized with ease. 
 This makes it an excellent approach for my work.
 
-## Approximation
+### Approximation
 
 The most efficient way to get a good solution for a Traveling Salesman Problem instance is not by solving it exactly, but by finding a path that, while not necessarily optimal, is still very good.  
 This method, known as approximation, can be performed much more quickly than exact methods.  
