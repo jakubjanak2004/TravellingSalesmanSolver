@@ -177,7 +177,47 @@ scaling improvements but rather be hindered by hardware constraints.
 ![Brute Force vs B&B](data_analysis/algorithm_speedup_across_thread_counts.png)
 
 ## Implementation
-...
+
+The Traveling Salesman Problem (TSP) solver is implemented in C++, a language renowned for its performance and hardware efficiency. This makes it an ideal choice for solving computationally intensive problems like the TSP.
+
+The solver is designed as a command-line application (detailed usage instructions are provided later). 
+C++'s object-oriented programming paradigm further enhances the implementation 
+by enabling a well-structured and modular approach. 
+This is particularly beneficial for organizing both the control logic and the computational components of the solver.
+
+### Architecture
+
+Below is the high-level UML class diagram of the application. 
+While the actual implementation of the classes includes additional fields and methods, 
+this diagram focuses on the most critical elements, omitting helper methods and attributes for simplicity.
+
+![tss class diagram](data_analysis/tss_class_diagram.jpg)
+
+The controller class employs the strategy pattern to manage command execution effectively.
+
+### Build Process
+
+The application is built using **CMake**, with the following dependencies:
+
+1. **Graphviz**: Used for loading and exporting graphs as DOT files.
+2. **Boost**: Utilized for argument parsing and implementing the thread pool.
+
+The project includes three executables:
+
+1. **tss**: The main application.
+2. **run_tests**: An executable dedicated to running unit tests.
+3. **stats**: A utility for generating statistical `.csv` files.
+
+### Testing
+
+The **run_tests** executable validates the core components of the application:
+
+1. **`solve(int number_of_threads = 1)` Method**:
+   - When executed with a single thread, the synchronized branch-and-bound algorithm is tested against the brute-force solver on small instances.
+   - Multi-threaded execution is also tested to ensure correctness and performance, with results compared to the brute-force solver.
+
+2. **Core Classes**:
+   - The **Edge**, **Node**, and **Graph** classes undergo thorough testing to verify their functionality.
 
 ## How to Use TSS
 
