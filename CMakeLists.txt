@@ -14,11 +14,6 @@ pkg_check_modules(GRAPHVIZ REQUIRED libgvc libcdt libcgraph)
 # Include directories for Graphviz
 include_directories(${GRAPHVIZ_INCLUDE_DIRS})
 
-# Print Graphviz configuration for debugging
-message(STATUS "Graphviz include directories: ${GRAPHVIZ_INCLUDE_DIRS}")
-message(STATUS "Graphviz library directories: ${GRAPHVIZ_LIBRARY_DIRS}")
-message(STATUS "Graphviz libraries: ${GRAPHVIZ_LIBRARIES}")
-
 # Add library directories if necessary
 link_directories(${GRAPHVIZ_LIBRARY_DIRS})
 link_directories(/opt/homebrew/opt/graphviz/lib)
