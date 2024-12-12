@@ -221,9 +221,8 @@ The **run_tests** executable validates the core components of the application:
 
 ### Data Analysis
 
-The `stats` executable generates `.csv` files containing statistics, which are saved in the `/data_analysis` folder. 
-A Python program, written in a Jupyter notebook, loads the data from these `.csv` files, 
-generates graphs, and saves them in `.jpg` format. 
+The `stats` executable generates `.csv` files containing statistics, which are saved in the `/files/data` folder. 
+A Python program in the `/data_analysis` folder loads this data, generates graphs, and saves them in `.jpg` format. 
 This automated data analysis process enables the handling of hundreds of samples efficiently.
 
 ## How to Use TSS
