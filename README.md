@@ -199,7 +199,7 @@ The controller class employs the strategy pattern to manage command execution ef
 
 The application is built using **CMake**, with the following dependencies:
 
-1. **Graphviz**: Used for loading and exporting graphs as DOT files.
+1. **Graphviz**: Used for loading and exporting graphs as `.dot` files.
 2. **Boost**: Utilized for argument parsing and implementing the thread pool.
 
 The project includes three executables:
@@ -218,6 +218,13 @@ The **run_tests** executable validates the core components of the application:
 
 2. **Core Classes**:
    - The **Edge**, **Node**, and **Graph** classes undergo thorough testing to verify their functionality.
+
+### Data Analysis
+
+The `stats` executable generates `.csv` files containing statistics, which are saved in the `/data_analysis` folder. 
+A Python program, written in a Jupyter notebook, loads the data from these `.csv` files, 
+generates graphs, and saves them in `.jpg` format. 
+This automated data analysis process enables the handling of hundreds of samples efficiently.
 
 ## How to Use TSS
 
