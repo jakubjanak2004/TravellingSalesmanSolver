@@ -5,7 +5,7 @@
 #include <gvcext.h>
 #include <map>
 #include <string>
-#include <__filesystem/directory_entry.h>
+#include <filesystem>
 
 #include "../graph/ts_instance.hpp"
 
@@ -31,4 +31,4 @@ public:
 };
 
 
-#endif //FILEMANAGER_H
+#endif
