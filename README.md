@@ -66,7 +66,7 @@ But that is still growing incredibly fast:
 | 19    | 6,402,373,705,728,000 | 3,201,186,852,864,000 |
 | 20    | 121,645,100,408,832,000 | 60,822,550,204,416,000 |
 
-The next possibility is to solve the Traveling Salesman by converting it into a Linear Program (LP).
+The next possibility is to solve the Traveling Salesman by converting it into an Integer Linear Program (ILP).
 However, this was not an approach that I have used.
 
 The Branch and Bound algorithm is a widely popular choice for solving TSP. 
@@ -82,7 +82,7 @@ In real-life scenarios, approximation is often preferred over exact solutions, e
 
 ## Branch and Bound Algorithm
 
-Branch and Bound (B&B) are a powerful algorithms for finding exact solutions to problems in Combinatorial Optimization, particularly Linear Programs.  
+Branch and Bound (B&B) are a powerful algorithms for finding exact solutions to problems in Combinatorial Optimization, particularly Integer Linear Programs.  
 It systematically explores the search space while eliminating branches (subproblems) that cannot lead to a better solution than the current best.  
 We will be using the B&B algorithm for solving the Traveling Salesman Problem (TSP).
 
